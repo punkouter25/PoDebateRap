@@ -9,7 +9,7 @@
 @inject ITopicRepository TopicRepo
 @inject IDebateOrchestrator Orchestrator
 @inject INewsService NewsService // Inject News Service
-@* Removed DialogService and Snackbar injections *@
+@* Removed IDialogService injection *@
 @inject ILogger<Home> Logger
 @inject IJSRuntime JSRuntime
 @* Inject IJSRuntime for JS interop *@
@@ -130,97 +130,16 @@
         }
     </div>
 
-    <!-- Results Modal -->
+    <!-- Results Modal (HTML/CSS version - Displaying Results) -->
     @if (ShowVotingModal)
     {
-        <div class="modal" tabindex="-1" style="display: block; background-color: rgba(0,0,0,0.5);">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Debate Results</h5> @* Changed title *@
-                    </div>
-                    <div class="modal-body text-center"> @* Centered text *@
-                        <p>The debate on '<strong>@CurrentTopic?.Title</strong>' between <strong>@CurrentRapper1?.Name</strong> (Pro) and <strong>@CurrentRapper2?.Name</strong> (Con) has concluded.</p>
-                        <hr />
-                        <h4>Judge's Decision:</h4>
-                        @* Use the stored _latestDebateState *@
-                        @if (!string.IsNullOrEmpty(_latestDebateState.WinnerName) && _latestDebateState.WinnerName != "Draw" && _latestDebateState.WinnerName != "Undecided" && _latestDebateState.WinnerName != "Error Judging" && _latestDebateState.WinnerName != "Error Parsing" && _latestDebateState.WinnerName != "Stats Error")
-                        {
-                            <p class="fs-4"><strong>@_latestDebateState.WinnerName wins!</strong></p>
-                        }
-                        else if (_latestDebateState.WinnerName == "Draw")
-                        {
-                             <p class="fs-4 text-warning">It's a Draw!</p> // Handle Draw
-                        }
-                        else if (_latestDebateState.WinnerName == "Undecided")
-                        {
-                             <p class="fs-5 text-muted">The judge was undecided.</p> // Changed text
-                        }
-                        else
-                        {
-                             <p class="fs-5 text-danger">There was an error determining or parsing the winner.</p>
-                        }
-
-                        @* Display Judge's Reasoning *@
-                        @if (!string.IsNullOrEmpty(_latestDebateState.JudgeReasoning))
-                        {
-                            <p class="mt-3 fst-italic">" @_latestDebateState.JudgeReasoning "</p>
-                        }
-
-                        @* Display Stats Grid *@
-                        @if (_latestDebateState.Stats != null)
-                        {
-                            <hr />
-                            <h5>Debate Stats (1-5)</h5>
-                            <table class="table table-sm table-bordered mt-3" style="color: var(--text-color);">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th>Metric</th>
-                                        <th>@CurrentRapper1?.Name (Pro)</th>
-                                        <th>@CurrentRapper2?.Name (Con)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Logic (R1/R2)</td>
-                                        <td>@_latestDebateState.Stats.Rapper1LogicScore</td>
-                                        <td>@_latestDebateState.Stats.Rapper2LogicScore</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Sentiment Analysis</td> @* Updated Header *@
-                                        <td>@_latestDebateState.Stats.Rapper1SentimentScore</td> @* Updated Property *@
-                                        <td>@_latestDebateState.Stats.Rapper2SentimentScore</td> @* Updated Property *@
-                                    </tr>
-                                    <tr>
-                                        <td>Adherence (Persona/Style)</td> @* Updated Header *@
-                                        <td>@_latestDebateState.Stats.Rapper1AdherenceScore</td> @* Updated Property *@
-                                        <td>@_latestDebateState.Stats.Rapper2AdherenceScore</td> @* Updated Property *@
-                                    </tr>
-                                    <tr>
-                                        <td>Rebuttal Quality</td>
-                                        <td>@_latestDebateState.Stats.Rapper1RebuttalScore</td>
-                                        <td>@_latestDebateState.Stats.Rapper2RebuttalScore</td>
-                                    </tr>
-                                    @* Add Total Row *@
-                                    <tr class="table-info"> @* Style total row *@
-                                        <td><strong>TOTAL SCORE</strong></td>
-                                        <td><strong>@_latestDebateState.Stats.Rapper1TotalScore</strong></td>
-                                        <td><strong>@_latestDebateState.Stats.Rapper2TotalScore</strong></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        }
-                        else
-                        {
-                             <p class="text-muted mt-3"><small>(Stats could not be generated)</small></p>
-                        }
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" @onclick="CloseResultsModal">Close</button> @* Changed button *@
-                    </div>
-                </div>
-            </div>
-        </div>
+        <ResultsModal Rapper1Name="CurrentRapper1?.Name"
+                      Rapper2Name="CurrentRapper2?.Name"
+                      TopicTitle="CurrentTopic?.Title"
+                      WinnerName="_latestDebateState.WinnerName"
+                      JudgeReasoning="_latestDebateState.JudgeReasoning"
+                      Stats="_latestDebateState.Stats"
+                      OnClose="HandleResultsModalClosed" /> @* Use OnClose callback *@
     }
 
 </div> @* End container *@
@@ -303,7 +222,7 @@
     private bool IsRapper1Turn { get; set; } = true;
     private int CurrentTurn { get; set; } = 0;
     private int TotalDebateTurns => Orchestrator.CurrentState.TotalTurns; // Get from orchestrator state
-    private bool ShowVotingModal = false; // Flag to show/hide the modal
+    private bool ShowVotingModal = false; // Re-add flag
 
     private static class ThemeVariables
     {
@@ -419,6 +338,7 @@
             // If CurrentTurnAudio is null, signal completion immediately
             await NotifyAudioPlaybackComplete();
         }
+        // Removed redundant else block
 
 
         if (!string.IsNullOrEmpty(newState.ErrorMessage))
@@ -427,11 +347,12 @@
              // TODO: Show error via custom alert or message area
         }
 
-        if (newState.IsDebateFinished && !newState.IsDebateInProgress) // Ensure debate is truly finished
-        {
-            Logger.LogInformation("Debate finished event received. Showing voting modal.");
-            ShowVotingModal = true;
-        }
+        // Remove modal display logic from here. It will be triggered by NotifyAudioPlaybackComplete.
+        // if (newState.IsDebateFinished && !newState.IsDebateInProgress)
+        // {
+        //     Logger.LogInformation("Debate finished event received. Showing voting modal.");
+        //     ShowVotingModal = true;
+        // }
 
         await InvokeAsync(StateHasChanged);
     }
@@ -443,7 +364,17 @@
         Logger.LogDebug("NotifyAudioPlaybackComplete called from JavaScript.");
         try
         {
+            // Signal orchestrator first
             await Orchestrator.SignalAudioPlaybackCompleteAsync();
+
+            // Now check if the debate is finished according to the latest state
+            // If it is, *now* we can show the modal by setting the flag.
+            if (_latestDebateState.IsDebateFinished)
+            {
+                Logger.LogInformation("Audio playback complete AND debate is finished. Showing results modal.");
+                ShowVotingModal = true;
+                await InvokeAsync(StateHasChanged); // Update UI to show modal
+            }
         }
         catch (Exception ex)
         {
@@ -472,7 +403,7 @@
         if (IsStartDisabled()) return;
         IsStartingDebate = true;
         DebateStarted = false;
-        ShowVotingModal = false;
+        ShowVotingModal = false; // Ensure modal is hidden when starting
         StateHasChanged();
 
         // Create Topic object from the input field
@@ -527,14 +458,13 @@
 
     // Removed HandleVoteSubmitted and HandleVoteSkipped
 
-    // Method to close the results modal and reset the debate
-    private void CloseResultsModal()
+    // Add handler for the modal's OnClose event
+    private void HandleResultsModalClosed()
     {
         ShowVotingModal = false; // Hide modal
         Logger.LogInformation("Results modal closed by user.");
 
-        // Update win/loss record based on calculated winner if valid
-        // Use the stored _latestDebateState
+        // Update win/loss record based on AI judge decision stored in _latestDebateState
         if (!string.IsNullOrEmpty(_latestDebateState.WinnerName) && _latestDebateState.WinnerName != "Draw" && _latestDebateState.WinnerName != "Undecided" && _latestDebateState.WinnerName != "Error Judging" && _latestDebateState.WinnerName != "Error Parsing" && _latestDebateState.WinnerName != "Stats Error")
         {
              Rapper? winner = null;
@@ -552,35 +482,48 @@
 
              if (winner != null && loser != null)
              {
-                 // Fire and forget the update - no need to await in UI thread
-                 _ = Task.Run(async () => {
-                     try
-                     {
-                         await RapperRepo.UpdateWinLossRecordAsync(winner.Name, loser.Name);
-                         Logger.LogInformation("Win/loss record updated successfully for winner {WinnerName}.", winner.Name);
-                     }
-                     catch (Exception ex)
-                     {
-                         Logger.LogError(ex, "Error updating win/loss record after AI judge decision.");
-                         // TODO: Maybe log this error more permanently?
-                     }
-                 });
+                 // Fire and forget the update
+                 _ = Task.Run(async () => await UpdateWinLossRecord(winner, loser));
              }
-             else {
-                 Logger.LogWarning("Could not determine valid winner/loser objects from WinnerName '{WinnerName}' to update records.", _latestDebateState.WinnerName);
+             else
+             {
+                 Logger.LogWarning("Could not determine valid winner/loser objects from AI Judge WinnerName '{WinnerName}' to update records.", _latestDebateState.WinnerName);
              }
         }
         else
         {
-             Logger.LogInformation("No valid winner determined by stats ({WinnerName}). Skipping win/loss record update.", _latestDebateState.WinnerName ?? "N/A");
+             Logger.LogInformation("No valid winner determined by AI judge ({WinnerName}). Skipping win/loss record update.", _latestDebateState.WinnerName ?? "N/A");
         }
 
+        // Resetting the debate state is now handled here
+        ResetDebateState();
+    }
+
+    // Method to handle updating win/loss record (Called by HandleResultsModalClosed)
+    // This could potentially be called based on AI judge results if desired later.
+    private async Task UpdateWinLossRecord(Rapper winner, Rapper loser)
+    {
+        try
+        {
+            await RapperRepo.UpdateWinLossRecordAsync(winner.Name, loser.Name);
+            Logger.LogInformation("Win/loss record updated successfully for winner {WinnerName}.", winner.Name);
+            // Optionally show a snackbar confirmation
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error updating win/loss record after user vote.");
+            // Optionally show a snackbar error
+        }
+    }
+
+    // New method to reset the state after the dialog closes
+    private void ResetDebateState()
+    {
         Orchestrator.ResetDebate(); // Reset orchestrator state
         DebateStarted = false; // Ensure debate visualizer is hidden
         CurrentDebateTurnText = "Debate finished. Select rappers and topic for a new debate."; // Update status message
         StateHasChanged();
     }
-
 
     public void Dispose()
     {

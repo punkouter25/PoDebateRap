@@ -22,4 +22,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border: 1px solid transparent; /* Default transparent border to prevent layout shift */
+    transition: border 0.3s ease-in-out; /* Smooth transition */
+}
+
+/* Style for the active rapper's profile border */
+.rapper-profile.active-border {
+    border: 2px solid var(--accent-color); /* Use accent color from app.css */
 }

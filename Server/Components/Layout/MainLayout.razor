@@ -1,5 +1,7 @@
 ﻿@inherits LayoutComponentBase
 
+<PageTitle>PoDebateRap</PageTitle> @* Set global page title *@
+
 <div class="page">
     <div class="sidebar">
         <NavMenu />
@@ -11,7 +13,7 @@
         </div>
 
         <article class="content px-4">
-            <MudThemeProvider />
+            <MudThemeProvider IsDarkMode="true" /> @* Explicitly set dark mode *@
             <MudDialogProvider />
             <MudSnackbarProvider />
             <MudPopoverProvider /> @* Added missing provider *@
