@@ -38,20 +38,21 @@ public class DebateOrchestrator : IDebateOrchestrator, IDisposable
     }
 
     /// <inheritdoc />
-    public async Task StartNewDebateAsync(Rapper rapper1, Rapper rapper2, Topic topic1, Topic topic2)
+    // Updated signature for single topic
+    public async Task StartNewDebateAsync(Rapper rapper1, Rapper rapper2, Topic topic)
     {
-        if (topic1 == null || topic2 == null)
+        // Argument validation
+        if (topic == null) throw new ArgumentNullException(nameof(topic));
+        if (rapper1 == null) throw new ArgumentNullException(nameof(rapper1));
+        if (rapper2 == null) throw new ArgumentNullException(nameof(rapper2));
+        if (rapper1.Name == rapper2.Name)
         {
-            throw new ArgumentNullException(topic1 == null ? nameof(topic1) : nameof(topic2));
-        }
-        if (topic1.RowKey == topic2.RowKey) // Ensure different topics were selected
-        {
-             _logger.LogError("Attempted to start debate with the same topic selected twice: {TopicTitle}", topic1.Title);
-             throw new ArgumentException("Cannot start a debate with the same topic selected twice.");
+            _logger.LogError("Attempted to start debate with the same rapper selected twice: {RapperName}", rapper1.Name);
+            throw new ArgumentException("Cannot start a debate with the same rapper selected twice.");
         }
 
-        _logger.LogInformation("Starting new debate. Rapper1: {R1}, Rapper2: {R2}. Debate: '{Topic1Title}' vs '{Topic2Title}'",
-            rapper1.Name, rapper2.Name, topic1.Title, topic2.Title);
+        _logger.LogInformation("Starting new debate. Rapper1 (Pro): {R1}, Rapper2 (Con): {R2}. Topic: '{TopicTitle}'",
+            rapper1.Name, rapper2.Name, topic.Title);
 
         // Cancel any previous debate task
         ResetDebate();
@@ -61,15 +62,15 @@ public class DebateOrchestrator : IDebateOrchestrator, IDisposable
         // Initialize state
         _currentState = new DebateState
         {
-            Rapper1 = rapper1, // Argues Topic1 > Topic2
-            Rapper2 = rapper2, // Argues Topic2 > Topic1
-            Topic1 = topic1,
-            Topic2 = topic2,
+            Rapper1 = rapper1, // Assumed Pro
+            Rapper2 = rapper2, // Assumed Con
+            Topic = topic,     // Single topic
             IsDebateInProgress = true,
             IsDebateFinished = false,
             CurrentTurnNumber = 0,
-            IsRapper1Turn = true, // Rapper 1 starts
-            CurrentTurnText = $"The debate begins! {rapper1.Name} ('{topic1.Title}') vs {rapper2.Name} ('{topic2.Title}'). {rapper1.Name} argues why '{topic1.Title}' is better.",
+            IsRapper1Turn = true, // Rapper 1 (Pro) starts
+            // Updated initial text for pro/con
+            CurrentTurnText = $"The debate begins! Topic: '{topic.Title}'. {rapper1.Name} (Pro) vs {rapper2.Name} (Con). {rapper1.Name} starts arguing FOR the topic.",
             DebateHistory = new List<string>()
         };
         await NotifyStateChangeAsync(); // Notify UI about the initial state
@@ -113,7 +114,8 @@ public class DebateOrchestrator : IDebateOrchestrator, IDisposable
 
                 var activeRapper = _currentState.IsRapper1Turn ? _currentState.Rapper1! : _currentState.Rapper2!;
                 var opponent = _currentState.IsRapper1Turn ? _currentState.Rapper2! : _currentState.Rapper1!;
-                // No single "active topic" - the context is the comparison between Topic1 and Topic2
+                var currentTopic = _currentState.Topic!; // Use the single topic
+                bool isProArgument = _currentState.IsRapper1Turn; // Rapper1 is Pro
 
                 string generatedText = string.Empty;
                 byte[]? audioData = null;
@@ -122,14 +124,15 @@ public class DebateOrchestrator : IDebateOrchestrator, IDisposable
                 try
                 {
                     // 1. Generate Text using OpenAI
+                    // Call the updated AI service method with single topic and stance
                     generatedText = await _openAIService.GenerateDebateTurnAsync(
                         activeRapper,
                         opponent,
-                        _currentState.Topic1!, // Pass Topic 1
-                        _currentState.Topic2!, // Pass Topic 2
-                        _currentState.IsRapper1Turn, // Indicate whose turn it is
+                        currentTopic,   // Pass the single topic
+                        isProArgument, // Indicate stance (Pro if Rapper1's turn)
                         _currentState.DebateHistory,
-                        750);
+                        _currentState.CurrentTurnNumber, // Pass the current turn number
+                        750); // Max tokens
 
                     if (cancellationToken.IsCancellationRequested) break;
 
@@ -198,13 +201,76 @@ public class DebateOrchestrator : IDebateOrchestrator, IDisposable
             if (cancellationToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Debate loop cancelled.");
-                _currentState = _currentState with { IsDebateInProgress = false, ErrorMessage = "Debate cancelled." };
+             _currentState = _currentState with { IsDebateInProgress = false, ErrorMessage = "Debate cancelled." };
             }
-            else
+            else // Debate finished normally
             {
-                _logger.LogInformation("Debate finished after {TotalTurns} turns on '{Topic1Title}' vs '{Topic2Title}'.",
-                    _currentState.TotalTurns, _currentState.Topic1?.Title, _currentState.Topic2?.Title);
-                _currentState = _currentState with { IsDebateInProgress = false, IsDebateFinished = true, CurrentTurnText = "Debate Concluded!" };
+                 // Wait for the *final* turn's audio to finish before judging
+                 if (_audioPlaybackTcs != null)
+                 {
+                    _logger.LogDebug("Waiting for final audio playback signal (Turn {TurnNumber})...", _currentState.CurrentTurnNumber);
+                    await _audioPlaybackTcs.Task;
+                    _logger.LogDebug("Final audio playback signal received.");
+                    _audioPlaybackTcs = null;
+                 }
+
+                _logger.LogInformation("Debate finished after {TotalTurns} turns on topic '{TopicTitle}'. Determining winner...",
+                    _currentState.TotalTurns, _currentState.Topic?.Title);
+
+                // Call the AI Judge to get reasoning and stats
+                string? reasoning = null;
+                DebateStats? stats = null;
+                string winnerName = "Error Judging"; // Default winner status
+
+                try
+                {
+                    (reasoning, stats) = await _openAIService.JudgeDebateAsync(
+                       _currentState.DebateHistory,
+                       _currentState.Rapper1!,
+                       _currentState.Rapper2!,
+                       _currentState.Topic!);
+
+                    // Determine winner based on total scores if stats were parsed
+                    if (stats != null)
+                    {
+                        if (stats.Rapper1TotalScore > stats.Rapper2TotalScore)
+                        {
+                            winnerName = _currentState.Rapper1!.Name;
+                        }
+                        else if (stats.Rapper2TotalScore > stats.Rapper1TotalScore)
+                        {
+                            winnerName = _currentState.Rapper2!.Name;
+                        }
+                        else
+                        {
+                            winnerName = "Draw"; // Explicitly handle ties
+                        }
+                         _logger.LogInformation("Winner determined by stats: {WinnerName} (R1 Total: {R1Score}, R2 Total: {R2Score})",
+                            winnerName, stats.Rapper1TotalScore, stats.Rapper2TotalScore);
+                    }
+                    else
+                    {
+                         winnerName = "Stats Error"; // Indicate stats parsing failed
+                         reasoning ??= "Could not determine winner because stats failed to generate or parse.";
+                         _logger.LogWarning("Could not determine winner because stats object was null.");
+                    }
+                }
+                catch(Exception judgeEx)
+                {
+                    _logger.LogError(judgeEx, "Error occurred during AI judging call.");
+                    reasoning ??= "An error occurred while the judge was deliberating."; // Provide error reasoning if not already set
+                    winnerName = "Error Judging"; // Ensure winner reflects the error
+                }
+
+                _currentState = _currentState with
+                {
+                    IsDebateInProgress = false,
+                    IsDebateFinished = true,
+                    CurrentTurnText = "Debate Concluded!",
+                    WinnerName = winnerName, // Store the calculated winner (or Draw/Error)
+                    JudgeReasoning = reasoning, // Store the reasoning
+                    Stats = stats // Store the stats (might be null)
+                };
             }
         }
         catch (OperationCanceledException)

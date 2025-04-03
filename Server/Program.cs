@@ -3,7 +3,8 @@ using MudBlazor.Services;
 using PoDebateRap.Server.Services.Data;
 using PoDebateRap.Server.Services.AI;
 using PoDebateRap.Server.Services.Speech;
-using PoDebateRap.Server.Services.Orchestration; // Add namespace for Orchestration services
+using PoDebateRap.Server.Services.Orchestration;
+using PoDebateRap.Server.Services.News; // Add namespace for News services
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,9 @@ builder.Services.AddScoped<ITextToSpeechService, TextToSpeechService>();
 
 // Register Debate Orchestrator (Scoped to manage state per user connection/session)
 builder.Services.AddScoped<IDebateOrchestrator, DebateOrchestrator>();
+
+// Register News Service (Scoped is suitable) and configure HttpClient
+builder.Services.AddHttpClient<INewsService, NewsService>(); // Registers both service and typed HttpClient
 
 
 var app = builder.Build();

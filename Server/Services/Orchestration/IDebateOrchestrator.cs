@@ -20,14 +20,13 @@ public interface IDebateOrchestrator
     event Func<DebateState, Task>? OnStateChangeAsync;
 
     /// <summary>
-    /// Starts a new debate session.
+    /// Starts a new debate session on a single topic.
     /// </summary>
-    /// <param name="rapper1">The first rapper (argues Topic 1 > Topic 2).</param>
-    /// <param name="rapper2">The second rapper (argues Topic 2 > Topic 1).</param>
-    /// <param name="topic1">The first selected topic.</param>
-    /// <param name="topic2">The second selected topic.</param>
+    /// <param name="rapper1">The first rapper (argues FOR the topic).</param>
+    /// <param name="rapper2">The second rapper (argues AGAINST the topic).</param>
+    /// <param name="topic">The topic of the debate.</param>
     /// <returns>A Task representing the asynchronous operation of starting the debate flow.</returns>
-    Task StartNewDebateAsync(Rapper rapper1, Rapper rapper2, Topic topic1, Topic topic2);
+    Task StartNewDebateAsync(Rapper rapper1, Rapper rapper2, Topic topic);
 
     /// <summary>
     /// Resets the orchestrator to an initial state, clearing any ongoing debate.
@@ -52,18 +51,23 @@ public interface IDebateOrchestrator
 /// </summary>
 public record DebateState
 {
-    public Rapper? Rapper1 { get; init; } // Argues Topic1 is better
-    public Rapper? Rapper2 { get; init; } // Argues Topic2 is better
-    public Topic? Topic1 { get; init; }   // First selected topic
-    public Topic? Topic2 { get; init; }   // Second selected topic
+    /// <summary> Rapper arguing FOR the topic. </summary>
+    public Rapper? Rapper1 { get; init; }
+    /// <summary> Rapper arguing AGAINST the topic. </summary>
+    public Rapper? Rapper2 { get; init; }
+    /// <summary> The single topic of the debate. </summary>
+    public Topic? Topic { get; init; }
     public bool IsDebateInProgress { get; init; } = false;
     public bool IsDebateFinished { get; init; } = false;
     public bool IsGeneratingTurn { get; init; } = false; // Indicates AI/TTS processing
-    public int CurrentTurnNumber { get; init; } = 0; // Overall turn (1-3)
-    public int TotalTurns { get; init; } = 3; // Reduced total turns
+    public int CurrentTurnNumber { get; init; } = 0; // Overall turn number (1-6)
+    public int TotalTurns { get; init; } = 6; // 3 rounds * 2 rappers = 6 turns
     public bool IsRapper1Turn { get; init; } = true;
     public string CurrentTurnText { get; init; } = string.Empty;
     public byte[]? CurrentTurnAudio { get; init; } // Audio data for the current turn
     public List<string> DebateHistory { get; init; } = new(); // History of text turns
     public string? ErrorMessage { get; init; } // To communicate errors to the UI
+    public string? WinnerName { get; init; } // Name of the AI-declared winner
+    public string? JudgeReasoning { get; init; } // AI Judge's reasoning text
+    public DebateStats? Stats { get; init; } // Numerical stats from AI Judge
 }

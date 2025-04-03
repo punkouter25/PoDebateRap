@@ -26,9 +26,14 @@ Configure voice selection logic based on rapper characteristics
 Create audio playback queue mechanism
 Implement event handling for sequential audio presentation
 Add error handling for speech synthesis failures
+✅ NewsAPI Integration & Single Topic Debate Refactor
+Implement NewsAPI service to fetch headlines
+Update Home page UI to allow selecting news topic or custom topic
+Refactor Orchestrator and AI Service for single topic (Pro/Con) debate format
+Update UI text and logic to reflect Pro/Con debate structure
 ✅ Main Page UI Development
 Design and implement rapper selection dropdowns
-Create topic selection interface with character counter
+Create topic selection interface (predefined, custom, news) with character counter
 Build debate arena visual layout with rapper profiles
 Implement responsive design for various screen sizes
 Add visual style elements with hip-hop aesthetic

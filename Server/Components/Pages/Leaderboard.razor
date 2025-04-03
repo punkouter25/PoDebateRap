@@ -5,6 +5,8 @@
 @inject IRapperRepository RapperRepo
 @inject NavigationManager NavManager
 @inject ILogger<Leaderboard> Logger
+@rendermode InteractiveServer
+
 
 <PageTitle>PoDebateRap - Leaderboard</PageTitle>
 
@@ -110,9 +112,10 @@
             .OrderByDescending(e => e.WinPercentage) // Sort by win percentage
             .ThenByDescending(e => e.Wins) // Then by wins (tie-breaker)
             .ThenBy(e => e.Losses) // Then by losses (ascending, fewer losses is better)
+            .Take(10) // Take only the top 10
             .Select((entry, index) =>
             {
-                entry.Rank = index + 1; // Assign rank based on sorted order
+                entry.Rank = index + 1; // Assign rank based on sorted order (1-10)
                 return entry;
             })
             .ToList();
