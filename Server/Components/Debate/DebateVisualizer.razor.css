@@ -1,32 +1,95 @@
-/* Blinking animation for the active rapper's icon */
-.blinking {
-    animation: blink-animation 1s infinite;
+.debate-visualizer-paper {
+    background-color: #1f1f1f; /* Match card background */
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
 }
 
-@keyframes blink-animation {
-    0% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.3;
-    }
-    100% {
-        opacity: 1;
-    }
+.paper-like {
+    background-color: #2a2a2a; /* Slightly lighter surface */
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
 }
 
-/* Optional: Add some padding/margin to the profile paper */
+.pa-4 {
+    padding: 1.5rem; /* Adjust padding as needed */
+}
+
+.pa-3 {
+    padding: 1rem;
+}
+
 .rapper-profile {
-    min-height: 80px; /* Ensure some minimum height */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid transparent; /* Default transparent border to prevent layout shift */
-    transition: border 0.3s ease-in-out; /* Smooth transition */
+    /* Add any specific profile styling */
 }
 
-/* Style for the active rapper's profile border */
-.rapper-profile.active-border {
-    border: 2px solid var(--accent-color); /* Use accent color from app.css */
+.active-border {
+    border: 2px solid var(--accent-color); /* Use accent color for active border */
+    box-shadow: 0 0 8px var(--accent-color);
+}
+
+.rapper-mic {
+    font-size: 1.5rem; /* Adjust icon size */
+    display: inline-block;
+    margin-top: 0.5rem;
+}
+
+.inactive-mic {
+    color: var(--secondary-color); /* Dim inactive mic */
+}
+
+.active-mic {
+    color: var(--accent-color); /* Accent color for active mic */
+}
+
+.gavel-icon {
+    font-size: 2.5rem; /* Adjust icon size */
+    color: var(--primary-color);
+}
+
+.debate-text-area {
+    min-height: 100px;
+    background-color: #181818; /* Darker background for text area */
+    color: var(--text-color);
+    font-family: monospace; /* Optional: Monospace font for debate text */
+    white-space: pre-wrap; /* Preserve whitespace and wrap text */
+}
+
+.debate-progress {
+    /* Basic styling for HTML progress element */
+    appearance: none;
+    width: 100%;
+    height: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    overflow: hidden; /* Ensure inner bar respects border-radius */
+}
+
+/* Style the progress bar value (track) */
+.debate-progress::-webkit-progress-bar {
+    background-color: #333; /* Dark background for the track */
+    border-radius: 5px;
+}
+
+/* Style the progress bar value (filled portion) */
+.debate-progress::-webkit-progress-value {
+    background-color: var(--primary-color); /* Use primary color for progress */
+    border-radius: 5px;
+    transition: width 0.3s ease; /* Smooth transition */
+}
+
+/* Firefox specific styles */
+.debate-progress::-moz-progress-bar {
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    transition: width 0.3s ease;
+}
+
+/* Blinking animation */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+.blinking {
+    animation: blink 1s linear infinite;
 }

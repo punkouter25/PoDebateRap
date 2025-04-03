@@ -1,73 +1,63 @@
 @using PoDebateRap.Shared.Models
-@using MudBlazor // Add MudBlazor namespace for components
-@* Removed MudBlazor.Services using *@
-@* Removed inject directive *@
+@* Removed: @using MudBlazor *@
 
-<MudPaper Elevation="3" Class="pa-4">
-    <MudGrid Spacing="3" Justify="Justify.Center">
+<div class="debate-visualizer-paper pa-4"> @* Replace MudPaper with styled div *@
+    <div class="row justify-content-center g-3"> @* Replace MudGrid with Bootstrap row/col *@
 
         <!-- Rapper 1 Profile Area -->
-        <MudItem xs="5" Class="text-center">
-             @* Apply active-border class conditionally instead of inline style *@
-            <MudPaper Elevation="@(IsRapper1Active ? 6 : 1)" Class="@($"pa-3 rapper-profile {(IsRapper1Active ? "active-border" : "")}")">
-                <MudText Typo="Typo.h5">@(Rapper1?.Name ?? "Rapper 1")</MudText>
+        <div class="col-5 text-center"> @* Replace MudItem *@
+            <div class="@($"pa-3 rapper-profile paper-like {(IsRapper1Active ? "active-border" : "")}")"> @* Replace MudPaper *@
+                <h5>@(Rapper1?.Name ?? "Rapper 1")</h5> @* Replace MudText *@
                 <!-- TODO: Add Blinking Indicator Component -->
-                <MudIcon Icon="@Icons.Material.Filled.Mic" Color="@(IsRapper1Active ? Color.Error : Color.Default)" Class="@(IsRapper1Active ? "blinking" : "")" />
+                <span class="@($"rapper-mic {(IsRapper1Active ? "blinking active-mic" : "inactive-mic")}")">🎤</span> @* Replace MudIcon *@
                  <!-- TODO: Add Rapper Image/Avatar if available -->
-            </MudPaper>
-        </MudItem>
+            </div>
+        </div>
 
         <!-- VS Separator -->
-        <MudItem xs="2" Class="d-flex align-center justify-center">
-             <MudIcon Icon="@Icons.Material.Filled.Gavel" Color="Color.Primary" Size="Size.Large" /> @* Replace VS text with Gavel icon *@
-        </MudItem>
+        <div class="col-2 d-flex align-items-center justify-content-center"> @* Replace MudItem *@
+             <span class="gavel-icon">⚖️</span> @* Replace MudIcon with Unicode Gavel/Scales *@
+        </div>
 
         <!-- Rapper 2 Profile Area -->
-        <MudItem xs="5" Class="text-center">
-             @* Apply active-border class conditionally instead of inline style *@
-             <MudPaper Elevation="@(IsRapper2Active ? 6 : 1)" Class="@($"pa-3 rapper-profile {(IsRapper2Active ? "active-border" : "")}")">
-                <MudText Typo="Typo.h5">@(Rapper2?.Name ?? "Rapper 2")</MudText>
+        <div class="col-5 text-center"> @* Replace MudItem *@
+             <div class="@($"pa-3 rapper-profile paper-like {(IsRapper2Active ? "active-border" : "")}")"> @* Replace MudPaper *@
+                <h5>@(Rapper2?.Name ?? "Rapper 2")</h5> @* Replace MudText *@
                  <!-- TODO: Add Blinking Indicator Component -->
-                 <MudIcon Icon="@Icons.Material.Filled.Mic" Color="@(IsRapper2Active ? Color.Error : Color.Default)" Class="@(IsRapper2Active ? "blinking" : "")" />
+                 <span class="@($"rapper-mic {(IsRapper2Active ? "blinking active-mic" : "inactive-mic")}")">🎤</span> @* Replace MudIcon *@
                  <!-- TODO: Add Rapper Image/Avatar if available -->
-            </MudPaper>
-        </MudItem>
+            </div>
+        </div>
 
         <!-- Debate Text Display Area -->
-        <MudItem xs="12" Class="mt-4">
-            <MudPaper Elevation="2" Class="pa-4" Style="min-height: 100px;"> @* Removed background-color, rely on theme Surface *@
-                <MudText Typo="Typo.body1">@CurrentTurnText</MudText>
-            </MudPaper>
-        </MudItem>
+        <div class="col-12 mt-4"> @* Replace MudItem *@
+            <div class="paper-like pa-4 debate-text-area"> @* Replace MudPaper, add style *@
+                <p>@CurrentTurnText</p> @* Replace MudText *@
+            </div>
+        </div>
 
         <!-- Progress Indicator Area -->
-        <MudItem xs="12" Class="mt-4">
+        <div class="col-12 mt-4"> @* Replace MudItem *@
              <!-- TODO: Add Progress Indicator Component -->
-             <MudText Align="Align.Center" Color="Color.Secondary">Turn @CurrentTurnNumber / @TotalTurns</MudText>
-             <MudProgressLinear Color="Color.Primary" Value="@CalculateProgress()" Class="my-1" />
-        </MudItem>
+             <p class="text-center text-secondary">Turn @CurrentTurnNumber / @TotalTurns</p> @* Replace MudText *@
+             <progress class="debate-progress w-100" value="@CurrentTurnNumber" max="@TotalTurns"></progress> @* Replace MudProgressLinear *@
+        </div>
 
-    </MudGrid>
-</MudPaper>
+    </div>
+</div>
 
 @code {
-    @* Removed IThemeProvider injection *@
-
     [Parameter] public Rapper? Rapper1 { get; set; }
     [Parameter] public Rapper? Rapper2 { get; set; }
     [Parameter] public string CurrentTurnText { get; set; } = "The debate hasn't started yet...";
     [Parameter] public bool IsRapper1Active { get; set; } = false;
     [Parameter] public bool IsRapper2Active { get; set; } = false;
-    [Parameter] public int CurrentTurnNumber { get; set; } = 0; // Overall turn number (1-10)
-    [Parameter] public int TotalTurns { get; set; } = 10; // Default total turns
+    [Parameter] public int CurrentTurnNumber { get; set; } = 0;
+    [Parameter] public int TotalTurns { get; set; } = 10;
 
-    @* Removed theme fetching and GetBorderStyle method *@
+    // Removed MudBlazor specific code
 
-     private double CalculateProgress()
-    {
-        if (TotalTurns <= 0) return 0;
-        return ((double)CurrentTurnNumber / TotalTurns) * 100;
-    }
+    // CalculateProgress is no longer needed as HTML progress uses value/max directly
 
-    // TODO: Add CSS for blinking animation in a .razor.css file
+    // TODO: Add CSS for blinking animation, active-border, paper-like, etc. in a .razor.css file or app.css
 }

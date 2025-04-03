@@ -1,0 +1,135 @@
+@using PoDebateRap.Server.Services.Diagnostics
+@inject IDiagnosticsService DiagnosticsSvc
+@inject ILogger<DiagnosticsModal> Logger
+
+@if (IsVisible)
+{
+    <div class="diagnostics-modal-backdrop">
+        <div class="diagnostics-modal" role="dialog" aria-modal="true">
+            <div class="diagnostics-modal-header">
+                <h5>System Diagnostics</h5>
+                <button type="button" class="close-button" @onclick="CloseModalAsync" aria-label="Close">×</button>
+            </div>
+            <div class="diagnostics-modal-body">
+                @if (_isLoading)
+                {
+                    <div class="loading-indicator">
+                        <p>Running diagnostic checks...</p>
+                        <!-- Add a simple spinner or progress indicator if desired -->
+                    </div>
+                }
+                else if (_results == null || !_results.Any())
+                {
+                    <p style="color: orange;">No diagnostic results available.</p>
+                }
+                else
+                {
+                    <table class="diagnostics-table">
+                        <thead>
+                            <tr>
+                                <th>Check</th>
+                                <th>Status</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var result in _results)
+                            {
+                                <tr>
+                                    <td>@result.CheckName</td>
+                                    <td style="text-align: center;">
+                                        @if (result.Success)
+                                        {
+                                            <span style="color: limegreen;" title="Success">✔</span> @* Simple checkmark *@
+                                        }
+                                        else
+                                        {
+                                            <span style="color: red;" title="Failed">✖</span> @* Simple X *@
+                                        }
+                                    </td>
+                                    <td>@result.Message</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+            <div class="diagnostics-modal-footer">
+                <button type="button" class="btn-close-diag" @onclick="CloseModalAsync" disabled="@_isLoading">Close</button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    private List<DiagnosticResult>? _results;
+    private bool _isLoading = true;
+    private CancellationTokenSource _cts = new CancellationTokenSource();
+
+    // Use OnParametersSetAsync to react to IsVisible changes if needed,
+    // but typically the parent controls visibility. Run diagnostics when first shown.
+    protected override async Task OnParametersSetAsync()
+    {
+        if (IsVisible && _results == null) // Run only once when first made visible
+        {
+            await RunDiagnostics();
+        }
+    }
+
+    private async Task RunDiagnostics()
+    {
+        _isLoading = true;
+        StateHasChanged(); // Update UI to show loading state
+
+        try
+        {
+            _results = await DiagnosticsSvc.RunChecksAsync(_cts.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            Logger.LogWarning("Diagnostics run cancelled.");
+            _results = new List<DiagnosticResult> { new DiagnosticResult { CheckName = "Overall", Success = false, Message = "Diagnostics cancelled." } };
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error running diagnostics.");
+            _results = new List<DiagnosticResult> { new DiagnosticResult { CheckName = "Overall", Success = false, Message = $"An error occurred: {ex.Message}" } };
+        }
+        finally
+        {
+            _isLoading = false;
+            StateHasChanged(); // Update UI with results
+            await AutoCloseDialog(); // Start auto-close timer
+        }
+    }
+
+    private async Task AutoCloseDialog()
+    {
+        try
+        {
+            // Wait a few seconds after checks complete before closing
+            await Task.Delay(TimeSpan.FromSeconds(5), _cts.Token);
+            await CloseModalAsync();
+        }
+        catch (TaskCanceledException) { /* Ignore if cancellation token triggered */ }
+    }
+
+    private async Task CloseModalAsync()
+    {
+        _cts.Cancel(); // Cancel any pending operations like the delay
+        if (OnClose.HasDelegate)
+        {
+            await OnClose.InvokeAsync(); // Notify parent component
+        }
+    }
+
+    // Ensure cancellation token source is disposed
+    public void Dispose()
+    {
+        _cts?.Cancel();
+        _cts?.Dispose();
+    }
+}

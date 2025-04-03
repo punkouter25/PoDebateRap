@@ -1,7 +1,7 @@
 ﻿﻿<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">
-            <MudIcon Icon="@Icons.Material.Filled.Mic" Class="me-2" /> @* Add microphone icon *@
+            <span class="me-2">🎤</span> @* Replace MudIcon with Unicode *@
             PoDebateRap
         </a>
     </div>
@@ -9,19 +9,18 @@
 
 <input type="checkbox" title="Navigation menu" class="navbar-toggler" />
 
-@using MudBlazor @* Add MudBlazor namespace *@
 
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
     <nav class="nav flex-column">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <MudIcon Icon="@Icons.Material.Filled.Home" Class="me-3" /> Home @* Replace span with MudIcon *@
+                <span class="me-3">🏠</span> Home @* Replace MudIcon with Unicode *@
             </NavLink>
         </div>
 
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="leaderboard">
-                <MudIcon Icon="@Icons.Material.Filled.EmojiEvents" Class="me-3" /> Leaderboard @* Replace span with MudIcon *@
+                <span class="me-3">🏆</span> Leaderboard @* Replace MudIcon with Unicode *@
             </NavLink>
         </div>
         @* Remove Counter and Weather links *@
