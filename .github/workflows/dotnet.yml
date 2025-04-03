@@ -1,0 +1,25 @@
+name: .NET Build and Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x # Use .NET 9
+    - name: Restore dependencies
+      run: dotnet restore PoDebateRap.sln
+    - name: Build
+      run: dotnet build PoDebateRap.sln --no-restore
+    - name: Test
+      run: dotnet test PoDebateRap.sln --no-build --verbosity normal

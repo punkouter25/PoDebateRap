@@ -1,0 +1,155 @@
+@using PoDebateRap.Shared.Models
+@inject ILogger<ResultsModal> Logger
+
+<!-- Basic Modal Structure using standard HTML/CSS -->
+<div class="modal-backdrop"></div>
+<div class="modal show" tabindex="-1" style="display: block;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background-color: #333; color: var(--text-color);">
+            <div class="modal-header" style="border-bottom-color: var(--border-color);">
+                <h5 class="modal-title w-100 text-center" style="@($"font-family: {ThemeVariables.HeaderFont}; color: {ThemeVariables.PrimaryColor};")">Who Won This Debate?</h5>
+                <!-- No close button to force a choice or skip -->
+            </div>
+            <div class="modal-body">
+                <p class="text-center mb-4">Vote for the rapper with the most compelling arguments.</p>
+                <div class="row justify-content-center g-3">
+                    <!-- Rapper 1 Voting Area -->
+                    <div class="col-6">
+                        <div class="card text-center h-100" style="background-color: #444;">
+                            <div class="card-body">
+                                <h6 class="card-title" style="@($"font-family: {ThemeVariables.HeaderFont};")">@Rapper1?.Name</h6>
+                                <p class="card-text small text-muted">Record: @Rapper1?.Wins - @Rapper1?.Losses</p>
+                                <button class="btn btn-primary mt-3" style="background-color: var(--primary-color); color: var(--background-color); border: none;" @onclick="() => SubmitVote(Rapper1)" disabled="@IsSubmitting">Vote for @Rapper1?.Name</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rapper 2 Voting Area -->
+                    <div class="col-6">
+                        <div class="card text-center h-100" style="background-color: #444;">
+                            <div class="card-body">
+                                <h6 class="card-title" style="@($"font-family: {ThemeVariables.HeaderFont};")">@Rapper2?.Name</h6>
+                                <p class="card-text small text-muted">Record: @Rapper2?.Wins - @Rapper2?.Losses</p>
+                                <button class="btn btn-primary mt-3" style="background-color: var(--primary-color); color: var(--background-color); border: none;" @onclick="() => SubmitVote(Rapper2)" disabled="@IsSubmitting">Vote for @Rapper2?.Name</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 @if (IsSubmitting)
+                {
+                    <div class="progress mt-4" style="height: 5px;">
+                      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%; background-color: var(--primary-color);"></div>
+                    </div>
+                }
+                 @if (!string.IsNullOrEmpty(VoteMessage))
+                {
+                     <div class="alert alert-success mt-4" role="alert">@VoteMessage</div>
+                }
+            </div>
+            <div class="modal-footer" style="border-top-color: var(--border-color);">
+                <button type="button" class="btn btn-secondary" @onclick="SkipVote" disabled="@IsSubmitting">Skip Voting</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    // Parameters to receive data and callbacks
+    [Parameter] public Rapper? Rapper1 { get; set; }
+    [Parameter] public Rapper? Rapper2 { get; set; }
+    [Parameter] public EventCallback<VoteResult?> OnVoteSubmitted { get; set; } // Callback for vote
+    [Parameter] public EventCallback OnVoteSkipped { get; set; } // Callback for skip
+
+    private bool IsSubmitting = false;
+    private string? VoteMessage = null;
+
+    // Simple access to theme variables
+    private static class ThemeVariables
+    {
+        public const string HeaderFont = "'Impact', Haettenschweiler, 'Arial Narrow Bold', sans-serif";
+        public const string PrimaryColor = "#FFD700"; // Gold
+    }
+
+    private async Task SubmitVote(Rapper? winner)
+    {
+        if (winner == null || IsSubmitting) return;
+
+        IsSubmitting = true;
+        VoteMessage = null;
+        StateHasChanged();
+
+        Logger.LogInformation("Vote submitted for: {WinnerName}", winner.Name);
+        var loser = (winner == Rapper1) ? Rapper2 : Rapper1;
+
+        if (loser == null)
+        {
+             Logger.LogError("Cannot determine loser for vote submission.");
+             VoteMessage = "Error recording vote.";
+             IsSubmitting = false;
+             StateHasChanged();
+             // Don't invoke callback on error, let user try again or skip
+             return;
+        }
+
+        // Invoke the callback with the vote result
+        await OnVoteSubmitted.InvokeAsync(new VoteResult { Winner = winner, Loser = loser });
+
+        // The parent component (Home.razor) will handle closing/hiding this component
+        // and showing feedback after processing the vote.
+        // We can optionally show a brief message here before the parent hides it.
+        VoteMessage = "Vote Recorded!";
+        StateHasChanged();
+        await Task.Delay(1000); // Brief pause to show message before parent hides modal
+    }
+
+    private async Task SkipVote()
+    {
+        Logger.LogInformation("Voting skipped.");
+        // Invoke the skip callback
+        await OnVoteSkipped.InvokeAsync();
+        // Parent component will hide this modal
+    }
+
+    /// <summary>
+    /// Simple record to pass vote results back.
+    /// </summary>
+    public record VoteResult
+    {
+        public required Rapper Winner { get; init; }
+        public required Rapper Loser { get; init; }
+    }
+}
+
+<!-- Add basic modal styling -->
+<style>
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1040;
+        width: 100vw;
+        height: 100vh;
+        background-color: #000;
+        opacity: 0.5;
+    }
+    .modal.show {
+        display: block;
+    }
+    .modal {
+         position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1050;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        outline: 0;
+    }
+    .rapper-vote-card {
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out;
+    }
+    .rapper-vote-card:hover {
+        transform: translateY(-5px);
+    }
+</style>

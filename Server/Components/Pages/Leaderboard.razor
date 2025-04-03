@@ -1,0 +1,163 @@
+@page "/leaderboard"
+@using PoDebateRap.Shared.Models
+@using PoDebateRap.Server.Services.Data
+@using MudBlazor // Added explicitly
+@inject IRapperRepository RapperRepo
+@inject NavigationManager NavManager
+@inject ILogger<Leaderboard> Logger
+
+<PageTitle>PoDebateRap - Leaderboard</PageTitle>
+
+<MudContainer Class="mt-4"> @* Removed MaxWidth parameter due to persistent build error *@
+    <MudText Typo="Typo.h3" GutterBottom="true" Align="Align.Center" Style="@($"font-family: {ThemeVariables.HeaderFont}; color: {ThemeVariables.PrimaryColor};")">Leaderboard</MudText>
+    <MudText Typo="Typo.h6" Align="Align.Center" Color="Color.Secondary" Class="mb-4">Top Rap Battle Champions</MudText>
+
+    <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="NavigateHome" StartIcon="@Icons.Material.Filled.ArrowBack" Class="mb-4">Return to Debates</MudButton>
+
+    @if (IsLoading)
+    {
+        <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+    }
+    else if (LeaderboardEntries == null || !LeaderboardEntries.Any())
+    {
+        <MudAlert Severity="Severity.Info">No leaderboard data available yet. Start some debates!</MudAlert>
+    }
+    else
+    {
+        <MudTable Items="@LeaderboardEntries" Hover="true" Dense="true" Striped="true" Elevation="3" Class="leaderboard-table">
+            <HeaderContent>
+                <MudTh Style="width: 50px;">Rank</MudTh>
+                <MudTh>Rapper</MudTh>
+                <MudTh>Wins</MudTh>
+                <MudTh>Losses</MudTh>
+                <MudTh>Total Debates</MudTh>
+                <MudTh>Win %</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Rank" Style="@GetRankStyle(context.Rank)">
+                    @if (context.Rank <= 3)
+                    {
+                        <MudIcon Icon="@GetRankIcon(context.Rank)" Size="Size.Small" Class="mr-1" Style="@($"color: {GetRankColor(context.Rank)};")" />
+                    }
+                    @context.Rank
+                </MudTd>
+                <MudTd DataLabel="Rapper">@context.Name</MudTd>
+                <MudTd DataLabel="Wins">@context.Wins</MudTd>
+                <MudTd DataLabel="Losses">@context.Losses</MudTd>
+                <MudTd DataLabel="Total Debates">@context.TotalDebates</MudTd>
+                <MudTd DataLabel="Win %">@context.WinPercentage.ToString("P1")</MudTd> <!-- Format as percentage with 1 decimal place -->
+            </RowTemplate>
+        </MudTable>
+    }
+
+</MudContainer>
+
+@code {
+    private List<RapperLeaderboardEntry>? LeaderboardEntries;
+    private bool IsLoading = true;
+
+    // Simple access to theme variables
+    private static class ThemeVariables
+    {
+        public const string HeaderFont = "'Impact', Haettenschweiler, 'Arial Narrow Bold', sans-serif";
+        public const string PrimaryColor = "#FFD700"; // Gold
+        public const string SecondaryColor = "#C0C0C0"; // Silver
+        public const string AccentColor = "#CD7F32"; // Bronze
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Logger.LogInformation("Leaderboard page initializing.");
+        IsLoading = true;
+        try
+        {
+            var rappers = await RapperRepo.GetAllRappersAsync();
+            if (rappers != null)
+            {
+                CalculateLeaderboard(rappers);
+                Logger.LogInformation("Leaderboard calculated for {Count} rappers.", LeaderboardEntries?.Count ?? 0);
+            }
+            else
+            {
+                LeaderboardEntries = new List<RapperLeaderboardEntry>();
+                Logger.LogWarning("No rapper data found to build leaderboard.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error loading data for Leaderboard page.");
+            LeaderboardEntries = new List<RapperLeaderboardEntry>(); // Ensure list is not null on error
+            // TODO: Display error message to the user
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    private void CalculateLeaderboard(List<Rapper> rappers)
+    {
+        LeaderboardEntries = rappers
+            .Select(r => new RapperLeaderboardEntry
+            {
+                Name = r.Name,
+                Wins = r.Wins,
+                Losses = r.Losses,
+                TotalDebates = r.TotalDebates,
+                // Calculate win percentage, handle division by zero
+                WinPercentage = (r.TotalDebates > 0) ? (double)r.Wins / r.TotalDebates : 0.0
+            })
+            .OrderByDescending(e => e.WinPercentage) // Sort by win percentage
+            .ThenByDescending(e => e.Wins) // Then by wins (tie-breaker)
+            .ThenBy(e => e.Losses) // Then by losses (ascending, fewer losses is better)
+            .Select((entry, index) =>
+            {
+                entry.Rank = index + 1; // Assign rank based on sorted order
+                return entry;
+            })
+            .ToList();
+    }
+
+    private void NavigateHome()
+    {
+        NavManager.NavigateTo("/");
+    }
+
+    // Helper methods for styling top ranks
+    private string GetRankStyle(int rank) => rank switch
+    {
+        1 => "font-weight: bold;",
+        2 => "font-weight: bold;",
+        3 => "font-weight: bold;",
+        _ => ""
+    };
+
+     private string GetRankColor(int rank) => rank switch
+    {
+        1 => ThemeVariables.PrimaryColor, // Gold
+        2 => ThemeVariables.SecondaryColor, // Silver
+        3 => ThemeVariables.AccentColor, // Bronze
+        _ => "inherit"
+    };
+
+    private string GetRankIcon(int rank) => rank switch
+    {
+        1 => Icons.Material.Filled.EmojiEvents, // Trophy/Crown
+        2 => Icons.Material.Filled.MilitaryTech, // Medal
+        3 => Icons.Material.Filled.Star, // Star
+        _ => ""
+    };
+
+    /// <summary>
+    /// Represents an entry in the leaderboard, including calculated fields.
+    /// </summary>
+    private class RapperLeaderboardEntry
+    {
+        public int Rank { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public int Wins { get; set; }
+        public int Losses { get; set; }
+        public int TotalDebates { get; set; }
+        public double WinPercentage { get; set; }
+    }
+}

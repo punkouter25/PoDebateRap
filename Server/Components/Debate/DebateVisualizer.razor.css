@@ -1,0 +1,25 @@
+/* Blinking animation for the active rapper's icon */
+.blinking {
+    animation: blink-animation 1s infinite;
+}
+
+@keyframes blink-animation {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Optional: Add some padding/margin to the profile paper */
+.rapper-profile {
+    min-height: 80px; /* Ensure some minimum height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

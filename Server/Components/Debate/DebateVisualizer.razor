@@ -1,0 +1,80 @@
+@using PoDebateRap.Shared.Models
+
+<MudPaper Elevation="3" Class="pa-4">
+    <MudGrid Spacing="3" Justify="Justify.Center">
+
+        <!-- Rapper 1 Profile Area -->
+        <MudItem xs="5" Class="text-center">
+            <MudPaper Elevation="@(IsRapper1Active ? 6 : 1)" Class="pa-3 rapper-profile" Style="@GetBorderStyle(IsRapper1Active)">
+                <MudText Typo="Typo.h5" Style="@($"font-family: {ThemeVariables.HeaderFont};")">@(Rapper1?.Name ?? "Rapper 1")</MudText>
+                <!-- TODO: Add Blinking Indicator Component -->
+                <MudIcon Icon="@Icons.Material.Filled.Mic" Color="@(IsRapper1Active ? Color.Error : Color.Dark)" Class="@(IsRapper1Active ? "blinking" : "")" />
+                 <!-- TODO: Add Rapper Image/Avatar if available -->
+            </MudPaper>
+        </MudItem>
+
+        <!-- VS Separator -->
+        <MudItem xs="2" Class="d-flex align-center justify-center">
+            <MudText Typo="Typo.h4" Style="@($"font-family: {ThemeVariables.HeaderFont}; color: {ThemeVariables.AccentColor};")">VS</MudText>
+        </MudItem>
+
+        <!-- Rapper 2 Profile Area -->
+        <MudItem xs="5" Class="text-center">
+             <MudPaper Elevation="@(IsRapper2Active ? 6 : 1)" Class="pa-3 rapper-profile" Style="@GetBorderStyle(IsRapper2Active)">
+                <MudText Typo="Typo.h5" Style="@($"font-family: {ThemeVariables.HeaderFont};")">@(Rapper2?.Name ?? "Rapper 2")</MudText>
+                 <!-- TODO: Add Blinking Indicator Component -->
+                 <MudIcon Icon="@Icons.Material.Filled.Mic" Color="@(IsRapper2Active ? Color.Error : Color.Dark)" Class="@(IsRapper2Active ? "blinking" : "")" />
+                 <!-- TODO: Add Rapper Image/Avatar if available -->
+            </MudPaper>
+        </MudItem>
+
+        <!-- Debate Text Display Area -->
+        <MudItem xs="12" Class="mt-4">
+            <MudPaper Elevation="2" Class="pa-4" Style="min-height: 100px; background-color: #333;">
+                <MudText Typo="Typo.body1">@CurrentTurnText</MudText>
+            </MudPaper>
+        </MudItem>
+
+        <!-- Progress Indicator Area -->
+        <MudItem xs="12" Class="mt-4">
+             <!-- TODO: Add Progress Indicator Component -->
+             <MudText Align="Align.Center" Color="Color.Secondary">Turn @CurrentTurnNumber / @TotalTurns</MudText>
+             <MudProgressLinear Color="Color.Primary" Value="@CalculateProgress()" Class="my-1" />
+        </MudItem>
+
+    </MudGrid>
+</MudPaper>
+
+@code {
+    [Parameter] public Rapper? Rapper1 { get; set; }
+    [Parameter] public Rapper? Rapper2 { get; set; }
+    [Parameter] public string CurrentTurnText { get; set; } = "The debate hasn't started yet...";
+    [Parameter] public bool IsRapper1Active { get; set; } = false;
+    [Parameter] public bool IsRapper2Active { get; set; } = false;
+    [Parameter] public int CurrentTurnNumber { get; set; } = 0; // Overall turn number (1-10)
+    [Parameter] public int TotalTurns { get; set; } = 10; // Default total turns
+
+    // Simple access to theme variables (could be a shared service/component later)
+    private static class ThemeVariables
+    {
+        public const string HeaderFont = "'Impact', Haettenschweiler, 'Arial Narrow Bold', sans-serif";
+        public const string PrimaryColor = "#FFD700"; // Gold
+        public const string AccentColor = "#CD7F32"; // Bronze
+        public const string ActiveBorderColor = "#FF4500"; // OrangeRed for active border
+    }
+
+    private string GetBorderStyle(bool isActive)
+    {
+        return isActive
+            ? $"border: 2px solid {ThemeVariables.ActiveBorderColor}; transition: border 0.3s ease-in-out;"
+            : "border: 1px solid transparent; transition: border 0.3s ease-in-out;"; // Use transparent to avoid layout shift
+    }
+
+     private double CalculateProgress()
+    {
+        if (TotalTurns <= 0) return 0;
+        return ((double)CurrentTurnNumber / TotalTurns) * 100;
+    }
+
+    // TODO: Add CSS for blinking animation in a .razor.css file
+}

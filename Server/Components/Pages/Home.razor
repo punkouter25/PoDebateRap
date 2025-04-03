@@ -1,0 +1,575 @@
+@page "/"
+@using PoDebateRap.Shared.Models
+@using PoDebateRap.Server.Services.Data
+@using PoDebateRap.Server.Services.Orchestration
+@using PoDebateRap.Server.Components.Debate
+@using Microsoft.JSInterop @* Add JSInterop namespace *@
+@inject IRapperRepository RapperRepo
+@inject ITopicRepository TopicRepo
+@inject IDebateOrchestrator Orchestrator
+@* Removed DialogService and Snackbar injections *@
+@inject ILogger<Home> Logger
+@inject IJSRuntime JSRuntime
+@* Inject IJSRuntime for JS interop *@
+@implements IDisposable
+@rendermode InteractiveServer
+
+<PageTitle>PoDebateRap - Home</PageTitle>
+
+<div class="container mt-4"> @* Replaced MudContainer *@
+    <h3 style="text-align: center; font-family: @ThemeVariables.HeaderFont; color: @ThemeVariables.PrimaryColor; margin-bottom: 0.5rem;">PoDebateRap</h3> @* Replaced MudText *@
+    <h5 style="text-align: center; color: grey; margin-bottom: 1.5rem;">AI Rap Battles</h5> @* Replaced MudText *@
+
+    @* Display loading error if any *@
+    @if (!string.IsNullOrEmpty(LoadingErrorMessage))
+    {
+        <div class="alert alert-danger mb-4" role="alert">@LoadingErrorMessage</div> @* Replaced MudAlert *@
+    }
+
+    <!-- Setup Section -->
+    <div class="border p-4 mb-6"> @* Replaced MudPaper *@
+        <div class="row g-3"> @* Replaced MudGrid/MudItem with Bootstrap grid *@
+            <!-- Rapper 1 Selection -->
+            <div class="col-12 col-sm-5">
+                <label for="rapper1Select" class="form-label">Select Rapper 1</label>
+                <select id="rapper1Select" class="form-select" @bind="SelectedRapper1Name" disabled="@(IsLoading || IsStartingDebate)">
+                    <option value="">-- Select --</option> @* Added default option *@
+                    @if (Rappers != null)
+                    {
+                        foreach (var rapper in Rappers.OrderBy(r => r.Name))
+                        {
+                            Logger.LogDebug("Rendering Rapper1 SelectItem: {RapperName}", rapper.Name);
+                            <option value="@rapper.Name">@rapper.Name</option>
+                        }
+                    }
+                    else if (!IsLoading)
+                    {
+                        <option disabled value="">Loading Rappers Failed</option>
+                    }
+                </select>
+            </div>
+
+            <!-- VS Separator -->
+            <div class="col-12 col-sm-2 d-flex align-items-center justify-content-center">
+                <span style="font-size: 1.5rem; font-family: @ThemeVariables.HeaderFont; color: @ThemeVariables.AccentColor;">VS</span> @* Replaced MudText *@
+            </div>
+
+            <!-- Rapper 2 Selection -->
+            <div class="col-12 col-sm-5">
+                 <label for="rapper2Select" class="form-label">Select Rapper 2</label>
+                 <select id="rapper2Select" class="form-select" @bind="SelectedRapper2Name" disabled="@(IsLoading || IsStartingDebate)">
+                    <option value="">-- Select --</option> @* Added default option *@
+                     @if (Rappers != null)
+                    {
+                        foreach (var rapper in Rappers.OrderBy(r => r.Name))
+                        {
+                            if (rapper.Name != SelectedRapper1Name)
+                            {
+                                Logger.LogDebug("Rendering Rapper2 SelectItem: {RapperName}", rapper.Name);
+                                <option value="@rapper.Name">@rapper.Name</option>
+                            }
+                        }
+                    }
+                     else if (!IsLoading)
+                    {
+                        <option disabled value="">Loading Rappers Failed</option>
+                    }
+                </select>
+            </div>
+
+            <!-- Topic 1 Selection -->
+            <div class="col-12 col-sm-6">
+                 <label for="topic1Select" class="form-label">Select Topic 1</label>
+                 <select id="topic1Select" class="form-select" @bind="SelectedTopic1Title" disabled="@(IsLoading || IsStartingDebate)">
+                    <option value="">-- Select --</option>
+                     @if (Topics != null)
+                    {
+                        foreach (var topic in Topics.OrderBy(t => t.Title))
+                        {
+                            // Disable option if it's selected as Topic 2 (and not custom)
+                            bool disabled = topic.Title == SelectedTopic2Title && SelectedTopic2Title != "--custom--";
+                            <option value="@topic.Title" disabled="@disabled">@topic.Title</option>
+                        }
+                    }
+                     else if (!IsLoading)
+                    {
+                        <option disabled value="">Loading Topics Failed</option>
+                    }
+                    <option value="--custom--">-- Enter Custom Topic 1 --</option>
+                </select>
+            </div>
+
+            @* Custom Topic 1 Input *@
+            @if (SelectedTopic1Title == "--custom--")
+            {
+                <div class="col-12 col-sm-6">
+                     <label for="customTopic1Input" class="form-label">Enter Custom Topic 1</label>
+                     <input type="text" id="customTopic1Input" class="form-control" @bind="CustomTopic1"
+                           maxlength="150" disabled="@(IsLoading || IsStartingDebate)" />
+                </div>
+            }
+            else
+            {
+                 <!-- Spacer to keep alignment when custom input isn't shown -->
+                 <div class="col-12 col-sm-6"></div>
+            }
+
+
+             <!-- Topic 2 Selection -->
+            <div class="col-12 col-sm-6">
+                 <label for="topic2Select" class="form-label">Select Topic 2</label>
+                 <select id="topic2Select" class="form-select" @bind="SelectedTopic2Title" disabled="@(IsLoading || IsStartingDebate)">
+                    <option value="">-- Select --</option>
+                     @if (Topics != null)
+                    {
+                        foreach (var topic in Topics.OrderBy(t => t.Title))
+                        {
+                             // Disable option if it's selected as Topic 1 (and not custom)
+                            bool disabled = topic.Title == SelectedTopic1Title && SelectedTopic1Title != "--custom--";
+                            <option value="@topic.Title" disabled="@disabled">@topic.Title</option>
+                        }
+                    }
+                     else if (!IsLoading)
+                    {
+                        <option disabled value="">Loading Topics Failed</option>
+                    }
+                     <option value="--custom--">-- Enter Custom Topic 2 --</option>
+                </select>
+            </div>
+
+             @* Custom Topic 2 Input *@
+            @if (SelectedTopic2Title == "--custom--")
+            {
+                <div class="col-12 col-sm-6">
+                     <label for="customTopic2Input" class="form-label">Enter Custom Topic 2</label>
+                     <input type="text" id="customTopic2Input" class="form-control" @bind="CustomTopic2"
+                           maxlength="150" disabled="@(IsLoading || IsStartingDebate)" />
+                </div>
+            }
+             else
+            {
+                 <!-- Spacer -->
+                 <div class="col-12 col-sm-6"></div>
+            }
+
+
+            <!-- Start Button -->
+            <div class="col-12 d-flex justify-content-center">
+                 <button class="btn btn-primary btn-lg mt-4" @onclick="StartDebate" disabled="@IsStartDisabled()">
+                    @if (IsLoading || IsStartingDebate)
+                    {
+                        <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> @* Replaced MudProgressCircular *@
+                        <span>@(IsStartingDebate ? "Starting..." : "Loading...")</span>
+                    }
+                    else
+                    {
+                        <span>Start Debate</span>
+                    }
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Debate Arena Section - Placeholder -->
+    <div class="border p-4" style="min-height: 300px; border-style: dashed !important; border-color: lightgray !important;"> @* Replaced MudPaper *@
+        @if (DebateStarted)
+        {
+            @* <DebateVisualizer ... /> - Temporarily removed *@
+            <h4>Debate in Progress...</h4>
+            <p><strong>Debate: '@CurrentTopic1?.Title' vs '@CurrentTopic2?.Title'</strong></p>
+            <p><strong>@CurrentRapper1?.Name argues '@CurrentTopic1?.Title' is better.</strong></p>
+            <p><strong>@CurrentRapper2?.Name argues '@CurrentTopic2?.Title' is better.</strong></p>
+            <p><strong>Turn @CurrentTurn / @TotalDebateTurns</strong></p>
+            <p><strong>@(IsRapper1Turn ? CurrentRapper1?.Name : CurrentRapper2?.Name)'s turn:</strong></p>
+            <p>@CurrentDebateTurnText</p>
+        }
+        else
+        {
+            <h6 style="text-align: center; color: grey;">Select rappers and two topics to start the debate!</h6> @* Replaced MudText *@
+        }
+    </div>
+
+    <!-- Voting Modal - Placeholder -->
+    @if (ShowVotingModal)
+    {
+        @* <ResultsModal ... /> - Temporarily removed *@
+        <div class="modal" tabindex="-1" style="display: block; background-color: rgba(0,0,0,0.5);">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Vote for the Winner!</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>Who won the debate on '@CurrentTopic1?.Title' vs '@CurrentTopic2?.Title' between @CurrentRapper1?.Name and @CurrentRapper2?.Name?</p>
+                        @* Simplified voting buttons for placeholder - Use local VoteOutcome record *@
+                        <button class="btn btn-success me-2" @onclick="() => HandleVoteSubmitted(new VoteOutcome(CurrentRapper1!, CurrentRapper2!))">Vote @CurrentRapper1?.Name</button>
+                        <button class="btn btn-success me-2" @onclick="() => HandleVoteSubmitted(new VoteOutcome(CurrentRapper2!, CurrentRapper1!))">Vote @CurrentRapper2?.Name</button>
+                        <button class="btn btn-secondary" @onclick="HandleVoteSkipped">Skip Vote</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div> @* End container *@
+
+<!-- JavaScript for Audio Playback -->
+<script>
+    window.playAudio = (dotnetHelper, base64String) => { // Accept dotnetHelper
+        try {
+            const audioSource = `data:audio/wav;base64,${base64String}`; // Assuming WAV format from TTS service
+            const audio = new Audio(audioSource);
+
+            // Add event listener for when audio finishes
+            audio.addEventListener('ended', () => {
+                console.log("Audio playback finished.");
+                if (dotnetHelper) {
+                    dotnetHelper.invokeMethodAsync('NotifyAudioPlaybackComplete')
+                        .catch(e => console.error("Error invoking .NET method:", e));
+                }
+            });
+
+            // Add event listener for playback errors
+             audio.addEventListener('error', (e) => {
+                console.error("Error during audio playback:", e);
+                 // Still notify completion on error to unblock the orchestrator
+                 if (dotnetHelper) {
+                    dotnetHelper.invokeMethodAsync('NotifyAudioPlaybackComplete')
+                        .catch(e => console.error("Error invoking .NET method after playback error:", e));
+                }
+            });
+
+            audio.play()
+                .catch(e => {
+                     console.error("Error starting audio playback:", e);
+                     // Still notify completion on error to unblock the orchestrator
+                     if (dotnetHelper) {
+                        dotnetHelper.invokeMethodAsync('NotifyAudioPlaybackComplete')
+                            .catch(e => console.error("Error invoking .NET method after playback start error:", e));
+                    }
+                });
+            console.log("Attempting to play audio...");
+        } catch (e) {
+            console.error("Error creating or playing audio:", e);
+             // Still notify completion on error to unblock the orchestrator
+             if (dotnetHelper) {
+                dotnetHelper.invokeMethodAsync('NotifyAudioPlaybackComplete')
+                    .catch(e => console.error("Error invoking .NET method after audio creation error:", e));
+            }
+        }
+    };
+</script>
+
+@code {
+    // Define a local record to hold vote results instead of relying on the removed ResultsModal
+    private record VoteOutcome(Rapper Winner, Rapper Loser);
+
+    private DotNetObjectReference<Home>? objRef; // Reference to this component instance
+
+    // Keep existing C# code, but ensure no direct references to MudBlazor components remain.
+    // The ThemeVariables might still be useful for inline styles.
+
+    private List<Rapper>? Rappers;
+    private List<Topic>? Topics; // Reverted name
+    private string? SelectedRapper1Name;
+    private string? SelectedRapper2Name;
+    private string? SelectedTopic1Title { get; set; } // Title or "--custom--"
+    private string? SelectedTopic2Title { get; set; } // Title or "--custom--"
+    private string CustomTopic1 { get; set; } = ""; // Input for custom topic 1
+    private string CustomTopic2 { get; set; } = ""; // Input for custom topic 2
+
+    private bool IsLoading = true;
+    private bool IsStartingDebate = false;
+    private string? LoadingErrorMessage = null; // To store loading errors
+
+    // Debate State Variables
+    private bool DebateStarted = false;
+    private Rapper? CurrentRapper1; // Argues Topic1 > Topic2
+    private Rapper? CurrentRapper2; // Argues Topic2 > Topic1
+    private Topic? CurrentTopic1;   // First selected topic
+    private Topic? CurrentTopic2;   // Second selected topic
+    private string CurrentDebateTurnText { get; set; } = "";
+    private bool IsRapper1Turn { get; set; } = true;
+    private int CurrentTurn { get; set; } = 0;
+    private int TotalDebateTurns => Orchestrator.CurrentState.TotalTurns; // Get from orchestrator state
+    private bool ShowVotingModal = false; // Flag to show/hide the modal
+
+    private static class ThemeVariables
+    {
+        public const string HeaderFont = "'Impact', Haettenschweiler, 'Arial Narrow Bold', sans-serif";
+        public const string PrimaryColor = "#FFD700";
+        public const string AccentColor = "#CD7F32";
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        objRef = DotNetObjectReference.Create(this); // Create the reference
+        Logger.LogInformation("Home page initializing.");
+        Orchestrator.OnStateChangeAsync += HandleDebateStateChange;
+        IsLoading = true;
+        LoadingErrorMessage = null; // Reset error on init
+        try
+        {
+            var rapperTask = RapperRepo.GetAllRappersAsync();
+            var topicTask = TopicRepo.GetAllTopicsAsync();
+            await Task.WhenAll(rapperTask, topicTask);
+            Rappers = await rapperTask;
+            Topics = await topicTask; // Assign loaded topics
+
+            Logger.LogDebug("Retrieved {LoadedRapperCount} rappers.", Rappers?.Count ?? 0);
+            Logger.LogDebug("Retrieved {LoadedTopicCount} topics.", Topics?.Count ?? 0);
+
+            if ((Rappers == null || Rappers.Count == 0) || (Topics == null || Topics.Count == 0))
+            {
+                 var errorMsg = "Rapper or Topic list is empty. Check Azurite data and seeding logic.";
+                 Logger.LogWarning(errorMsg);
+                 LoadingErrorMessage = errorMsg;
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error loading initial data for Home page.");
+            LoadingErrorMessage = $"Error loading initial data: {ex.Message}"; // Store error message
+        }
+        finally
+        {
+            IsLoading = false;
+            StateHasChanged(); // Explicitly trigger UI update after loading
+        }
+    }
+
+    private async Task HandleDebateStateChange(DebateState newState)
+    {
+        Logger.LogDebug("Received state update. Turn: {Turn}, IsGenerating: {IsGenerating}", newState.CurrentTurnNumber, newState.IsGeneratingTurn);
+
+        CurrentRapper1 = newState.Rapper1; // Argues Topic1 > Topic2
+        CurrentRapper2 = newState.Rapper2; // Argues Topic2 > Topic1
+        CurrentTopic1 = newState.Topic1;   // Assign Topic 1 from state
+        CurrentTopic2 = newState.Topic2;   // Assign Topic 2 from state
+        DebateStarted = newState.IsDebateInProgress || newState.IsDebateFinished;
+        CurrentDebateTurnText = newState.CurrentTurnText;
+        IsRapper1Turn = newState.IsRapper1Turn;
+        CurrentTurn = newState.CurrentTurnNumber;
+        IsStartingDebate = newState.IsGeneratingTurn;
+
+        // Play audio if available
+        if (newState.CurrentTurnAudio != null && newState.CurrentTurnAudio.Length > 0 && objRef != null) // Check objRef is not null
+        {
+            try
+            {
+                var base64Audio = Convert.ToBase64String(newState.CurrentTurnAudio);
+                Logger.LogInformation("Audio data received for turn {Turn}, attempting playback via JS interop. Base64 length: {Length}", newState.CurrentTurnNumber, base64Audio.Length);
+                // Pass the DotNetObjectReference to the JS function
+                await JSRuntime.InvokeVoidAsync("playAudio", objRef, base64Audio);
+            }
+            catch (JSException jsEx) // Catch specific JS exceptions
+            {
+                 Logger.LogError(jsEx, "JavaScript error invoking playAudio for turn {Turn}.", newState.CurrentTurnNumber);
+                 // Signal completion here too, as JS might not be able to call back
+                 await NotifyAudioPlaybackComplete();
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, "Error invoking JS for audio playback for turn {Turn}.", newState.CurrentTurnNumber);
+                 // Signal completion here too
+                 await NotifyAudioPlaybackComplete();
+            }
+        }
+        else if (newState.CurrentTurnAudio != null) // Log if array is empty but not null
+        {
+             Logger.LogWarning("Received empty audio data byte array for turn {Turn}.", newState.CurrentTurnNumber);
+             // If there's no audio data to play, signal completion immediately
+             await NotifyAudioPlaybackComplete();
+        }
+        else
+        {
+            // If CurrentTurnAudio is null, signal completion immediately
+            await NotifyAudioPlaybackComplete();
+        }
+
+
+        if (!string.IsNullOrEmpty(newState.ErrorMessage))
+        {
+             Logger.LogError("Error from orchestrator: {Error}", newState.ErrorMessage);
+             // TODO: Show error via custom alert or message area
+        }
+
+        if (newState.IsDebateFinished && !newState.IsDebateInProgress) // Ensure debate is truly finished
+        {
+            Logger.LogInformation("Debate finished event received. Showing voting modal.");
+            ShowVotingModal = true; // Show the modal
+        }
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+     // Method callable from JavaScript
+    [JSInvokable]
+    public async Task NotifyAudioPlaybackComplete()
+    {
+        Logger.LogDebug("NotifyAudioPlaybackComplete called from JavaScript.");
+        try
+        {
+            await Orchestrator.SignalAudioPlaybackCompleteAsync();
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error signaling audio playback completion to orchestrator.");
+        }
+    }
+
+
+    private bool IsStartDisabled()
+    {
+        if (IsLoading || IsStartingDebate || ShowVotingModal) return true;
+        if (string.IsNullOrEmpty(SelectedRapper1Name) || string.IsNullOrEmpty(SelectedRapper2Name)) return true;
+        if (SelectedRapper1Name == SelectedRapper2Name) return true;
+
+        // Check Topic 1 selection
+        bool topic1Valid = !string.IsNullOrEmpty(SelectedTopic1Title);
+        if (SelectedTopic1Title == "--custom--" && string.IsNullOrWhiteSpace(CustomTopic1)) topic1Valid = false;
+
+        // Check Topic 2 selection
+        bool topic2Valid = !string.IsNullOrEmpty(SelectedTopic2Title);
+        if (SelectedTopic2Title == "--custom--" && string.IsNullOrWhiteSpace(CustomTopic2)) topic2Valid = false;
+
+        if (!topic1Valid || !topic2Valid) return true;
+
+        // Check if topics are different (handle custom cases)
+        string finalTopic1 = SelectedTopic1Title == "--custom--" ? CustomTopic1.Trim() : SelectedTopic1Title ?? "";
+        string finalTopic2 = SelectedTopic2Title == "--custom--" ? CustomTopic2.Trim() : SelectedTopic2Title ?? "";
+        if (string.Equals(finalTopic1, finalTopic2, StringComparison.OrdinalIgnoreCase) && !string.IsNullOrEmpty(finalTopic1)) return true; // Cannot select the same topic
+
+        return false;
+    }
+
+    private async Task StartDebate()
+    {
+        if (IsStartDisabled()) return;
+        IsStartingDebate = true;
+        DebateStarted = false;
+        ShowVotingModal = false;
+        StateHasChanged();
+
+        // Determine final topics (handle custom)
+        Topic topic1;
+        if (SelectedTopic1Title == "--custom--")
+        {
+            topic1 = new Topic(CustomTopic1.Trim());
+            Logger.LogInformation("Using custom topic 1: {CustomTopicTitle}", topic1.Title);
+        }
+        else
+        {
+            topic1 = Topics?.FirstOrDefault(t => t.Title == SelectedTopic1Title) ?? new Topic("Unknown Topic 1"); // Fallback
+        }
+
+        Topic topic2;
+        if (SelectedTopic2Title == "--custom--")
+        {
+            topic2 = new Topic(CustomTopic2.Trim());
+            Logger.LogInformation("Using custom topic 2: {CustomTopicTitle}", topic2.Title);
+        }
+        else
+        {
+            topic2 = Topics?.FirstOrDefault(t => t.Title == SelectedTopic2Title) ?? new Topic("Unknown Topic 2"); // Fallback
+        }
+
+
+        Logger.LogInformation("StartDebate clicked. Rapper1: {R1}, Rapper2: {R2}, Topic1: {T1}, Topic2: {T2}",
+            SelectedRapper1Name, SelectedRapper2Name, topic1.Title, topic2.Title);
+        try
+        {
+            CurrentRapper1 = Rappers?.FirstOrDefault(r => r.Name == SelectedRapper1Name);
+            CurrentRapper2 = Rappers?.FirstOrDefault(r => r.Name == SelectedRapper2Name);
+            CurrentTopic1 = topic1; // Assign determined topic 1
+            CurrentTopic2 = topic2; // Assign determined topic 2
+
+
+            if (CurrentRapper1 == null || CurrentRapper2 == null || CurrentTopic1 == null || CurrentTopic2 == null)
+            {
+                Logger.LogError("Failed to find selected rappers or finalize topics.");
+                IsStartingDebate = false;
+                StateHasChanged();
+                return;
+            }
+
+            // Update initial text
+            CurrentDebateTurnText = $"Get ready! {CurrentRapper1.Name} ('{CurrentTopic1.Title}') vs {CurrentRapper2.Name} ('{CurrentTopic2.Title}'). {CurrentRapper1.Name} starts...";
+            CurrentTurn = 0;
+            IsRapper1Turn = true;
+            DebateStarted = true;
+            Logger.LogInformation("Debate setup complete. Starting orchestration with Topic1: {Topic1}, Topic2: {Topic2}", CurrentTopic1.Title, CurrentTopic2.Title);
+            // Call the updated orchestrator method
+            await Orchestrator.StartNewDebateAsync(CurrentRapper1, CurrentRapper2, CurrentTopic1, CurrentTopic2);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error during debate setup.");
+            DebateStarted = false;
+            // Optionally set an error message for the UI
+            LoadingErrorMessage = $"Error starting debate: {ex.Message}";
+        }
+        finally
+        {
+            // Orchestrator state change will set IsStartingDebate to false eventually
+            // We might want to ensure it's false if an exception occurred before orchestration started
+            if (!DebateStarted) // If setup failed before calling orchestrator
+            {
+                 IsStartingDebate = false;
+            }
+            StateHasChanged(); // Update UI after setup attempt
+        }
+    }
+
+    // Callback handler for when a vote is submitted from the modal - Use local VoteOutcome record
+    private async Task HandleVoteSubmitted(VoteOutcome? voteResult)
+    {
+        ShowVotingModal = false; // Hide modal
+        if (voteResult != null)
+        {
+            Logger.LogInformation("Vote received. Winner: {Winner}, Loser: {Loser}", voteResult.Winner.Name, voteResult.Loser.Name);
+            try
+            {
+                await RapperRepo.UpdateWinLossRecordAsync(voteResult.Winner.Name, voteResult.Loser.Name);
+                Logger.LogInformation("Win/loss record updated successfully.");
+                // TODO: Show success feedback (e.g., using a simple message area)
+                CurrentDebateTurnText = $"Vote for {voteResult.Winner.Name} recorded!";
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, "Error updating win/loss record after vote.");
+                // TODO: Show error feedback
+                 CurrentDebateTurnText = "Error recording vote."; // Corrected typo here
+            }
+        }
+        else
+        {
+             Logger.LogWarning("Vote submission callback received null data.");
+        }
+        Orchestrator.ResetDebate(); // Reset orchestrator state
+        DebateStarted = false; // Ensure debate visualizer is hidden
+        StateHasChanged();
+    }
+
+    // Callback handler for when voting is skipped
+    private void HandleVoteSkipped()
+    {
+        ShowVotingModal = false; // Hide modal
+        Logger.LogInformation("Voting skipped.");
+        Orchestrator.ResetDebate(); // Reset orchestrator state
+        DebateStarted = false; // Ensure debate visualizer is hidden
+        CurrentDebateTurnText = "Voting skipped."; // Update status message
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+         objRef?.Dispose(); // Dispose of the object reference
+        if (Orchestrator != null)
+        {
+            Orchestrator.OnStateChangeAsync -= HandleDebateStateChange;
+        }
+        Logger.LogDebug("Home page disposed, unsubscribed from orchestrator.");
+        GC.SuppressFinalize(this);
+    }
+}
