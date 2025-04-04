@@ -59,8 +59,42 @@ public class TableStorageService : ITableStorageService
                         throw new InvalidOperationException("Azure Storage Connection String is not configured.");
                     }
                     _logger.LogInformation("Initializing TableServiceClient...");
-                    _tableServiceClient = new TableServiceClient(_connectionString); // Exception will be thrown here if connection string is invalid (e.g., Base-64)
-                    _logger.LogInformation("TableServiceClient initialized successfully.");
+                    
+                    // Parse the connection string manually to handle potential issues with the account key
+                    if (_connectionString.Contains("AccountName=") && _connectionString.Contains("AccountKey="))
+                    {
+                        try
+                        {
+                            // Extract account name and key from connection string
+                            var accountName = ExtractValueFromConnectionString(_connectionString, "AccountName");
+                            var accountKey = ExtractValueFromConnectionString(_connectionString, "AccountKey");
+                            
+                            if (!string.IsNullOrEmpty(accountName) && !string.IsNullOrEmpty(accountKey))
+                            {
+                                // Create credentials and client manually
+                                var credential = new Azure.Data.Tables.TableSharedKeyCredential(accountName, accountKey);
+                                var serviceUri = new Uri($"https://{accountName}.table.core.windows.net/");
+                                _tableServiceClient = new TableServiceClient(serviceUri, credential);
+                                _logger.LogInformation("TableServiceClient initialized successfully with manual credentials.");
+                            }
+                            else
+                            {
+                                throw new InvalidOperationException("Could not extract account name or key from connection string.");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError(ex, "Failed to initialize TableServiceClient with manual credentials.");
+                            // Fall back to using the connection string directly
+                            _tableServiceClient = new TableServiceClient(_connectionString);
+                        }
+                    }
+                    else
+                    {
+                        // Use the connection string directly if it doesn't contain AccountName and AccountKey
+                        _tableServiceClient = new TableServiceClient(_connectionString);
+                        _logger.LogInformation("TableServiceClient initialized successfully with connection string.");
+                    }
                 }
             }
             catch (Exception ex)
@@ -218,5 +252,28 @@ public class TableStorageService : ITableStorageService
             _logger.LogError(ex, "An unexpected error occurred while deleting entity from table {TableName} with PartitionKey={PartitionKey}, RowKey={RowKey}.", tableName, partitionKey, rowKey);
             throw;
         }
+    }
+
+    /// <summary>
+    /// Extracts a value from a connection string by key.
+    /// </summary>
+    /// <param name="connectionString">The connection string to parse.</param>
+    /// <param name="key">The key to extract the value for.</param>
+    /// <returns>The extracted value, or null if not found.</returns>
+    private string? ExtractValueFromConnectionString(string connectionString, string key)
+    {
+        // Format: Key1=Value1;Key2=Value2;...
+        var keyWithEquals = key + "=";
+        var parts = connectionString.Split(';');
+        
+        foreach (var part in parts)
+        {
+            if (part.Trim().StartsWith(keyWithEquals, StringComparison.OrdinalIgnoreCase))
+            {
+                return part.Substring(keyWithEquals.Length).Trim();
+            }
+        }
+        
+        return null;
     }
 }

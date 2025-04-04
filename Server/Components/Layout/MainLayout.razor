@@ -1,4 +1,4 @@
-﻿@inherits LayoutComponentBase
+@inherits LayoutComponentBase
 
 <PageTitle>PoDebateRap</PageTitle> @* Set global page title *@
 
@@ -29,13 +29,25 @@
 
 @code {
     private bool _showDiagnosticsModal = false; // Initially hidden
+    // private bool _firstRender = true; // Flag removed as it's unused
 
-    protected override void OnInitialized()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        // Show the modal when the layout first initializes
-        _showDiagnosticsModal = true;
-        base.OnInitialized();
+        if (firstRender) // Use the provided firstRender parameter directly
+        {
+            // Show the modal after the initial render
+            _showDiagnosticsModal = true;
+            await InvokeAsync(StateHasChanged); // Ensure UI updates
+        }
+        await base.OnAfterRenderAsync(firstRender);
     }
+
+    // protected override void OnInitialized() // Removed OnInitialized logic
+    // {
+    //     // Show the modal when the layout first initializes
+    //     _showDiagnosticsModal = true;
+    //     base.OnInitialized();
+    // }
 
     private void HandleDiagnosticsClose()
     {

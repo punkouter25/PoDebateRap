@@ -6,7 +6,24 @@ using PoDebateRap.Server.Services.Orchestration;
 using PoDebateRap.Server.Services.News; // Add namespace for News services
 using PoDebateRap.Server.Services.Diagnostics; // Add namespace for Diagnostics services
 using Azure.Identity; // Add namespace for Managed Identity
+using PoDebateRap.Server.Logging; // Add namespace for File Logger
+
 var builder = WebApplication.CreateBuilder(args);
+
+// --- Configure Logging ---
+builder.Logging.ClearProviders(); // Remove default providers like Console
+builder.Logging.AddConsole(); // Re-add console logger
+builder.Logging.AddDebug(); // Re-add debug logger
+// Add File Logger only for Development environment
+if (builder.Environment.IsDevelopment())
+{
+    // Ensure log file path is relative to the content root (project directory)
+    var logFilePath = Path.Combine(builder.Environment.ContentRootPath, "..", "log.txt"); // Place log.txt in solution root
+    builder.Logging.AddProvider(new FileLoggerProvider(logFilePath));
+    Console.WriteLine($"File logging enabled at: {logFilePath}"); // Log info
+}
+// --- End Logging Configuration ---
+
 
 // --- Add Key Vault Configuration ---
 // Get Key Vault URI from configuration (set as App Setting or environment variable)

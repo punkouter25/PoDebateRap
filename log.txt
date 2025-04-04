@@ -1,0 +1,700 @@
+[2025-04-04 02:59:37.323 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 02:59:37.330 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 02:59:37.331 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 02:59:37.333 UTC] [INFORMATION] [PoDebateRap.Server] Attempting initial data seeding...
+[2025-04-04 02:59:37.337 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Checking if initial rapper seeding is required for table Rappers.
+[2025-04-04 02:59:37.338 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 02:59:37.357 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 02:59:37.387 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableServiceClient initialized successfully.
+[2025-04-04 02:59:37.387 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Getting or creating TableClient for table: Rappers
+[2025-04-04 02:59:37.469 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableClient for Rappers obtained successfully.
+[2025-04-04 02:59:37.500 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Successfully retrieved 20 rappers.
+[2025-04-04 02:59:37.502 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Table Rappers already contains 20 rappers. Skipping initial seeding.
+[2025-04-04 02:59:37.502 UTC] [INFORMATION] [PoDebateRap.Server] Initial data seeding completed (if necessary).
+[2025-04-04 02:59:37.580 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Now listening on: http://localhost:5188
+[2025-04-04 02:59:37.582 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Application started. Press Ctrl+C to shut down.
+[2025-04-04 02:59:37.582 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Hosting environment: Development
+[2025-04-04 02:59:37.583 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Content root path: C:\Users\punko\OneDrive\Documents\PoDebateRap\Server
+[2025-04-04 02:59:43.026 UTC] [WARNING    ] [Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware] Failed to determine the https port for redirect.
+[2025-04-04 02:59:43.060 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 02:59:43.061 UTC] [INFORMATION] [PoDebateRap.Server.Services.Diagnostics.DiagnosticsService] DiagnosticsService initialized.
+[2025-04-04 02:59:43.074 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] AzureOpenAIService initialized with endpoint https://podebaterapopenai073205.openai.azure.com/ and deployment gpt-35-turbo
+[2025-04-04 02:59:43.086 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] TextToSpeechService initialized for region eastus.
+[2025-04-04 02:59:43.087 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] DebateOrchestrator initialized.
+[2025-04-04 02:59:43.087 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 02:59:43.088 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 02:59:43.090 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Home page initializing.
+[2025-04-04 02:59:43.090 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 02:59:43.090 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 02:59:43.091 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableServiceClient initialized successfully.
+[2025-04-04 02:59:43.091 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Getting or creating TableClient for table: Rappers
+[2025-04-04 02:59:43.103 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableClient for Rappers obtained successfully.
+[2025-04-04 02:59:43.110 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Successfully retrieved 20 rappers.
+[2025-04-04 02:59:43.112 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Fetching top 1 headlines from NewsAPI.
+[2025-04-04 02:59:43.115 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] Start processing HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 02:59:43.115 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Sending HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 02:59:43.370 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Received HTTP response headers after 221.3597ms - 200
+[2025-04-04 02:59:43.375 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] End processing HTTP request after 261.8363ms - 200
+[2025-04-04 02:59:43.405 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Successfully fetched 0 headlines from NewsAPI.
+[2025-04-04 02:59:43.406 UTC] [WARNING    ] [PoDebateRap.Server.Components.Pages.Home] NewsService returned no headlines or headline had no title.
+[2025-04-04 02:59:43.710 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] AzureOpenAIService initialized with endpoint https://podebaterapopenai073205.openai.azure.com/ and deployment gpt-35-turbo
+[2025-04-04 02:59:43.711 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] TextToSpeechService initialized for region eastus.
+[2025-04-04 02:59:43.712 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] DebateOrchestrator initialized.
+[2025-04-04 02:59:43.717 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 02:59:43.724 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 02:59:43.726 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 02:59:43.727 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Home page initializing.
+[2025-04-04 02:59:43.733 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 02:59:43.737 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 02:59:43.738 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableServiceClient initialized successfully.
+[2025-04-04 02:59:43.738 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Getting or creating TableClient for table: Rappers
+[2025-04-04 02:59:43.746 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableClient for Rappers obtained successfully.
+[2025-04-04 02:59:43.756 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Successfully retrieved 20 rappers.
+[2025-04-04 02:59:43.757 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Fetching top 1 headlines from NewsAPI.
+[2025-04-04 02:59:43.757 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] Start processing HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 02:59:43.758 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Sending HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 02:59:43.798 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Received HTTP response headers after 39.5846ms - 200
+[2025-04-04 02:59:43.798 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] End processing HTTP request after 41.3165ms - 200
+[2025-04-04 02:59:43.800 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Successfully fetched 0 headlines from NewsAPI.
+[2025-04-04 02:59:43.800 UTC] [WARNING    ] [PoDebateRap.Server.Components.Pages.Home] NewsService returned no headlines or headline had no title.
+[2025-04-04 02:59:59.008 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Application is shutting down...
+[2025-04-04 03:06:15.888 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 03:06:15.895 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 03:06:15.896 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 03:06:15.898 UTC] [INFORMATION] [PoDebateRap.Server] Attempting initial data seeding...
+[2025-04-04 03:06:15.900 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Checking if initial rapper seeding is required for table Rappers.
+[2025-04-04 03:06:15.901 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 03:06:15.903 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 03:06:15.925 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableServiceClient initialized successfully.
+[2025-04-04 03:06:15.926 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Getting or creating TableClient for table: Rappers
+[2025-04-04 03:06:15.978 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableClient for Rappers obtained successfully.
+[2025-04-04 03:06:16.006 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Successfully retrieved 20 rappers.
+[2025-04-04 03:06:16.007 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Table Rappers already contains 20 rappers. Skipping initial seeding.
+[2025-04-04 03:06:16.008 UTC] [INFORMATION] [PoDebateRap.Server] Initial data seeding completed (if necessary).
+[2025-04-04 03:06:16.082 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Now listening on: http://localhost:5188
+[2025-04-04 03:06:16.084 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Application started. Press Ctrl+C to shut down.
+[2025-04-04 03:06:16.084 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Hosting environment: Development
+[2025-04-04 03:06:16.086 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Content root path: C:\Users\punko\OneDrive\Documents\PoDebateRap\Server
+[2025-04-04 03:06:19.543 UTC] [WARNING    ] [Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware] Failed to determine the https port for redirect.
+[2025-04-04 03:06:19.577 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 03:06:19.578 UTC] [INFORMATION] [PoDebateRap.Server.Services.Diagnostics.DiagnosticsService] DiagnosticsService initialized.
+[2025-04-04 03:06:19.591 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] AzureOpenAIService initialized with endpoint https://podebaterapopenai073205.openai.azure.com/ and deployment gpt-35-turbo
+[2025-04-04 03:06:19.601 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] TextToSpeechService initialized for region eastus.
+[2025-04-04 03:06:19.601 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] DebateOrchestrator initialized.
+[2025-04-04 03:06:19.602 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 03:06:19.603 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 03:06:19.604 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Home page initializing.
+[2025-04-04 03:06:19.605 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 03:06:19.605 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 03:06:19.606 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableServiceClient initialized successfully.
+[2025-04-04 03:06:19.606 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Getting or creating TableClient for table: Rappers
+[2025-04-04 03:06:19.618 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableClient for Rappers obtained successfully.
+[2025-04-04 03:06:19.623 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Successfully retrieved 20 rappers.
+[2025-04-04 03:06:19.625 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Fetching top 1 headlines from NewsAPI.
+[2025-04-04 03:06:19.627 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] Start processing HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 03:06:19.627 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Sending HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 03:06:19.896 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Received HTTP response headers after 259.2313ms - 200
+[2025-04-04 03:06:19.897 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] End processing HTTP request after 271.4819ms - 200
+[2025-04-04 03:06:19.911 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Successfully fetched 1 headlines from NewsAPI.
+[2025-04-04 03:06:19.911 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Pre-populated topic from news: Dow futures tumble over 800 points on fear Trump's tariffs will spark trade war: Live updates - CNBC
+[2025-04-04 03:06:20.105 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] AzureOpenAIService initialized with endpoint https://podebaterapopenai073205.openai.azure.com/ and deployment gpt-35-turbo
+[2025-04-04 03:06:20.106 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] TextToSpeechService initialized for region eastus.
+[2025-04-04 03:06:20.106 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] DebateOrchestrator initialized.
+[2025-04-04 03:06:20.107 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 03:06:20.108 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 03:06:20.108 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 03:06:20.109 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Home page initializing.
+[2025-04-04 03:06:20.111 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 03:06:20.111 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 03:06:20.112 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableServiceClient initialized successfully.
+[2025-04-04 03:06:20.112 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Getting or creating TableClient for table: Rappers
+[2025-04-04 03:06:20.124 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableClient for Rappers obtained successfully.
+[2025-04-04 03:06:20.129 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Successfully retrieved 20 rappers.
+[2025-04-04 03:06:20.130 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Fetching top 1 headlines from NewsAPI.
+[2025-04-04 03:06:20.130 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] Start processing HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 03:06:20.131 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Sending HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 03:06:20.170 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Received HTTP response headers after 38.725ms - 200
+[2025-04-04 03:06:20.171 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] End processing HTTP request after 40.6912ms - 200
+[2025-04-04 03:06:20.172 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Successfully fetched 1 headlines from NewsAPI.
+[2025-04-04 03:06:20.173 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Pre-populated topic from news: Dow futures tumble over 800 points on fear Trump's tariffs will spark trade war: Live updates - CNBC
+[2025-04-04 03:06:26.814 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Begin Debate clicked. Rapper1: J. Cole, Rapper2: Kanye West, Topic: Dow futures tumble over 800 points on fear Trump's tariffs will spark trade war: Live updates - CNBC
+[2025-04-04 03:06:26.828 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Debate setup complete. Starting orchestration with Topic: Dow futures tumble over 800 points on fear Trump's tariffs will spark trade war: Live updates - CNBC
+[2025-04-04 03:06:26.838 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Starting new debate. Rapper1 (Pro): J. Cole, Rapper2 (Con): Kanye West. Topic: 'Dow futures tumble over 800 points on fear Trump's tariffs will spark trade war: Live updates - CNBC'
+[2025-04-04 03:06:26.843 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Resetting debate state.
+[2025-04-04 03:06:26.863 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Debate loop started.
+[2025-04-04 03:06:26.865 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Starting Turn 1. Active Rapper: J. Cole
+[2025-04-04 03:06:26.881 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] Generating debate turn for J. Cole arguing FOR 'Dow futures tumble over 800 points on fear Trump's tariffs will spark trade war: Live updates - CNBC' against Kanye West
+[2025-04-04 03:06:28.537 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] Successfully generated debate turn for J. Cole. Length: 561
+[2025-04-04 03:06:28.547 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] Synthesizing speech for J. Cole using voice en-US-TonyNeural. Text length: 561
+[2025-04-04 03:06:29.147 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] Speech synthesis completed successfully for J. Cole.
+[2025-04-04 03:06:29.203 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Audio data received for turn 1, attempting playback via JS interop. Base64 length: 220224
+[2025-04-04 03:06:43.433 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Debate loop explicitly cancelled via CancellationToken.
+[2025-04-04 03:06:43.434 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Debate loop ended.
+[2025-04-04 03:18:50.904 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Application is shutting down...
+[2025-04-04 13:29:01.734 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 13:29:01.741 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 13:29:01.743 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 13:29:01.745 UTC] [INFORMATION] [PoDebateRap.Server] Attempting initial data seeding...
+[2025-04-04 13:29:02.463 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Checking if initial rapper seeding is required for table Rappers.
+[2025-04-04 13:29:02.466 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 13:29:02.474 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 13:29:02.518 UTC] [ERROR      ] [PoDebateRap.Server.Services.Data.TableStorageService] Failed to initialize TableServiceClient.
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at Azure.Data.Tables.TableConnectionString.GetCredentials(ConnectionString settings)
+   at Azure.Data.Tables.TableConnectionString.ParseInternal(String connectionString, TableConnectionString& accountInformation, String& error)
+   at Azure.Data.Tables.TableConnectionString.Parse(String connectionString)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString, TableClientOptions options)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 62
+[2025-04-04 13:29:02.541 UTC] [ERROR      ] [PoDebateRap.Server.Services.Data.RapperRepository] Error retrieving all rappers from table Rappers
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at Azure.Data.Tables.TableConnectionString.GetCredentials(ConnectionString settings)
+   at Azure.Data.Tables.TableConnectionString.ParseInternal(String connectionString, TableConnectionString& accountInformation, String& error)
+   at Azure.Data.Tables.TableConnectionString.Parse(String connectionString)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString, TableClientOptions options)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 62
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetTableClientAsync(String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 91
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetAllEntitiesAsync[T](String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 118
+   at PoDebateRap.Server.Services.Data.RapperRepository.GetAllRappersAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\RapperRepository.cs:line 43
+[2025-04-04 13:29:02.543 UTC] [ERROR      ] [PoDebateRap.Server.Services.Data.RapperRepository] Error during initial rapper seeding for table Rappers.
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at Azure.Data.Tables.TableConnectionString.GetCredentials(ConnectionString settings)
+   at Azure.Data.Tables.TableConnectionString.ParseInternal(String connectionString, TableConnectionString& accountInformation, String& error)
+   at Azure.Data.Tables.TableConnectionString.Parse(String connectionString)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString, TableClientOptions options)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 62
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetTableClientAsync(String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 91
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetAllEntitiesAsync[T](String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 118
+   at PoDebateRap.Server.Services.Data.RapperRepository.GetAllRappersAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\RapperRepository.cs:line 43
+   at PoDebateRap.Server.Services.Data.RapperRepository.SeedInitialRappersAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\RapperRepository.cs:line 181
+[2025-04-04 13:29:02.544 UTC] [ERROR      ] [PoDebateRap.Server] Error during initial data seeding (likely due to invalid connection string or table access issue). Seeding skipped.
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at Azure.Data.Tables.TableConnectionString.GetCredentials(ConnectionString settings)
+   at Azure.Data.Tables.TableConnectionString.ParseInternal(String connectionString, TableConnectionString& accountInformation, String& error)
+   at Azure.Data.Tables.TableConnectionString.Parse(String connectionString)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString, TableClientOptions options)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 62
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetTableClientAsync(String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 91
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetAllEntitiesAsync[T](String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 118
+   at PoDebateRap.Server.Services.Data.RapperRepository.GetAllRappersAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\RapperRepository.cs:line 43
+   at PoDebateRap.Server.Services.Data.RapperRepository.SeedInitialRappersAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\RapperRepository.cs:line 181
+   at Program.<Main>$(String[] args) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Program.cs:line 124
+[2025-04-04 13:29:02.686 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Now listening on: http://localhost:5188
+[2025-04-04 13:29:02.687 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Application started. Press Ctrl+C to shut down.
+[2025-04-04 13:29:02.688 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Hosting environment: Development
+[2025-04-04 13:29:02.688 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Content root path: C:\Users\punko\OneDrive\Documents\PoDebateRap\Server
+[2025-04-04 13:29:14.787 UTC] [WARNING    ] [Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware] Failed to determine the https port for redirect.
+[2025-04-04 13:29:14.838 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 13:29:14.839 UTC] [INFORMATION] [PoDebateRap.Server.Services.Diagnostics.DiagnosticsService] DiagnosticsService initialized.
+[2025-04-04 13:29:15.204 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] AzureOpenAIService initialized with endpoint https://podebaterapopenai073205.openai.azure.com/ and deployment gpt-35-turbo
+[2025-04-04 13:29:15.572 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] TextToSpeechService initialized for region eastus.
+[2025-04-04 13:29:15.574 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] DebateOrchestrator initialized.
+[2025-04-04 13:29:15.575 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 13:29:15.575 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 13:29:15.577 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Home page initializing.
+[2025-04-04 13:29:15.577 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 13:29:15.578 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 13:29:15.579 UTC] [ERROR      ] [PoDebateRap.Server.Services.Data.TableStorageService] Failed to initialize TableServiceClient.
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at Azure.Data.Tables.TableConnectionString.GetCredentials(ConnectionString settings)
+   at Azure.Data.Tables.TableConnectionString.ParseInternal(String connectionString, TableConnectionString& accountInformation, String& error)
+   at Azure.Data.Tables.TableConnectionString.Parse(String connectionString)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString, TableClientOptions options)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 62
+[2025-04-04 13:29:15.580 UTC] [ERROR      ] [PoDebateRap.Server.Services.Data.RapperRepository] Error retrieving all rappers from table Rappers
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at Azure.Data.Tables.TableConnectionString.GetCredentials(ConnectionString settings)
+   at Azure.Data.Tables.TableConnectionString.ParseInternal(String connectionString, TableConnectionString& accountInformation, String& error)
+   at Azure.Data.Tables.TableConnectionString.Parse(String connectionString)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString, TableClientOptions options)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 62
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetTableClientAsync(String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 91
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetAllEntitiesAsync[T](String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 118
+   at PoDebateRap.Server.Services.Data.RapperRepository.GetAllRappersAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\RapperRepository.cs:line 43
+[2025-04-04 13:29:15.581 UTC] [ERROR      ] [PoDebateRap.Server.Components.Pages.Home] Error loading initial data for Home page.
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at Azure.Data.Tables.TableConnectionString.GetCredentials(ConnectionString settings)
+   at Azure.Data.Tables.TableConnectionString.ParseInternal(String connectionString, TableConnectionString& accountInformation, String& error)
+   at Azure.Data.Tables.TableConnectionString.Parse(String connectionString)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString, TableClientOptions options)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 62
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetTableClientAsync(String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 91
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetAllEntitiesAsync[T](String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 118
+   at PoDebateRap.Server.Services.Data.RapperRepository.GetAllRappersAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\RapperRepository.cs:line 43
+   at PoDebateRap.Server.Components.Pages.Home.OnInitializedAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Components\Pages\Home.razor:line 246
+[2025-04-04 13:29:15.861 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] AzureOpenAIService initialized with endpoint https://podebaterapopenai073205.openai.azure.com/ and deployment gpt-35-turbo
+[2025-04-04 13:29:15.861 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] TextToSpeechService initialized for region eastus.
+[2025-04-04 13:29:15.862 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] DebateOrchestrator initialized.
+[2025-04-04 13:29:15.862 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 13:29:15.863 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 13:29:15.864 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 13:29:15.864 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Home page initializing.
+[2025-04-04 13:29:15.868 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 13:29:15.868 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 13:29:15.869 UTC] [ERROR      ] [PoDebateRap.Server.Services.Data.TableStorageService] Failed to initialize TableServiceClient.
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at Azure.Data.Tables.TableConnectionString.GetCredentials(ConnectionString settings)
+   at Azure.Data.Tables.TableConnectionString.ParseInternal(String connectionString, TableConnectionString& accountInformation, String& error)
+   at Azure.Data.Tables.TableConnectionString.Parse(String connectionString)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString, TableClientOptions options)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 62
+[2025-04-04 13:29:15.872 UTC] [ERROR      ] [PoDebateRap.Server.Services.Data.RapperRepository] Error retrieving all rappers from table Rappers
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at Azure.Data.Tables.TableConnectionString.GetCredentials(ConnectionString settings)
+   at Azure.Data.Tables.TableConnectionString.ParseInternal(String connectionString, TableConnectionString& accountInformation, String& error)
+   at Azure.Data.Tables.TableConnectionString.Parse(String connectionString)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString, TableClientOptions options)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 62
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetTableClientAsync(String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 91
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetAllEntitiesAsync[T](String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 118
+   at PoDebateRap.Server.Services.Data.RapperRepository.GetAllRappersAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\RapperRepository.cs:line 43
+[2025-04-04 13:29:15.873 UTC] [ERROR      ] [PoDebateRap.Server.Components.Pages.Home] Error loading initial data for Home page.
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at Azure.Data.Tables.TableConnectionString.GetCredentials(ConnectionString settings)
+   at Azure.Data.Tables.TableConnectionString.ParseInternal(String connectionString, TableConnectionString& accountInformation, String& error)
+   at Azure.Data.Tables.TableConnectionString.Parse(String connectionString)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString, TableClientOptions options)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 62
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetTableClientAsync(String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 91
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetAllEntitiesAsync[T](String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 118
+   at PoDebateRap.Server.Services.Data.RapperRepository.GetAllRappersAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\RapperRepository.cs:line 43
+   at PoDebateRap.Server.Components.Pages.Home.OnInitializedAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Components\Pages\Home.razor:line 246
+[2025-04-04 13:31:20.102 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 13:31:20.109 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 13:31:20.109 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 13:31:20.110 UTC] [INFORMATION] [PoDebateRap.Server] Attempting initial data seeding...
+[2025-04-04 13:31:20.113 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Checking if initial rapper seeding is required for table Rappers.
+[2025-04-04 13:31:20.114 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 13:31:20.116 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 13:31:20.123 UTC] [ERROR      ] [PoDebateRap.Server.Services.Data.TableStorageService] Failed to initialize TableServiceClient.
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at Azure.Data.Tables.TableConnectionString.GetCredentials(ConnectionString settings)
+   at Azure.Data.Tables.TableConnectionString.ParseInternal(String connectionString, TableConnectionString& accountInformation, String& error)
+   at Azure.Data.Tables.TableConnectionString.Parse(String connectionString)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString, TableClientOptions options)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 62
+[2025-04-04 13:31:20.140 UTC] [ERROR      ] [PoDebateRap.Server.Services.Data.RapperRepository] Error retrieving all rappers from table Rappers
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at Azure.Data.Tables.TableConnectionString.GetCredentials(ConnectionString settings)
+   at Azure.Data.Tables.TableConnectionString.ParseInternal(String connectionString, TableConnectionString& accountInformation, String& error)
+   at Azure.Data.Tables.TableConnectionString.Parse(String connectionString)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString, TableClientOptions options)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 62
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetTableClientAsync(String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 91
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetAllEntitiesAsync[T](String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 118
+   at PoDebateRap.Server.Services.Data.RapperRepository.GetAllRappersAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\RapperRepository.cs:line 43
+[2025-04-04 13:31:20.143 UTC] [ERROR      ] [PoDebateRap.Server.Services.Data.RapperRepository] Error during initial rapper seeding for table Rappers.
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at Azure.Data.Tables.TableConnectionString.GetCredentials(ConnectionString settings)
+   at Azure.Data.Tables.TableConnectionString.ParseInternal(String connectionString, TableConnectionString& accountInformation, String& error)
+   at Azure.Data.Tables.TableConnectionString.Parse(String connectionString)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString, TableClientOptions options)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 62
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetTableClientAsync(String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 91
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetAllEntitiesAsync[T](String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 118
+   at PoDebateRap.Server.Services.Data.RapperRepository.GetAllRappersAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\RapperRepository.cs:line 43
+   at PoDebateRap.Server.Services.Data.RapperRepository.SeedInitialRappersAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\RapperRepository.cs:line 181
+[2025-04-04 13:31:20.144 UTC] [ERROR      ] [PoDebateRap.Server] Error during initial data seeding (likely due to invalid connection string or table access issue). Seeding skipped.
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at Azure.Data.Tables.TableConnectionString.GetCredentials(ConnectionString settings)
+   at Azure.Data.Tables.TableConnectionString.ParseInternal(String connectionString, TableConnectionString& accountInformation, String& error)
+   at Azure.Data.Tables.TableConnectionString.Parse(String connectionString)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString, TableClientOptions options)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 62
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetTableClientAsync(String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 91
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetAllEntitiesAsync[T](String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 118
+   at PoDebateRap.Server.Services.Data.RapperRepository.GetAllRappersAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\RapperRepository.cs:line 43
+   at PoDebateRap.Server.Services.Data.RapperRepository.SeedInitialRappersAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\RapperRepository.cs:line 181
+   at Program.<Main>$(String[] args) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Program.cs:line 124
+[2025-04-04 13:31:20.237 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Now listening on: http://localhost:5188
+[2025-04-04 13:31:20.238 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Application started. Press Ctrl+C to shut down.
+[2025-04-04 13:31:20.239 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Hosting environment: Development
+[2025-04-04 13:31:20.239 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Content root path: C:\Users\punko\OneDrive\Documents\PoDebateRap\Server
+[2025-04-04 13:31:20.313 UTC] [WARNING    ] [Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware] Failed to determine the https port for redirect.
+[2025-04-04 13:31:20.399 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 13:31:20.400 UTC] [INFORMATION] [PoDebateRap.Server.Services.Diagnostics.DiagnosticsService] DiagnosticsService initialized.
+[2025-04-04 13:31:20.408 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] AzureOpenAIService initialized with endpoint https://podebaterapopenai073205.openai.azure.com/ and deployment gpt-35-turbo
+[2025-04-04 13:31:20.419 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] TextToSpeechService initialized for region eastus.
+[2025-04-04 13:31:20.419 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] DebateOrchestrator initialized.
+[2025-04-04 13:31:20.420 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 13:31:20.420 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 13:31:20.421 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Home page initializing.
+[2025-04-04 13:31:20.422 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 13:31:20.422 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 13:31:20.423 UTC] [ERROR      ] [PoDebateRap.Server.Services.Data.TableStorageService] Failed to initialize TableServiceClient.
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at Azure.Data.Tables.TableConnectionString.GetCredentials(ConnectionString settings)
+   at Azure.Data.Tables.TableConnectionString.ParseInternal(String connectionString, TableConnectionString& accountInformation, String& error)
+   at Azure.Data.Tables.TableConnectionString.Parse(String connectionString)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString, TableClientOptions options)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 62
+[2025-04-04 13:31:20.423 UTC] [ERROR      ] [PoDebateRap.Server.Services.Data.RapperRepository] Error retrieving all rappers from table Rappers
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at Azure.Data.Tables.TableConnectionString.GetCredentials(ConnectionString settings)
+   at Azure.Data.Tables.TableConnectionString.ParseInternal(String connectionString, TableConnectionString& accountInformation, String& error)
+   at Azure.Data.Tables.TableConnectionString.Parse(String connectionString)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString, TableClientOptions options)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 62
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetTableClientAsync(String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 91
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetAllEntitiesAsync[T](String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 118
+   at PoDebateRap.Server.Services.Data.RapperRepository.GetAllRappersAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\RapperRepository.cs:line 43
+[2025-04-04 13:31:20.424 UTC] [ERROR      ] [PoDebateRap.Server.Components.Pages.Home] Error loading initial data for Home page.
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at Azure.Data.Tables.TableConnectionString.GetCredentials(ConnectionString settings)
+   at Azure.Data.Tables.TableConnectionString.ParseInternal(String connectionString, TableConnectionString& accountInformation, String& error)
+   at Azure.Data.Tables.TableConnectionString.Parse(String connectionString)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString, TableClientOptions options)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 62
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetTableClientAsync(String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 91
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetAllEntitiesAsync[T](String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 118
+   at PoDebateRap.Server.Services.Data.RapperRepository.GetAllRappersAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\RapperRepository.cs:line 43
+   at PoDebateRap.Server.Components.Pages.Home.OnInitializedAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Components\Pages\Home.razor:line 246
+[2025-04-04 13:31:20.703 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] AzureOpenAIService initialized with endpoint https://podebaterapopenai073205.openai.azure.com/ and deployment gpt-35-turbo
+[2025-04-04 13:31:20.704 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] TextToSpeechService initialized for region eastus.
+[2025-04-04 13:31:20.705 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] DebateOrchestrator initialized.
+[2025-04-04 13:31:20.706 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 13:31:20.706 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 13:31:20.707 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 13:31:20.709 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Home page initializing.
+[2025-04-04 13:31:20.713 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 13:31:20.713 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 13:31:20.714 UTC] [ERROR      ] [PoDebateRap.Server.Services.Data.TableStorageService] Failed to initialize TableServiceClient.
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at Azure.Data.Tables.TableConnectionString.GetCredentials(ConnectionString settings)
+   at Azure.Data.Tables.TableConnectionString.ParseInternal(String connectionString, TableConnectionString& accountInformation, String& error)
+   at Azure.Data.Tables.TableConnectionString.Parse(String connectionString)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString, TableClientOptions options)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 62
+[2025-04-04 13:31:20.715 UTC] [ERROR      ] [PoDebateRap.Server.Services.Data.RapperRepository] Error retrieving all rappers from table Rappers
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at Azure.Data.Tables.TableConnectionString.GetCredentials(ConnectionString settings)
+   at Azure.Data.Tables.TableConnectionString.ParseInternal(String connectionString, TableConnectionString& accountInformation, String& error)
+   at Azure.Data.Tables.TableConnectionString.Parse(String connectionString)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString, TableClientOptions options)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 62
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetTableClientAsync(String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 91
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetAllEntitiesAsync[T](String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 118
+   at PoDebateRap.Server.Services.Data.RapperRepository.GetAllRappersAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\RapperRepository.cs:line 43
+[2025-04-04 13:31:20.730 UTC] [ERROR      ] [PoDebateRap.Server.Components.Pages.Home] Error loading initial data for Home page.
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at Azure.Data.Tables.TableConnectionString.GetCredentials(ConnectionString settings)
+   at Azure.Data.Tables.TableConnectionString.ParseInternal(String connectionString, TableConnectionString& accountInformation, String& error)
+   at Azure.Data.Tables.TableConnectionString.Parse(String connectionString)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString, TableClientOptions options)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 62
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetTableClientAsync(String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 91
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetAllEntitiesAsync[T](String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 118
+   at PoDebateRap.Server.Services.Data.RapperRepository.GetAllRappersAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\RapperRepository.cs:line 43
+   at PoDebateRap.Server.Components.Pages.Home.OnInitializedAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Components\Pages\Home.razor:line 246
+[2025-04-04 13:33:15.444 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 13:33:15.453 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 13:33:15.455 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 13:33:15.456 UTC] [INFORMATION] [PoDebateRap.Server] Attempting initial data seeding...
+[2025-04-04 13:33:15.458 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Checking if initial rapper seeding is required for table Rappers.
+[2025-04-04 13:33:15.458 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 13:33:15.460 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 13:33:15.468 UTC] [ERROR      ] [PoDebateRap.Server.Services.Data.TableStorageService] Failed to initialize TableServiceClient with manual credentials.
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 75
+[2025-04-04 13:33:15.486 UTC] [ERROR      ] [PoDebateRap.Server.Services.Data.TableStorageService] Failed to initialize TableServiceClient.
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at Azure.Data.Tables.TableConnectionString.GetCredentials(ConnectionString settings)
+   at Azure.Data.Tables.TableConnectionString.ParseInternal(String connectionString, TableConnectionString& accountInformation, String& error)
+   at Azure.Data.Tables.TableConnectionString.Parse(String connectionString)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString, TableClientOptions options)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 89
+[2025-04-04 13:33:15.487 UTC] [ERROR      ] [PoDebateRap.Server.Services.Data.RapperRepository] Error retrieving all rappers from table Rappers
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at Azure.Data.Tables.TableConnectionString.GetCredentials(ConnectionString settings)
+   at Azure.Data.Tables.TableConnectionString.ParseInternal(String connectionString, TableConnectionString& accountInformation, String& error)
+   at Azure.Data.Tables.TableConnectionString.Parse(String connectionString)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString, TableClientOptions options)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 89
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetTableClientAsync(String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 125
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetAllEntitiesAsync[T](String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 152
+   at PoDebateRap.Server.Services.Data.RapperRepository.GetAllRappersAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\RapperRepository.cs:line 43
+[2025-04-04 13:33:15.489 UTC] [ERROR      ] [PoDebateRap.Server.Services.Data.RapperRepository] Error during initial rapper seeding for table Rappers.
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at Azure.Data.Tables.TableConnectionString.GetCredentials(ConnectionString settings)
+   at Azure.Data.Tables.TableConnectionString.ParseInternal(String connectionString, TableConnectionString& accountInformation, String& error)
+   at Azure.Data.Tables.TableConnectionString.Parse(String connectionString)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString, TableClientOptions options)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 89
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetTableClientAsync(String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 125
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetAllEntitiesAsync[T](String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 152
+   at PoDebateRap.Server.Services.Data.RapperRepository.GetAllRappersAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\RapperRepository.cs:line 43
+   at PoDebateRap.Server.Services.Data.RapperRepository.SeedInitialRappersAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\RapperRepository.cs:line 181
+[2025-04-04 13:33:15.490 UTC] [ERROR      ] [PoDebateRap.Server] Error during initial data seeding (likely due to invalid connection string or table access issue). Seeding skipped.
+System.FormatException: The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.
+   at System.Convert.FromBase64CharPtr(Char* inputPtr, Int32 inputLength)
+   at System.Convert.FromBase64String(String s)
+   at Azure.Data.Tables.TableSharedKeyCredential.SetAccountKey(String accountKey)
+   at Azure.Data.Tables.TableSharedKeyCredential..ctor(String accountName, String accountKey)
+   at Azure.Data.Tables.TableConnectionString.GetCredentials(ConnectionString settings)
+   at Azure.Data.Tables.TableConnectionString.ParseInternal(String connectionString, TableConnectionString& accountInformation, String& error)
+   at Azure.Data.Tables.TableConnectionString.Parse(String connectionString)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString, TableClientOptions options)
+   at Azure.Data.Tables.TableServiceClient..ctor(String connectionString)
+   at PoDebateRap.Server.Services.Data.TableStorageService.InitializeTableServiceClientAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 89
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetTableClientAsync(String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 125
+   at PoDebateRap.Server.Services.Data.TableStorageService.GetAllEntitiesAsync[T](String tableName) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\TableStorageService.cs:line 152
+   at PoDebateRap.Server.Services.Data.RapperRepository.GetAllRappersAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\RapperRepository.cs:line 43
+   at PoDebateRap.Server.Services.Data.RapperRepository.SeedInitialRappersAsync() in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Services\Data\RapperRepository.cs:line 181
+   at Program.<Main>$(String[] args) in C:\Users\punko\OneDrive\Documents\PoDebateRap\Server\Program.cs:line 124
+[2025-04-04 13:33:15.587 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Now listening on: http://localhost:5188
+[2025-04-04 13:33:15.588 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Application started. Press Ctrl+C to shut down.
+[2025-04-04 13:33:15.588 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Hosting environment: Development
+[2025-04-04 13:33:15.589 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Content root path: C:\Users\punko\OneDrive\Documents\PoDebateRap\Server
+[2025-04-04 13:34:44.460 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 13:34:44.466 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 13:34:44.467 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 13:34:44.467 UTC] [INFORMATION] [PoDebateRap.Server] Attempting initial data seeding...
+[2025-04-04 13:34:44.469 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Checking if initial rapper seeding is required for table Rappers.
+[2025-04-04 13:34:44.470 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 13:34:44.472 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 13:34:44.493 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableServiceClient initialized successfully with connection string.
+[2025-04-04 13:34:44.494 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Getting or creating TableClient for table: Rappers
+[2025-04-04 13:34:44.763 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableClient for Rappers obtained successfully.
+[2025-04-04 13:34:44.904 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Successfully retrieved 20 rappers.
+[2025-04-04 13:34:44.904 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Table Rappers already contains 20 rappers. Skipping initial seeding.
+[2025-04-04 13:34:44.905 UTC] [INFORMATION] [PoDebateRap.Server] Initial data seeding completed (if necessary).
+[2025-04-04 13:34:45.024 UTC] [ERROR      ] [Microsoft.Extensions.Hosting.Internal.Host] Hosting failed to start
+System.IO.IOException: Failed to bind to address http://127.0.0.1:5188: address already in use.
+ ---> Microsoft.AspNetCore.Connections.AddressInUseException: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+ ---> System.Net.Sockets.SocketException (10048): Only one usage of each socket address (protocol/network address/port) is normally permitted.
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+[2025-04-04 13:35:03.953 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 13:35:03.960 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 13:35:03.968 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 13:35:03.972 UTC] [INFORMATION] [PoDebateRap.Server] Attempting initial data seeding...
+[2025-04-04 13:35:03.975 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Checking if initial rapper seeding is required for table Rappers.
+[2025-04-04 13:35:03.976 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 13:35:03.982 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 13:35:04.000 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableServiceClient initialized successfully with connection string.
+[2025-04-04 13:35:04.001 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Getting or creating TableClient for table: Rappers
+[2025-04-04 13:35:04.241 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableClient for Rappers obtained successfully.
+[2025-04-04 13:35:04.326 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Successfully retrieved 20 rappers.
+[2025-04-04 13:35:04.327 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Table Rappers already contains 20 rappers. Skipping initial seeding.
+[2025-04-04 13:35:04.327 UTC] [INFORMATION] [PoDebateRap.Server] Initial data seeding completed (if necessary).
+[2025-04-04 13:35:04.410 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Now listening on: http://localhost:5189
+[2025-04-04 13:35:04.412 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Application started. Press Ctrl+C to shut down.
+[2025-04-04 13:35:04.413 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Hosting environment: Development
+[2025-04-04 13:35:04.413 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Content root path: C:\Users\punko\OneDrive\Documents\PoDebateRap\Server
+[2025-04-04 13:35:48.791 UTC] [WARNING    ] [Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware] Failed to determine the https port for redirect.
+[2025-04-04 13:35:48.837 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 13:35:48.838 UTC] [INFORMATION] [PoDebateRap.Server.Services.Diagnostics.DiagnosticsService] DiagnosticsService initialized.
+[2025-04-04 13:35:48.849 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] AzureOpenAIService initialized with endpoint https://podebaterapopenai073205.openai.azure.com/ and deployment gpt-35-turbo
+[2025-04-04 13:35:48.858 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] TextToSpeechService initialized for region eastus.
+[2025-04-04 13:35:48.859 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] DebateOrchestrator initialized.
+[2025-04-04 13:35:48.860 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 13:35:48.860 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 13:35:48.862 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Home page initializing.
+[2025-04-04 13:35:48.862 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 13:35:48.863 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 13:35:48.865 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableServiceClient initialized successfully with connection string.
+[2025-04-04 13:35:48.865 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Getting or creating TableClient for table: Rappers
+[2025-04-04 13:35:48.897 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableClient for Rappers obtained successfully.
+[2025-04-04 13:35:48.932 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Successfully retrieved 20 rappers.
+[2025-04-04 13:35:48.940 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Fetching top 1 headlines from NewsAPI.
+[2025-04-04 13:35:48.945 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] Start processing HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 13:35:48.947 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Sending HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 13:35:49.191 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Received HTTP response headers after 238.2137ms - 200
+[2025-04-04 13:35:49.192 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] End processing HTTP request after 250.2268ms - 200
+[2025-04-04 13:35:49.211 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Successfully fetched 1 headlines from NewsAPI.
+[2025-04-04 13:35:49.216 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Pre-populated topic from news: Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge
+[2025-04-04 13:35:50.055 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] AzureOpenAIService initialized with endpoint https://podebaterapopenai073205.openai.azure.com/ and deployment gpt-35-turbo
+[2025-04-04 13:35:50.056 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] TextToSpeechService initialized for region eastus.
+[2025-04-04 13:35:50.057 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] DebateOrchestrator initialized.
+[2025-04-04 13:35:50.059 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 13:35:50.059 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 13:35:50.060 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 13:35:50.061 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Home page initializing.
+[2025-04-04 13:35:50.063 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 13:35:50.063 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 13:35:50.064 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableServiceClient initialized successfully with connection string.
+[2025-04-04 13:35:50.064 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Getting or creating TableClient for table: Rappers
+[2025-04-04 13:35:50.087 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableClient for Rappers obtained successfully.
+[2025-04-04 13:35:50.142 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Successfully retrieved 20 rappers.
+[2025-04-04 13:35:50.144 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Fetching top 1 headlines from NewsAPI.
+[2025-04-04 13:35:50.145 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] Start processing HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 13:35:50.145 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Sending HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 13:35:50.203 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Received HTTP response headers after 57.5744ms - 200
+[2025-04-04 13:35:50.206 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] End processing HTTP request after 61.1466ms - 200
+[2025-04-04 13:35:50.207 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Successfully fetched 1 headlines from NewsAPI.
+[2025-04-04 13:35:50.207 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Pre-populated topic from news: Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge
+[2025-04-04 13:38:06.924 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 13:38:06.931 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 13:38:06.932 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 13:38:06.933 UTC] [INFORMATION] [PoDebateRap.Server] Attempting initial data seeding...
+[2025-04-04 13:38:06.935 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Checking if initial rapper seeding is required for table Rappers.
+[2025-04-04 13:38:06.936 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 13:38:06.939 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 13:38:06.960 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableServiceClient initialized successfully with connection string.
+[2025-04-04 13:38:06.961 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Getting or creating TableClient for table: Rappers
+[2025-04-04 13:38:07.140 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableClient for Rappers obtained successfully.
+[2025-04-04 13:38:07.204 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Successfully retrieved 20 rappers.
+[2025-04-04 13:38:07.206 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Table Rappers already contains 20 rappers. Skipping initial seeding.
+[2025-04-04 13:38:07.207 UTC] [INFORMATION] [PoDebateRap.Server] Initial data seeding completed (if necessary).
+[2025-04-04 13:38:07.332 UTC] [ERROR      ] [Microsoft.Extensions.Hosting.Internal.Host] Hosting failed to start
+System.IO.IOException: Failed to bind to address http://127.0.0.1:5189: address already in use.
+ ---> Microsoft.AspNetCore.Connections.AddressInUseException: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+ ---> System.Net.Sockets.SocketException (10048): Only one usage of each socket address (protocol/network address/port) is normally permitted.
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
