@@ -28,11 +28,14 @@ public class TableStorageService : ITableStorageService
     {
         _configuration = configuration;
         _logger = logger;
-        // Retrieve connection string - use Key Vault name format (dashes)
-        // The configuration system maps Azure-StorageConnectionString from Key Vault to this lookup.
-        _connectionString = _configuration["Azure-StorageConnectionString"]
-            ?? throw new InvalidOperationException("Azure Storage Connection String ('Azure-StorageConnectionString' from Key Vault or config) is not configured.");
-        _logger.LogInformation("TableStorageService initialized.");
+        // Retrieve connection string - Use colon format. Key Vault provider should map the secret name.
+        // Store it even if null/empty; validation happens on connection attempt.
+        _connectionString = _configuration["Azure:StorageConnectionString"] ?? string.Empty;
+        if (string.IsNullOrEmpty(_connectionString))
+        {
+            _logger.LogWarning("Azure Storage Connection String ('Azure:StorageConnectionString' from Key Vault/config) is not configured. Connection attempts will fail.");
+        }
+        _logger.LogInformation("TableStorageService initialized (Connection string presence checked later).");
     }
 
     /// <summary>
@@ -49,8 +52,14 @@ public class TableStorageService : ITableStorageService
                 // Double-check locking pattern
                 if (_tableServiceClient == null)
                 {
+                    // Check connection string validity *before* attempting to create client
+                    if (string.IsNullOrEmpty(_connectionString))
+                    {
+                        _logger.LogError("Cannot initialize TableServiceClient: Connection string is missing or empty.");
+                        throw new InvalidOperationException("Azure Storage Connection String is not configured.");
+                    }
                     _logger.LogInformation("Initializing TableServiceClient...");
-                    _tableServiceClient = new TableServiceClient(_connectionString);
+                    _tableServiceClient = new TableServiceClient(_connectionString); // Exception will be thrown here if connection string is invalid (e.g., Base-64)
                     _logger.LogInformation("TableServiceClient initialized successfully.");
                 }
             }

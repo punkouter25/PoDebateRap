@@ -94,16 +94,25 @@ using (var scope = app.Services.CreateScope())
         var rapperRepository = services.GetRequiredService<IRapperRepository>();
         var topicRepository = services.GetRequiredService<ITopicRepository>();
 
-        // Check for Azure Storage connection string (using Key Vault name format) before attempting to seed
+        // Check for Azure Storage connection string (using colon format) before attempting to seed
         var configuration = services.GetRequiredService<IConfiguration>();
-        // Use the Key Vault secret name format (dashes instead of colons)
-        if (!string.IsNullOrEmpty(configuration["Azure-StorageConnectionString"]))
+        // Use the colon format. Key Vault provider should map the secret name.
+        if (!string.IsNullOrEmpty(configuration["Azure:StorageConnectionString"]))
         {
-             // Run seeding asynchronously but wait for completion here
-             // Using .GetAwaiter().GetResult() is okay in Program.cs initialization context
-             rapperRepository.SeedInitialRappersAsync().GetAwaiter().GetResult();
-             topicRepository.SeedInitialTopicsAsync().GetAwaiter().GetResult();
-             app.Logger.LogInformation("Initial data seeding completed (if necessary).");
+            try
+            {
+                app.Logger.LogInformation("Attempting initial data seeding...");
+                // Run seeding asynchronously but wait for completion here
+                 // Using .GetAwaiter().GetResult() is okay in Program.cs initialization context
+                 rapperRepository.SeedInitialRappersAsync().GetAwaiter().GetResult();
+                 // topicRepository.SeedInitialTopicsAsync().GetAwaiter().GetResult(); // Removed topic seeding
+                 app.Logger.LogInformation("Initial data seeding completed (if necessary).");
+            }
+            catch (Exception seedEx)
+            {
+                // Log seeding error but allow app to continue starting
+                app.Logger.LogError(seedEx, "Error during initial data seeding (likely due to invalid connection string or table access issue). Seeding skipped.");
+            }
         }
         else
         {

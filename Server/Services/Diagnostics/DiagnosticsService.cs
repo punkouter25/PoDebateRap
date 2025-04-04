@@ -32,10 +32,11 @@ namespace PoDebateRap.Server.Services.Diagnostics
             _logger.LogInformation("Starting diagnostic checks...");
             var results = new List<DiagnosticResult>();
 
-            results.Add(await CheckTableStorageConnectionAsync(cancellationToken));
+            // Reordered checks: Internet first, then critical data connection
             results.Add(await CheckInternetConnectionAsync(cancellationToken));
-            results.Add(await CheckApiHealthAsync(cancellationToken)); // Placeholder
-            results.Add(await CheckAuthenticationStatusAsync(cancellationToken)); // Placeholder
+            results.Add(await CheckTableStorageConnectionAsync(cancellationToken));
+            results.Add(await CheckApiHealthAsync(cancellationToken)); // Placeholder - Less critical
+            results.Add(await CheckAuthenticationStatusAsync(cancellationToken)); // Placeholder - Less critical
 
             // Add more checks here as needed
 
