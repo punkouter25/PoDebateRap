@@ -10,12 +10,14 @@
                 <h5 class="modal-title w-100 text-center" style="font-family: var(--header-font); color: var(--primary-color);">Debate Results</h5>
             </div>
             <div class="modal-body text-center">
-                <p>The debate on '<strong>@(TopicTitle ?? "the topic")</strong>' between <strong>@(Rapper1Name ?? "Rapper 1")</strong> (Pro) and <strong>@(Rapper2Name ?? "Rapper 2")</strong> (Con) has concluded.</p> @* Added null checks *@
+                @* Ensure @() syntax is used for expressions with null-coalescing *@
+                <p>The debate on '<strong>@(TopicTitle ?? "the topic")</strong>' between <strong>@(Rapper1Name ?? "Rapper 1")</strong> (Pro) and <strong>@(Rapper2Name ?? "Rapper 2")</strong> (Con) has concluded.</p>
                 <hr style="border-top-color: var(--border-color);" />
                 <h4>Judge's Decision:</h4>
                 @if (!string.IsNullOrEmpty(WinnerName) && WinnerName != "Draw" && WinnerName != "Undecided" && WinnerName != "Error Judging" && WinnerName != "Error Parsing" && WinnerName != "Stats Error")
                 {
-                    <p class="fs-4" style="color: var(--primary-color);"><strong>@WinnerName wins!</strong></p> @* Ensure @ is processed *@
+                     @* Ensure simple @ syntax is used for direct variable output *@
+                    <p class="fs-4" style="color: var(--primary-color);"><strong>@WinnerName wins!</strong></p>
                 }
                 else if (WinnerName == "Draw")
                 {
@@ -33,7 +35,8 @@
                 @* Display Judge's Reasoning *@
                 @if (!string.IsNullOrEmpty(JudgeReasoning))
                 {
-                    <p class="mt-3 fst-italic" style="color: var(--secondary-color);">" @(JudgeReasoning) "</p> @* Ensure @ is processed *@
+                    @* Ensure @() syntax is used for expressions *@
+                    <p class="mt-3 fst-italic" style="color: var(--secondary-color);">"@(JudgeReasoning)"</p>
                 }
 
                 @* Display Stats Grid *@
@@ -45,8 +48,9 @@
                         <thead style="background-color: #2a2a2a;">
                             <tr>
                                 <th style="color: var(--primary-color); font-family: var(--header-font); border-color: var(--border-color);">Metric</th>
-                                <th style="color: var(--primary-color); font-family: var(--header-font); border-color: var(--border-color);">@(Rapper1Name ?? "Rapper 1") (Pro)</th> @* Added null check *@
-                                <th style="color: var(--primary-color); font-family: var(--header-font); border-color: var(--border-color);">@(Rapper2Name ?? "Rapper 2") (Con)</th> @* Added null check *@
+                                @* Ensure @() syntax is used for expressions with null-coalescing *@
+                                <th style="color: var(--primary-color); font-family: var(--header-font); border-color: var(--border-color);">@(Rapper1Name ?? "Rapper 1") (Pro)</th>
+                                <th style="color: var(--primary-color); font-family: var(--header-font); border-color: var(--border-color);">@(Rapper2Name ?? "Rapper 2") (Con)</th>
                             </tr>
                         </thead>
                         <tbody>
