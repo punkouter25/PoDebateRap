@@ -698,3 +698,313 @@ System.IO.IOException: Failed to bind to address http://127.0.0.1:5189: address 
    at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
    at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__14_1(IHostedService service, CancellationToken token)
    at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+[2025-04-04 14:24:00.017 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 14:24:00.025 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 14:24:00.026 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 14:24:00.027 UTC] [INFORMATION] [PoDebateRap.Server] Attempting initial data seeding...
+[2025-04-04 14:24:01.036 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Checking if initial rapper seeding is required for table Rappers.
+[2025-04-04 14:24:01.037 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 14:24:01.041 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 14:24:01.068 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableServiceClient initialized successfully with connection string.
+[2025-04-04 14:24:01.069 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Getting or creating TableClient for table: Rappers
+[2025-04-04 14:24:01.268 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableClient for Rappers obtained successfully.
+[2025-04-04 14:24:01.356 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Successfully retrieved 20 rappers.
+[2025-04-04 14:24:01.357 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Table Rappers already contains 20 rappers. Skipping initial seeding.
+[2025-04-04 14:24:01.358 UTC] [INFORMATION] [PoDebateRap.Server] Initial data seeding completed (if necessary).
+[2025-04-04 14:24:01.469 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Now listening on: http://localhost:5189
+[2025-04-04 14:24:01.470 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Application started. Press Ctrl+C to shut down.
+[2025-04-04 14:24:01.471 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Hosting environment: Development
+[2025-04-04 14:24:01.472 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Content root path: C:\Users\punko\OneDrive\Documents\PoDebateRap\Server
+[2025-04-04 14:26:11.693 UTC] [WARNING    ] [Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware] Failed to determine the https port for redirect.
+[2025-04-04 14:26:11.728 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 14:26:11.729 UTC] [INFORMATION] [PoDebateRap.Server.Services.Diagnostics.DiagnosticsService] DiagnosticsService initialized.
+[2025-04-04 14:26:11.762 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] AzureOpenAIService initialized with endpoint https://podebaterapopenai073205.openai.azure.com/ and deployment gpt-35-turbo
+[2025-04-04 14:26:11.803 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] TextToSpeechService initialized for region eastus.
+[2025-04-04 14:26:11.804 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] DebateOrchestrator initialized.
+[2025-04-04 14:26:11.805 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 14:26:11.806 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 14:26:11.808 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Home page initializing.
+[2025-04-04 14:26:11.809 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 14:26:11.809 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 14:26:11.811 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableServiceClient initialized successfully with connection string.
+[2025-04-04 14:26:11.811 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Getting or creating TableClient for table: Rappers
+[2025-04-04 14:26:11.962 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableClient for Rappers obtained successfully.
+[2025-04-04 14:26:12.011 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Successfully retrieved 20 rappers.
+[2025-04-04 14:26:12.017 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Fetching top 1 headlines from NewsAPI.
+[2025-04-04 14:26:12.021 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] Start processing HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 14:26:12.021 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Sending HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 14:26:12.197 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Received HTTP response headers after 172.2379ms - 200
+[2025-04-04 14:26:12.198 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] End processing HTTP request after 178.9579ms - 200
+[2025-04-04 14:26:12.209 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Successfully fetched 1 headlines from NewsAPI.
+[2025-04-04 14:26:12.210 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Pre-populated topic from news: Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge
+[2025-04-04 14:26:12.420 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] AzureOpenAIService initialized with endpoint https://podebaterapopenai073205.openai.azure.com/ and deployment gpt-35-turbo
+[2025-04-04 14:26:12.421 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] TextToSpeechService initialized for region eastus.
+[2025-04-04 14:26:12.421 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] DebateOrchestrator initialized.
+[2025-04-04 14:26:12.422 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 14:26:12.423 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 14:26:12.423 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 14:26:12.424 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Home page initializing.
+[2025-04-04 14:26:12.426 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 14:26:12.426 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 14:26:12.427 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableServiceClient initialized successfully with connection string.
+[2025-04-04 14:26:12.427 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Getting or creating TableClient for table: Rappers
+[2025-04-04 14:26:12.459 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableClient for Rappers obtained successfully.
+[2025-04-04 14:26:12.519 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Successfully retrieved 20 rappers.
+[2025-04-04 14:26:12.521 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Fetching top 1 headlines from NewsAPI.
+[2025-04-04 14:26:12.522 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] Start processing HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 14:26:12.523 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Sending HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 14:26:12.559 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Received HTTP response headers after 35.8863ms - 200
+[2025-04-04 14:26:12.560 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] End processing HTTP request after 37.0887ms - 200
+[2025-04-04 14:26:12.560 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Successfully fetched 1 headlines from NewsAPI.
+[2025-04-04 14:26:12.561 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Pre-populated topic from news: Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge
+[2025-04-04 14:26:16.995 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 14:26:16.997 UTC] [INFORMATION] [PoDebateRap.Server.Services.Diagnostics.DiagnosticsService] DiagnosticsService initialized.
+[2025-04-04 14:26:17.000 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] AzureOpenAIService initialized with endpoint https://podebaterapopenai073205.openai.azure.com/ and deployment gpt-35-turbo
+[2025-04-04 14:26:17.002 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] TextToSpeechService initialized for region eastus.
+[2025-04-04 14:26:17.004 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] DebateOrchestrator initialized.
+[2025-04-04 14:26:17.012 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 14:26:17.014 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 14:26:17.015 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Home page initializing.
+[2025-04-04 14:26:17.015 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 14:26:17.015 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 14:26:17.016 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableServiceClient initialized successfully with connection string.
+[2025-04-04 14:26:17.017 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Getting or creating TableClient for table: Rappers
+[2025-04-04 14:26:17.046 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableClient for Rappers obtained successfully.
+[2025-04-04 14:26:17.092 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Successfully retrieved 20 rappers.
+[2025-04-04 14:26:17.094 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Fetching top 1 headlines from NewsAPI.
+[2025-04-04 14:26:17.094 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] Start processing HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 14:26:17.094 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Sending HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 14:26:17.151 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Received HTTP response headers after 56.5857ms - 200
+[2025-04-04 14:26:17.152 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] End processing HTTP request after 58.3768ms - 200
+[2025-04-04 14:26:17.154 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Successfully fetched 1 headlines from NewsAPI.
+[2025-04-04 14:26:17.159 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Pre-populated topic from news: Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge
+[2025-04-04 14:26:17.787 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] AzureOpenAIService initialized with endpoint https://podebaterapopenai073205.openai.azure.com/ and deployment gpt-35-turbo
+[2025-04-04 14:26:17.788 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] TextToSpeechService initialized for region eastus.
+[2025-04-04 14:26:17.789 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] DebateOrchestrator initialized.
+[2025-04-04 14:26:17.789 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 14:26:17.789 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 14:26:17.790 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 14:26:17.790 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Home page initializing.
+[2025-04-04 14:26:17.791 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 14:26:17.791 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 14:26:17.791 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableServiceClient initialized successfully with connection string.
+[2025-04-04 14:26:17.792 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Getting or creating TableClient for table: Rappers
+[2025-04-04 14:26:17.825 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableClient for Rappers obtained successfully.
+[2025-04-04 14:26:17.868 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Successfully retrieved 20 rappers.
+[2025-04-04 14:26:17.868 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Fetching top 1 headlines from NewsAPI.
+[2025-04-04 14:26:17.869 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] Start processing HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 14:26:17.869 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Sending HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 14:26:17.922 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Received HTTP response headers after 52.7918ms - 200
+[2025-04-04 14:26:17.923 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] End processing HTTP request after 54.0883ms - 200
+[2025-04-04 14:26:17.925 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Successfully fetched 1 headlines from NewsAPI.
+[2025-04-04 14:26:17.926 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Pre-populated topic from news: Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge
+[2025-04-04 14:26:18.496 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Begin Debate clicked. Rapper1: J. Cole, Rapper2: MF DOOM, Topic: Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge
+[2025-04-04 14:26:18.503 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Debate setup complete. Starting orchestration.
+[2025-04-04 14:26:18.505 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Starting new debate. Rapper1 (Pro): J. Cole, Rapper2 (Con): MF DOOM. Topic: 'Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge'
+[2025-04-04 14:26:18.506 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Resetting debate state.
+[2025-04-04 14:26:18.512 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] HandleDebateStateChange: Received CurrentTurnText: 'The debate begins! Topic: 'Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge'. J. Cole (Pro) vs MF DOOM (Con). J. Cole starts arguing FOR the topic.'
+[2025-04-04 14:26:18.525 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Debate loop started.
+[2025-04-04 14:26:18.528 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Starting Turn 1. Active Rapper: J. Cole
+[2025-04-04 14:26:18.538 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] HandleDebateStateChange: Received CurrentTurnText: 'The debate begins! Topic: 'Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge'. J. Cole (Pro) vs MF DOOM (Con). J. Cole starts arguing FOR the topic.'
+[2025-04-04 14:26:18.554 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] Generating debate turn for J. Cole arguing FOR 'Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge' against MF DOOM
+[2025-04-04 14:26:21.795 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] Successfully generated debate turn for J. Cole. Length: 506
+[2025-04-04 14:26:21.802 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] Synthesizing speech for J. Cole using voice en-US-TonyNeural. Text length: 506
+[2025-04-04 14:26:22.272 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] Speech synthesis completed successfully for J. Cole.
+[2025-04-04 14:26:22.327 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] HandleDebateStateChange: Received CurrentTurnText: 'Yo, MF DOOM, you bring the gloom, but let me enlighten the room. 
+Windows 365 Link PC, it's a game-changer, no need to be a stranger. 
+Portable power at your fingertips, productivity on the go, ain't that a trip? 
+Efficiency and flexibility, Microsoft's innovation is key, can't you see? 
+So don't sleep on this tech evolution, embrace the solution. 
+In a world where speed is vital, this miniature marvel is truly vital. 
+So open your mind, expand your view, Windows 365 Link PC, the future is true.'
+[2025-04-04 14:26:22.328 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Audio data received for turn 1, attempting playback via JS interop.
+[2025-04-04 14:26:30.657 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Debate loop explicitly cancelled via CancellationToken.
+[2025-04-04 14:26:30.659 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Debate loop ended.
+[2025-04-04 14:32:09.132 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 14:32:09.138 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 14:32:09.139 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 14:32:09.139 UTC] [INFORMATION] [PoDebateRap.Server] Attempting initial data seeding...
+[2025-04-04 14:32:09.142 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Checking if initial rapper seeding is required for table Rappers.
+[2025-04-04 14:32:09.143 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 14:32:09.145 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 14:32:09.163 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableServiceClient initialized successfully with connection string.
+[2025-04-04 14:32:09.164 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Getting or creating TableClient for table: Rappers
+[2025-04-04 14:32:09.370 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableClient for Rappers obtained successfully.
+[2025-04-04 14:32:09.436 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Successfully retrieved 20 rappers.
+[2025-04-04 14:32:09.436 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Table Rappers already contains 20 rappers. Skipping initial seeding.
+[2025-04-04 14:32:09.437 UTC] [INFORMATION] [PoDebateRap.Server] Initial data seeding completed (if necessary).
+[2025-04-04 14:32:09.541 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Now listening on: http://localhost:5189
+[2025-04-04 14:32:09.543 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Application started. Press Ctrl+C to shut down.
+[2025-04-04 14:32:09.545 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Hosting environment: Development
+[2025-04-04 14:32:09.546 UTC] [INFORMATION] [Microsoft.Hosting.Lifetime] Content root path: C:\Users\punko\OneDrive\Documents\PoDebateRap\Server
+[2025-04-04 14:34:31.048 UTC] [WARNING    ] [Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware] Failed to determine the https port for redirect.
+[2025-04-04 14:34:31.113 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 14:34:31.115 UTC] [INFORMATION] [PoDebateRap.Server.Services.Diagnostics.DiagnosticsService] DiagnosticsService initialized.
+[2025-04-04 14:34:31.125 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] AzureOpenAIService initialized with endpoint https://podebaterapopenai073205.openai.azure.com/ and deployment gpt-35-turbo
+[2025-04-04 14:34:31.135 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] TextToSpeechService initialized for region eastus.
+[2025-04-04 14:34:31.135 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] DebateOrchestrator initialized.
+[2025-04-04 14:34:31.136 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 14:34:31.137 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 14:34:31.138 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Home page initializing.
+[2025-04-04 14:34:31.139 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 14:34:31.139 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 14:34:31.141 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableServiceClient initialized successfully with connection string.
+[2025-04-04 14:34:31.141 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Getting or creating TableClient for table: Rappers
+[2025-04-04 14:34:31.266 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableClient for Rappers obtained successfully.
+[2025-04-04 14:34:31.308 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Successfully retrieved 20 rappers.
+[2025-04-04 14:34:31.311 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Fetching top 1 headlines from NewsAPI.
+[2025-04-04 14:34:31.314 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] Start processing HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 14:34:31.314 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Sending HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 14:34:31.511 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Received HTTP response headers after 193.4203ms - 200
+[2025-04-04 14:34:31.512 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] End processing HTTP request after 200.5777ms - 200
+[2025-04-04 14:34:31.521 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Successfully fetched 1 headlines from NewsAPI.
+[2025-04-04 14:34:31.522 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Pre-populated topic from news: Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge
+[2025-04-04 14:34:32.252 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] AzureOpenAIService initialized with endpoint https://podebaterapopenai073205.openai.azure.com/ and deployment gpt-35-turbo
+[2025-04-04 14:34:32.253 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] TextToSpeechService initialized for region eastus.
+[2025-04-04 14:34:32.254 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] DebateOrchestrator initialized.
+[2025-04-04 14:34:32.257 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 14:34:32.257 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 14:34:32.258 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 14:34:32.259 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Home page initializing.
+[2025-04-04 14:34:32.262 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 14:34:32.262 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 14:34:32.263 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableServiceClient initialized successfully with connection string.
+[2025-04-04 14:34:32.263 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Getting or creating TableClient for table: Rappers
+[2025-04-04 14:34:32.291 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableClient for Rappers obtained successfully.
+[2025-04-04 14:34:32.335 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Successfully retrieved 20 rappers.
+[2025-04-04 14:34:32.335 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Fetching top 1 headlines from NewsAPI.
+[2025-04-04 14:34:32.335 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] Start processing HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 14:34:32.336 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Sending HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 14:34:32.378 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Received HTTP response headers after 41.5814ms - 200
+[2025-04-04 14:34:32.379 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] End processing HTTP request after 43.148ms - 200
+[2025-04-04 14:34:32.379 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Successfully fetched 1 headlines from NewsAPI.
+[2025-04-04 14:34:32.380 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Pre-populated topic from news: Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge
+[2025-04-04 14:35:48.847 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 14:35:48.849 UTC] [INFORMATION] [PoDebateRap.Server.Services.Diagnostics.DiagnosticsService] DiagnosticsService initialized.
+[2025-04-04 14:35:48.851 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] AzureOpenAIService initialized with endpoint https://podebaterapopenai073205.openai.azure.com/ and deployment gpt-35-turbo
+[2025-04-04 14:35:48.852 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] TextToSpeechService initialized for region eastus.
+[2025-04-04 14:35:48.852 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] DebateOrchestrator initialized.
+[2025-04-04 14:35:48.853 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 14:35:48.853 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 14:35:48.854 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Home page initializing.
+[2025-04-04 14:35:48.855 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 14:35:48.855 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 14:35:48.856 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableServiceClient initialized successfully with connection string.
+[2025-04-04 14:35:48.857 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Getting or creating TableClient for table: Rappers
+[2025-04-04 14:35:48.984 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableClient for Rappers obtained successfully.
+[2025-04-04 14:35:49.037 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Successfully retrieved 20 rappers.
+[2025-04-04 14:35:49.040 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Fetching top 1 headlines from NewsAPI.
+[2025-04-04 14:35:49.041 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] Start processing HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 14:35:49.045 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Sending HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 14:35:49.169 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Received HTTP response headers after 123.2035ms - 200
+[2025-04-04 14:35:49.170 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] End processing HTTP request after 129.1132ms - 200
+[2025-04-04 14:35:49.172 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Successfully fetched 1 headlines from NewsAPI.
+[2025-04-04 14:35:49.174 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Pre-populated topic from news: Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge
+[2025-04-04 14:35:49.405 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] AzureOpenAIService initialized with endpoint https://podebaterapopenai073205.openai.azure.com/ and deployment gpt-35-turbo
+[2025-04-04 14:35:49.406 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] TextToSpeechService initialized for region eastus.
+[2025-04-04 14:35:49.407 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] DebateOrchestrator initialized.
+[2025-04-04 14:35:49.407 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 14:35:49.408 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 14:35:49.408 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 14:35:49.409 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Home page initializing.
+[2025-04-04 14:35:49.410 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 14:35:49.410 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 14:35:49.412 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableServiceClient initialized successfully with connection string.
+[2025-04-04 14:35:49.412 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Getting or creating TableClient for table: Rappers
+[2025-04-04 14:35:49.446 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableClient for Rappers obtained successfully.
+[2025-04-04 14:35:49.481 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Successfully retrieved 20 rappers.
+[2025-04-04 14:35:49.483 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Fetching top 1 headlines from NewsAPI.
+[2025-04-04 14:35:49.489 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] Start processing HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 14:35:49.491 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Sending HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 14:35:49.538 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Received HTTP response headers after 43.0166ms - 200
+[2025-04-04 14:35:49.543 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] End processing HTTP request after 52.5359ms - 200
+[2025-04-04 14:35:49.547 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Successfully fetched 1 headlines from NewsAPI.
+[2025-04-04 14:35:49.548 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Pre-populated topic from news: Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge
+[2025-04-04 14:35:56.641 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Begin Debate clicked. Rapper1: J. Cole, Rapper2: Method Man, Topic: Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge
+[2025-04-04 14:35:56.648 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Debate setup complete. Starting orchestration.
+[2025-04-04 14:35:56.653 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Starting new debate. Rapper1 (Pro): J. Cole, Rapper2 (Con): Method Man. Topic: 'Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge'
+[2025-04-04 14:35:56.655 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Resetting debate state.
+[2025-04-04 14:35:56.673 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] HandleDebateStateChange: Received CurrentTurnText: 'The debate begins! Topic: 'Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge'. J. Cole (Pro) vs Method Man (Con). J. Cole starts arguing FOR the topic.'
+[2025-04-04 14:35:56.687 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Debate loop started.
+[2025-04-04 14:35:56.689 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Starting Turn 1. Active Rapper: J. Cole
+[2025-04-04 14:35:56.690 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] HandleDebateStateChange: Received CurrentTurnText: 'The debate begins! Topic: 'Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge'. J. Cole (Pro) vs Method Man (Con). J. Cole starts arguing FOR the topic.'
+[2025-04-04 14:35:56.698 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] Generating debate turn for J. Cole arguing FOR 'Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge' against Method Man
+[2025-04-04 14:35:58.002 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] Successfully generated debate turn for J. Cole. Length: 503
+[2025-04-04 14:35:58.008 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] Synthesizing speech for J. Cole using voice en-US-TonyNeural. Text length: 503
+[2025-04-04 14:35:58.596 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] Speech synthesis completed successfully for J. Cole.
+[2025-04-04 14:35:58.652 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] HandleDebateStateChange: Received CurrentTurnText: 'Yo, Method Man, I see you doubting, but let me drop some knowledge. This miniature Windows 365 Link PC ain't just a gimmick, it's a game-changer. It's portable power, a pocket-sized office tower. For those on the move, it's innovation they can prove. Don't sleep on this tech evolution, it's a solution for a digital revolution. So before you dismiss, just remember this, Microsoft ain't playing, they're paving the way. So embrace the change, don't stay stuck in the past, this mini PC is here to last.'
+[2025-04-04 14:35:58.653 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Audio data received for turn 1, attempting playback via JS interop.
+[2025-04-04 14:36:01.470 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] STOP DEBATE button clicked.
+[2025-04-04 14:36:01.472 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Resetting debate state.
+[2025-04-04 14:36:01.473 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Debate loop explicitly cancelled via CancellationToken.
+[2025-04-04 14:36:01.474 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] HandleDebateStateChange: Received CurrentTurnText: ''
+[2025-04-04 14:36:01.475 UTC] [ERROR      ] [PoDebateRap.Server.Components.Pages.Home] Error from orchestrator: Debate cancelled.
+[2025-04-04 14:36:01.486 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Debate loop ended.
+[2025-04-04 14:51:11.561 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 14:51:11.563 UTC] [INFORMATION] [PoDebateRap.Server.Services.Diagnostics.DiagnosticsService] DiagnosticsService initialized.
+[2025-04-04 14:51:11.565 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] AzureOpenAIService initialized with endpoint https://podebaterapopenai073205.openai.azure.com/ and deployment gpt-35-turbo
+[2025-04-04 14:51:11.566 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] TextToSpeechService initialized for region eastus.
+[2025-04-04 14:51:11.567 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] DebateOrchestrator initialized.
+[2025-04-04 14:51:11.568 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 14:51:11.569 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 14:51:11.570 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Home page initializing.
+[2025-04-04 14:51:11.570 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 14:51:11.570 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 14:51:11.572 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableServiceClient initialized successfully with connection string.
+[2025-04-04 14:51:11.573 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Getting or creating TableClient for table: Rappers
+[2025-04-04 14:51:11.698 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableClient for Rappers obtained successfully.
+[2025-04-04 14:51:11.756 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Successfully retrieved 20 rappers.
+[2025-04-04 14:51:11.757 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Fetching top 1 headlines from NewsAPI.
+[2025-04-04 14:51:11.760 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] Start processing HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 14:51:11.761 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Sending HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 14:51:11.977 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Received HTTP response headers after 211.0301ms - 200
+[2025-04-04 14:51:11.982 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] End processing HTTP request after 221.8477ms - 200
+[2025-04-04 14:51:11.989 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Successfully fetched 1 headlines from NewsAPI.
+[2025-04-04 14:51:11.991 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Pre-populated topic from news: Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge
+[2025-04-04 14:51:12.147 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] AzureOpenAIService initialized with endpoint https://podebaterapopenai073205.openai.azure.com/ and deployment gpt-35-turbo
+[2025-04-04 14:51:12.150 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] TextToSpeechService initialized for region eastus.
+[2025-04-04 14:51:12.151 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] DebateOrchestrator initialized.
+[2025-04-04 14:51:12.152 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableStorageService initialized (Connection string presence checked later).
+[2025-04-04 14:51:12.152 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TopicRepository] TopicRepository initialized.
+[2025-04-04 14:51:12.154 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] RapperRepository initialized.
+[2025-04-04 14:51:12.155 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Home page initializing.
+[2025-04-04 14:51:12.156 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Attempting to retrieve all rappers from table Rappers
+[2025-04-04 14:51:12.157 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Initializing TableServiceClient...
+[2025-04-04 14:51:12.161 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableServiceClient initialized successfully with connection string.
+[2025-04-04 14:51:12.162 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] Getting or creating TableClient for table: Rappers
+[2025-04-04 14:51:12.195 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.TableStorageService] TableClient for Rappers obtained successfully.
+[2025-04-04 14:51:12.239 UTC] [INFORMATION] [PoDebateRap.Server.Services.Data.RapperRepository] Successfully retrieved 20 rappers.
+[2025-04-04 14:51:12.240 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Fetching top 1 headlines from NewsAPI.
+[2025-04-04 14:51:12.241 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] Start processing HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 14:51:12.243 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Sending HTTP request GET https://newsapi.org/v2/top-headlines?*
+[2025-04-04 14:51:12.304 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.ClientHandler] Received HTTP response headers after 58.922ms - 200
+[2025-04-04 14:51:12.305 UTC] [INFORMATION] [System.Net.Http.HttpClient.INewsService.LogicalHandler] End processing HTTP request after 63.7481ms - 200
+[2025-04-04 14:51:12.308 UTC] [INFORMATION] [PoDebateRap.Server.Services.News.NewsService] Successfully fetched 1 headlines from NewsAPI.
+[2025-04-04 14:51:12.316 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Pre-populated topic from news: Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge
+[2025-04-04 14:51:20.899 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Begin Debate clicked. Rapper1: Eminem, Rapper2: Kanye West, Topic: Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge
+[2025-04-04 14:51:20.905 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Debate setup complete. Starting orchestration.
+[2025-04-04 14:51:20.922 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Starting new debate. Rapper1 (Pro): Eminem, Rapper2 (Con): Kanye West. Topic: 'Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge'
+[2025-04-04 14:51:20.928 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Resetting debate state.
+[2025-04-04 14:51:20.930 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] HandleDebateStateChange: Received CurrentTurnText: 'The debate begins! Topic: 'Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge'. Eminem (Pro) vs Kanye West (Con). Eminem starts arguing FOR the topic.'
+[2025-04-04 14:51:20.932 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Debate loop started.
+[2025-04-04 14:51:20.934 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Starting Turn 1. Active Rapper: Eminem
+[2025-04-04 14:51:20.941 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] HandleDebateStateChange: Received CurrentTurnText: 'The debate begins! Topic: 'Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge'. Eminem (Pro) vs Kanye West (Con). Eminem starts arguing FOR the topic.'
+[2025-04-04 14:51:20.947 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] Generating debate turn for Eminem arguing FOR 'Microsoft’s miniature Windows 365 Link PC is available to buy now - The Verge' against Kanye West
+[2025-04-04 14:51:22.286 UTC] [INFORMATION] [PoDebateRap.Server.Services.AI.AzureOpenAIService] Successfully generated debate turn for Eminem. Length: 363
+[2025-04-04 14:51:22.295 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] Synthesizing speech for Eminem using voice en-US-JasonNeural. Text length: 363
+[2025-04-04 14:51:23.584 UTC] [INFORMATION] [PoDebateRap.Server.Services.Speech.TextToSpeechService] Speech synthesis completed successfully for Eminem.
+[2025-04-04 14:51:23.585 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] HandleDebateStateChange: Received CurrentTurnText: 'Yo, Kanye, let me make it crystal clear,
+Why this Windows 365 Link PC should be revered.
+Portable power in a miniature size,
+No need for bulky setups, just a sleek surprise.
+Efficiency on the go, productivity in hand,
+No need to be confined, let your ideas expand.
+Don't sleep on this tech, it's a game-changer for sure,
+Windows 365 Link PC, the future to endure.'
+[2025-04-04 14:51:23.587 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] Audio data received for turn 1, attempting playback via JS interop.
+[2025-04-04 14:51:32.565 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] STOP DEBATE button clicked.
+[2025-04-04 14:51:32.569 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Resetting debate state.
+[2025-04-04 14:51:32.571 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Debate loop explicitly cancelled via CancellationToken.
+[2025-04-04 14:51:32.572 UTC] [INFORMATION] [PoDebateRap.Server.Components.Pages.Home] HandleDebateStateChange: Received CurrentTurnText: ''
+[2025-04-04 14:51:32.574 UTC] [ERROR      ] [PoDebateRap.Server.Components.Pages.Home] Error from orchestrator: Debate cancelled.
+[2025-04-04 14:51:32.578 UTC] [INFORMATION] [PoDebateRap.Server.Services.Orchestration.DebateOrchestrator] Debate loop ended.

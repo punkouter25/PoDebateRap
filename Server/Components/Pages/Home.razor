@@ -158,30 +158,42 @@
 
 <!-- JavaScript for Audio Playback -->
 <script>
+    window.currentAudio = null; // Global variable to hold the current audio object
+
     window.playAudio = (dotnetHelper, base64String) => { // Accept dotnetHelper
         try {
-            const audioSource = `data:audio/wav;base64,${base64String}`; // Assuming WAV format from TTS service
-            const audio = new Audio(audioSource);
+            // Stop any currently playing audio first
+            if (window.currentAudio) {
+                window.currentAudio.pause();
+                window.currentAudio.currentTime = 0;
+                console.log("Stopped previous audio.");
+            }
 
-            audio.addEventListener('ended', () => {
+            const audioSource = `data:audio/wav;base64,${base64String}`; // Assuming WAV format from TTS service
+            window.currentAudio = new Audio(audioSource); // Assign to global variable
+
+            window.currentAudio.addEventListener('ended', () => {
                 console.log("Audio playback finished.");
+                window.currentAudio = null; // Clear reference on end
                 if (dotnetHelper) {
                     dotnetHelper.invokeMethodAsync('NotifyAudioPlaybackComplete')
                         .catch(e => console.error("Error invoking .NET method:", e));
                 }
             });
 
-             audio.addEventListener('error', (e) => {
+             window.currentAudio.addEventListener('error', (e) => {
                 console.error("Error during audio playback:", e);
+                window.currentAudio = null; // Clear reference on error
                  if (dotnetHelper) {
                     dotnetHelper.invokeMethodAsync('NotifyAudioPlaybackComplete')
                         .catch(e => console.error("Error invoking .NET method after playback error:", e));
                 }
             });
 
-            audio.play()
+            window.currentAudio.play()
                 .catch(e => {
                      console.error("Error starting audio playback:", e);
+                     window.currentAudio = null; // Clear reference on start error
                      if (dotnetHelper) {
                         dotnetHelper.invokeMethodAsync('NotifyAudioPlaybackComplete')
                             .catch(e => console.error("Error invoking .NET method after playback start error:", e));
@@ -190,11 +202,24 @@
             console.log("Attempting to play audio...");
         } catch (e) {
             console.error("Error creating or playing audio:", e);
+            window.currentAudio = null; // Clear reference on creation error
              if (dotnetHelper) {
                 dotnetHelper.invokeMethodAsync('NotifyAudioPlaybackComplete')
                     .catch(e => console.error("Error invoking .NET method after audio creation error:", e));
             }
         }
+    };
+
+    window.stopAudio = () => {
+        if (window.currentAudio) {
+            window.currentAudio.pause();
+            window.currentAudio.currentTime = 0;
+            window.currentAudio = null; // Clear the reference
+            console.log("Audio stopped via JS call.");
+            return true; // Indicate audio was stopped
+        }
+        console.log("No audio playing to stop.");
+        return false; // Indicate no audio was playing
     };
 </script>
 
@@ -296,7 +321,8 @@
         CurrentRapper2 = newState.Rapper2;
         CurrentTopic = newState.Topic;
         DebateStarted = newState.IsDebateInProgress || newState.IsDebateFinished;
-        CurrentDebateTurnText = newState.CurrentTurnText;
+        CurrentDebateTurnText = newState.CurrentTurnText; // Update the UI property
+        Logger.LogInformation("HandleDebateStateChange: Received CurrentTurnText: '{TurnText}'", newState.CurrentTurnText ?? "NULL"); // Log the received text
         IsRapper1Turn = newState.IsRapper1Turn;
         CurrentTurn = newState.CurrentTurnNumber;
         IsStartingDebate = newState.IsGeneratingTurn; // Reflect if orchestrator is busy
@@ -413,9 +439,18 @@
     }
 
     // New method to handle stopping the debate
-    private void StopDebate()
+    private async Task StopDebate() // Make async
     {
         Logger.LogInformation("STOP DEBATE button clicked.");
+        // Stop audio playback via JS interop
+        try
+        {
+            await JSRuntime.InvokeVoidAsync("stopAudio");
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error invoking JS stopAudio function.");
+        }
         Orchestrator.ResetDebate(); // Call the reset method on the orchestrator
         ResetDebateState(); // Call the local UI reset method
     }

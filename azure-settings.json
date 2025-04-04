@@ -1,0 +1,7 @@
+[
+  {
+    "name": "Azure:StorageConnectionString",
+    "value": "DefaultEndpointsProtocol=https;AccountName=podebaterapstorage002161;AccountKey=38gS/7XRmkG84YYMsXTEx4aEDFzTfHFonz0Mh4HCuLPQwKXfiOaa3nA1QNDj2w9ELQqA+rnb2PChF+ASte8HQOw==;EndpointSuffix=core.windows.net",
+    "slotSetting": false
+  }
+]

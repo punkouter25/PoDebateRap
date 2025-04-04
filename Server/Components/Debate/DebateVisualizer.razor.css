@@ -51,7 +51,7 @@
     background-color: #181818; /* Darker background for text area */
     color: var(--text-color);
     font-family: monospace; /* Optional: Monospace font for debate text */
-    white-space: pre-wrap; /* Preserve whitespace and wrap text */
+    /* white-space: pre-wrap; */ /* Removed to test visibility */
 }
 
 .debate-progress {
