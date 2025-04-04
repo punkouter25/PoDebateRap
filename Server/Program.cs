@@ -35,6 +35,10 @@ builder.Services.AddScoped<IDiagnosticsService, DiagnosticsService>();
 // Ensure HttpClientFactory is available (often implicitly registered, but explicit doesn't hurt)
 builder.Services.AddHttpClient();
 
+// Add Application Insights for telemetry and logging
+// It reads the connection string from configuration (appsettings.json or environment variables/App Service settings)
+builder.Services.AddApplicationInsightsTelemetry();
+
 
 var app = builder.Build();
 
