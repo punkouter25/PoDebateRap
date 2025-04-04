@@ -28,9 +28,10 @@ public class TableStorageService : ITableStorageService
     {
         _configuration = configuration;
         _logger = logger;
-        // Retrieve connection string - ensure it's configured in appsettings.json or environment variables
-        _connectionString = _configuration["Azure:StorageConnectionString"]
-            ?? throw new InvalidOperationException("Azure Storage Connection String ('Azure:StorageConnectionString') is not configured.");
+        // Retrieve connection string - use Key Vault name format (dashes)
+        // The configuration system maps Azure-StorageConnectionString from Key Vault to this lookup.
+        _connectionString = _configuration["Azure-StorageConnectionString"]
+            ?? throw new InvalidOperationException("Azure Storage Connection String ('Azure-StorageConnectionString' from Key Vault or config) is not configured.");
         _logger.LogInformation("TableStorageService initialized.");
     }
 

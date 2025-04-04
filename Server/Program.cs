@@ -5,8 +5,32 @@ using PoDebateRap.Server.Services.Speech;
 using PoDebateRap.Server.Services.Orchestration;
 using PoDebateRap.Server.Services.News; // Add namespace for News services
 using PoDebateRap.Server.Services.Diagnostics; // Add namespace for Diagnostics services
-
+using Azure.Identity; // Add namespace for Managed Identity
 var builder = WebApplication.CreateBuilder(args);
+
+// --- Add Key Vault Configuration ---
+// Get Key Vault URI from configuration (set as App Setting or environment variable)
+var keyVaultUri = builder.Configuration["KeyVaultUri"];
+if (!string.IsNullOrEmpty(keyVaultUri))
+{
+    try
+    {
+        builder.Configuration.AddAzureKeyVault(
+            new Uri(keyVaultUri),
+            new DefaultAzureCredential()); // Uses managed identity when deployed to Azure
+        Console.WriteLine($"Successfully added Key Vault configuration source: {keyVaultUri}"); // Log success
+    }
+    catch (Exception ex)
+    {
+        // Log error but continue - app might still work with other config sources
+        Console.WriteLine($"Error adding Key Vault configuration source: {ex.Message}");
+    }
+}
+else
+{
+    Console.WriteLine("KeyVaultUri not found in configuration. Skipping Key Vault setup."); // Log info
+}
+// --- End Key Vault Configuration ---
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -70,9 +94,10 @@ using (var scope = app.Services.CreateScope())
         var rapperRepository = services.GetRequiredService<IRapperRepository>();
         var topicRepository = services.GetRequiredService<ITopicRepository>();
 
-        // Check for Azure Storage connection string before attempting to seed
+        // Check for Azure Storage connection string (using Key Vault name format) before attempting to seed
         var configuration = services.GetRequiredService<IConfiguration>();
-        if (!string.IsNullOrEmpty(configuration["Azure:StorageConnectionString"]))
+        // Use the Key Vault secret name format (dashes instead of colons)
+        if (!string.IsNullOrEmpty(configuration["Azure-StorageConnectionString"]))
         {
              // Run seeding asynchronously but wait for completion here
              // Using .GetAwaiter().GetResult() is okay in Program.cs initialization context
