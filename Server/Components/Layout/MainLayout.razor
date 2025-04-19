@@ -1,0 +1,57 @@
+@inherits LayoutComponentBase
+
+<PageTitle>PoDebateRap</PageTitle> @* Set global page title *@
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+
+        @* Render the diagnostics modal, controlled by _showDiagnosticsModal *@
+        <DiagnosticsModal IsVisible="_showDiagnosticsModal" OnClose="HandleDiagnosticsClose" />
+    </main>
+</div>
+
+<div id="blazor-error-ui" data-nosnippet>
+    An unhandled error has occurred.
+    <a href="." class="reload">Reload</a>
+    <span class="dismiss">🗙</span>
+</div>
+
+@code {
+    private bool _showDiagnosticsModal = false; // Initially hidden
+    // private bool _firstRender = true; // Flag removed as it's unused
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender) // Use the provided firstRender parameter directly
+        {
+            // Show the modal after the initial render
+            _showDiagnosticsModal = true;
+            await InvokeAsync(StateHasChanged); // Ensure UI updates
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    // protected override void OnInitialized() // Removed OnInitialized logic
+    // {
+    //     // Show the modal when the layout first initializes
+    //     _showDiagnosticsModal = true;
+    //     base.OnInitialized();
+    // }
+
+    private void HandleDiagnosticsClose()
+    {
+        _showDiagnosticsModal = false;
+        StateHasChanged(); // Update the UI to hide the modal
+    }
+}

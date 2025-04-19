@@ -1,0 +1,165 @@
+@page "/leaderboard"
+@using PoDebateRap.Shared.Models
+@using PoDebateRap.Server.Services.Data
+@* Removed: @using MudBlazor *@
+@inject IRapperRepository RapperRepo
+@inject NavigationManager NavManager
+@inject ILogger<Leaderboard> Logger
+@rendermode InteractiveServer
+
+<PageTitle>PoDebateRap - Leaderboard</PageTitle>
+
+<div class="container mt-4"> @* Replace MudContainer with div.container *@
+    <h3 class="text-center mb-2">Leaderboard</h3> @* Replace MudText with h3/p and basic styling *@
+    <p class="text-center text-secondary mb-4">Top Rap Battle Champions</p>
+
+    <button class="btn btn-outline-primary mb-4" @onclick="NavigateHome"> @* Replace MudButton with button *@
+        <span aria-hidden="true">←</span> Return to Debates @* Replace StartIcon *@
+    </button>
+
+    @if (IsLoading)
+    {
+        <p>Loading leaderboard...</p> @* Replace MudProgressCircular *@
+    }
+    else if (LeaderboardEntries == null || !LeaderboardEntries.Any())
+    {
+        <div class="alert alert-info" role="alert"> @* Replace MudAlert with styled div *@
+            No leaderboard data available yet. Start some debates!
+        </div>
+    }
+    else
+    {
+        <table class="table table-striped table-hover table-bordered table-sm leaderboard-table"> @* Replace MudTable with standard table and classes *@
+            <thead> @* Replace HeaderContent *@
+                <tr>
+                    <th style="width: 50px;">Rank</th> @* Replace MudTh *@
+                    <th>Rapper</th>
+                    <th>Wins</th>
+                    <th>Losses</th>
+                    <th>Total Debates</th>
+                    <th>Win %</th>
+                </tr>
+            </thead>
+            <tbody> @* Replace RowTemplate *@
+                @foreach (var context in LeaderboardEntries)
+                {
+                    <tr>
+                        <td data-label="Rank" style="@GetRankStyle(context.Rank)"> @* Replace MudTd *@
+                            @if (context.Rank <= 3)
+                            {
+                                <span class="rank-icon mr-1" style="@($"color: {GetRankColor(context.Rank)};")">@GetRankIcon(context.Rank)</span> @* Replace MudIcon *@
+                            }
+                            @context.Rank
+                        </td>
+                        <td data-label="Rapper">@context.Name</td>
+                        <td data-label="Wins">@context.Wins</td>
+                        <td data-label="Losses">@context.Losses</td>
+                        <td data-label="Total Debates">@context.TotalDebates</td>
+                        <td data-label="Win %">@context.WinPercentage.ToString("P1")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+</div>
+
+@code {
+    private List<RapperLeaderboardEntry>? LeaderboardEntries;
+    private bool IsLoading = true;
+
+    // Removed ThemeVariables class
+
+    protected override async Task OnInitializedAsync()
+    {
+        Logger.LogInformation("Leaderboard page initializing.");
+        IsLoading = true;
+        try
+        {
+            var rappers = await RapperRepo.GetAllRappersAsync();
+            if (rappers != null)
+            {
+                CalculateLeaderboard(rappers);
+                Logger.LogInformation("Leaderboard calculated for {Count} rappers.", LeaderboardEntries?.Count ?? 0);
+            }
+            else
+            {
+                LeaderboardEntries = new List<RapperLeaderboardEntry>();
+                Logger.LogWarning("No rapper data found to build leaderboard.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error loading data for Leaderboard page.");
+            LeaderboardEntries = new List<RapperLeaderboardEntry>(); // Ensure list is not null on error
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    private void CalculateLeaderboard(List<Rapper> rappers)
+    {
+        LeaderboardEntries = rappers
+            .Select(r => new RapperLeaderboardEntry
+            {
+                Name = r.Name,
+                Wins = r.Wins,
+                Losses = r.Losses,
+                TotalDebates = r.TotalDebates,
+                WinPercentage = (r.TotalDebates > 0) ? (double)r.Wins / r.TotalDebates : 0.0
+            })
+            .OrderByDescending(e => e.WinPercentage)
+            .ThenByDescending(e => e.Wins)
+            .ThenBy(e => e.Losses)
+            .Take(10)
+            .Select((entry, index) =>
+            {
+                entry.Rank = index + 1;
+                return entry;
+            })
+            .ToList();
+    }
+
+    private void NavigateHome()
+    {
+        NavManager.NavigateTo("/");
+    }
+
+    // Helper methods for styling top ranks - kept logic, removed MudBlazor specifics
+    private string GetRankStyle(int rank) => rank switch
+    {
+        1 => "font-weight: bold;",
+        2 => "font-weight: bold;",
+        3 => "font-weight: bold;",
+        _ => ""
+    };
+
+     private string GetRankColor(int rank) => rank switch
+    {
+        1 => "#FFD700", // Gold
+        2 => "#C0C0C0", // Silver
+        3 => "#CD7F32", // Bronze
+        _ => "inherit"
+    };
+
+    // Replace MudIcon references with Unicode characters
+    private string GetRankIcon(int rank) => rank switch
+    {
+        1 => "🏆", // Trophy
+        2 => "🥈", // 2nd place medal
+        3 => "🥉", // 3rd place medal
+        _ => ""
+    };
+
+    private class RapperLeaderboardEntry
+    {
+        public int Rank { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public int Wins { get; set; }
+        public int Losses { get; set; }
+        public int TotalDebates { get; set; }
+        public double WinPercentage { get; set; }
+    }
+}

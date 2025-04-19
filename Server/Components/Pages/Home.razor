@@ -1,0 +1,522 @@
+@page "/"
+@using PoDebateRap.Shared.Models
+@using PoDebateRap.Server.Services.Data
+@using PoDebateRap.Server.Services.Orchestration
+@using PoDebateRap.Server.Services.News // Inject News Service
+@using PoDebateRap.Server.Components.Debate
+@using Microsoft.JSInterop @* Add JSInterop namespace *@
+@inject IRapperRepository RapperRepo
+@inject ITopicRepository TopicRepo
+@inject IDebateOrchestrator Orchestrator
+@inject INewsService NewsService // Inject News Service
+@inject ILogger<Home> Logger
+@inject IJSRuntime JSRuntime
+@* Inject IJSRuntime for JS interop *@
+@implements IDisposable
+@rendermode InteractiveServer
+
+<PageTitle>PoDebateRap - Home</PageTitle>
+
+<div class="container mt-4">
+    <h3 style="text-align: center; font-family: @ThemeVariables.HeaderFont; color: @ThemeVariables.PrimaryColor; margin-bottom: 0.5rem;">PoDebateRap</h3>
+    <h5 style="text-align: center; color: grey; margin-bottom: 1.5rem;">AI Rap Battles</h5>
+
+    @* Display loading error if any *@
+    @if (!string.IsNullOrEmpty(LoadingErrorMessage))
+    {
+        <div class="alert alert-danger mb-4" role="alert">@LoadingErrorMessage</div>
+    }
+
+    <!-- Setup Section -->
+    <div class="border p-4 mb-4"> @* Added mb-4 for spacing *@
+        <div class="row g-3">
+            <!-- Rapper 1 Selection -->
+            <div class="col-12 col-sm-5">
+                <label for="rapper1Select" class="form-label">Select Rapper 1</label>
+                <select id="rapper1Select" class="form-select" @bind="SelectedRapper1Name" disabled="@(IsLoading || IsStartingDebate || DebateStarted)"> @* Disable if debate started *@
+                    <option value="">-- Select --</option>
+                    @if (Rappers != null)
+                    {
+                        foreach (var rapper in Rappers.OrderBy(r => r.Name)) // Removed Take(10) for full list
+                        {
+                            <option value="@rapper.Name">@rapper.Name</option>
+                        }
+                    }
+                    else if (!IsLoading)
+                    {
+                        <option disabled value="">Loading Rappers Failed</option>
+                    }
+                </select>
+            </div>
+
+            <!-- VS Separator -->
+            <div class="col-12 col-sm-2 d-flex align-items-center justify-content-center">
+                <span style="font-size: 1.5rem; font-family: @ThemeVariables.HeaderFont; color: @ThemeVariables.AccentColor;">VS</span>
+            </div>
+
+            <!-- Rapper 2 Selection -->
+            <div class="col-12 col-sm-5">
+                 <label for="rapper2Select" class="form-label">Select Rapper 2</label>
+                 <select id="rapper2Select" class="form-select" @bind="SelectedRapper2Name" disabled="@(IsLoading || IsStartingDebate || DebateStarted)"> @* Disable if debate started *@
+                    <option value="">-- Select --</option>
+                     @if (Rappers != null)
+                    {
+                        foreach (var rapper in Rappers.OrderBy(r => r.Name)) // Removed Take(10)
+                        {
+                            if (rapper.Name != SelectedRapper1Name) // Prevent selecting same rapper
+                            {
+                                <option value="@rapper.Name">@rapper.Name</option>
+                            }
+                        }
+                    }
+                     else if (!IsLoading)
+                    {
+                        <option disabled value="">Loading Rappers Failed</option>
+                    }
+                </select>
+            </div>
+
+            <!-- Topic Input Area -->
+            <div class="col-12">
+                <label for="debateTopicInput" class="form-label">Debate Topic</label>
+                <input type="text" id="debateTopicInput" class="form-control" placeholder="@(IsFetchingInitialTopic ? "Fetching news topic..." : "Enter debate topic...")"
+                       @bind="DebateTopicInput" @bind:event="oninput"
+                       maxlength="150" disabled="@(IsLoading || IsStartingDebate || IsFetchingInitialTopic || DebateStarted)" /> @* Disable if debate started *@
+                 @if (!string.IsNullOrEmpty(InitialTopicFetchError))
+                {
+                    <div class="text-danger mt-1"><small>@InitialTopicFetchError</small></div>
+                }
+            </div>
+
+            <!-- Begin/Stop Debate Button -->
+            <div class="col-12 d-flex justify-content-center">
+                @if (!DebateStarted)
+                {
+                    <!-- Show Begin Button -->
+                    <button class="btn btn-primary btn-lg mt-4" @onclick="StartDebate" disabled="@IsStartDisabled()">
+                        @if (IsLoading || IsStartingDebate || IsFetchingInitialTopic)
+                        {
+                            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                            <span>@(IsStartingDebate ? "Starting..." : (IsFetchingInitialTopic ? "Fetching Topic..." : "Loading..."))</span>
+                        }
+                        else
+                        {
+                            <span>Begin Debate</span>
+                        }
+                    </button>
+                }
+                else // Debate is in progress or finishing
+                {
+                    <!-- Show Stop Button -->
+                    <button class="btn btn-danger btn-lg mt-4" @onclick="StopDebate" disabled="@ShowVotingModal"> @* Disable Stop if results modal is showing *@
+                        @if (IsStartingDebate) // Still show spinner if orchestrator is generating
+                        {
+                             <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                             <span>Generating...</span>
+                        }
+                        else
+                        {
+                            <span>STOP DEBATE</span>
+                        }
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Debate Arena Section -->
+    <div class="border p-4 mb-4" style="min-height: 300px; border-style: dashed !important; border-color: lightgray !important;">
+        @if (DebateStarted)
+        {
+            <DebateVisualizer Rapper1="@CurrentRapper1"
+                              Rapper2="@CurrentRapper2"
+                              CurrentTurnText="@CurrentDebateTurnText"
+                              IsRapper1Active="@IsRapper1Turn"
+                              IsRapper2Active="@(!IsRapper1Turn)"
+                              CurrentTurnNumber="@CurrentTurn"
+                              TotalTurns="@TotalDebateTurns" />
+        }
+        else
+        {
+            <h6 style="text-align: center; color: grey;">Select rappers and a topic to start the debate!</h6>
+        }
+    </div>
+
+    <!-- Results Modal (HTML/CSS version - Displaying Results) -->
+    @if (ShowVotingModal)
+    {
+        <ResultsModal Rapper1Name="@CurrentRapper1?.Name"
+                      Rapper2Name="@CurrentRapper2?.Name"
+                      TopicTitle="@CurrentTopic?.Title"
+                      WinnerName="@_latestDebateState.WinnerName"
+                      JudgeReasoning="@_latestDebateState.JudgeReasoning"
+                      Stats="@_latestDebateState.Stats"
+                      OnClose="HandleResultsModalClosed" />
+    }
+
+</div> @* End container *@
+
+<!-- JavaScript for Audio Playback -->
+<script>
+    window.currentAudio = null; // Global variable to hold the current audio object
+
+    window.playAudio = (dotnetHelper, base64String) => { // Accept dotnetHelper
+        try {
+            // Stop any currently playing audio first
+            if (window.currentAudio) {
+                window.currentAudio.pause();
+                window.currentAudio.currentTime = 0;
+                console.log("Stopped previous audio.");
+            }
+
+            const audioSource = `data:audio/wav;base64,${base64String}`; // Assuming WAV format from TTS service
+            window.currentAudio = new Audio(audioSource); // Assign to global variable
+
+            window.currentAudio.addEventListener('ended', () => {
+                console.log("Audio playback finished.");
+                window.currentAudio = null; // Clear reference on end
+                if (dotnetHelper) {
+                    dotnetHelper.invokeMethodAsync('NotifyAudioPlaybackComplete')
+                        .catch(e => console.error("Error invoking .NET method:", e));
+                }
+            });
+
+             window.currentAudio.addEventListener('error', (e) => {
+                console.error("Error during audio playback:", e);
+                window.currentAudio = null; // Clear reference on error
+                 if (dotnetHelper) {
+                    dotnetHelper.invokeMethodAsync('NotifyAudioPlaybackComplete')
+                        .catch(e => console.error("Error invoking .NET method after playback error:", e));
+                }
+            });
+
+            window.currentAudio.play()
+                .catch(e => {
+                     console.error("Error starting audio playback:", e);
+                     window.currentAudio = null; // Clear reference on start error
+                     if (dotnetHelper) {
+                        dotnetHelper.invokeMethodAsync('NotifyAudioPlaybackComplete')
+                            .catch(e => console.error("Error invoking .NET method after playback start error:", e));
+                    }
+                });
+            console.log("Attempting to play audio...");
+        } catch (e) {
+            console.error("Error creating or playing audio:", e);
+            window.currentAudio = null; // Clear reference on creation error
+             if (dotnetHelper) {
+                dotnetHelper.invokeMethodAsync('NotifyAudioPlaybackComplete')
+                    .catch(e => console.error("Error invoking .NET method after audio creation error:", e));
+            }
+        }
+    };
+
+    window.stopAudio = () => {
+        if (window.currentAudio) {
+            window.currentAudio.pause();
+            window.currentAudio.currentTime = 0;
+            window.currentAudio = null; // Clear the reference
+            console.log("Audio stopped via JS call.");
+            return true; // Indicate audio was stopped
+        }
+        console.log("No audio playing to stop.");
+        return false; // Indicate no audio was playing
+    };
+</script>
+
+@code {
+    private DotNetObjectReference<Home>? objRef;
+    private DebateState _latestDebateState = new();
+
+    private List<Rapper>? Rappers;
+    private string? SelectedRapper1Name;
+    private string? SelectedRapper2Name;
+    private string DebateTopicInput { get; set; } = "";
+
+    private bool IsLoading = true;
+    private bool IsStartingDebate = false;
+    private bool IsFetchingInitialTopic = false;
+    private string? LoadingErrorMessage = null;
+    private string? InitialTopicFetchError = null;
+
+    private bool DebateStarted = false;
+    private Rapper? CurrentRapper1;
+    private Rapper? CurrentRapper2;
+    private Topic? CurrentTopic;
+    private string CurrentDebateTurnText { get; set; } = "";
+    private bool IsRapper1Turn { get; set; } = true;
+    private int CurrentTurn { get; set; } = 0;
+    private int TotalDebateTurns => Orchestrator.CurrentState.TotalTurns;
+    private bool ShowVotingModal = false;
+
+    private static class ThemeVariables
+    {
+        public const string HeaderFont = "'Impact', Haettenschweiler, 'Arial Narrow Bold', sans-serif";
+        public const string PrimaryColor = "#FFD700"; // Using Gold for primary theme accent
+        public const string AccentColor = "#CD7F32"; // Bronze for VS separator
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        objRef = DotNetObjectReference.Create(this);
+        Logger.LogInformation("Home page initializing.");
+        Orchestrator.OnStateChangeAsync += HandleDebateStateChange;
+        IsLoading = true;
+        IsFetchingInitialTopic = true;
+        LoadingErrorMessage = null;
+        InitialTopicFetchError = null;
+        StateHasChanged();
+
+        try
+        {
+            Rappers = await RapperRepo.GetAllRappersAsync();
+            Logger.LogDebug("Retrieved {LoadedRapperCount} rappers.", Rappers?.Count ?? 0);
+            if (Rappers == null || Rappers.Count == 0)
+            {
+                 LoadingErrorMessage = "Rapper list is empty. Check Azurite data and seeding logic.";
+                 Logger.LogWarning(LoadingErrorMessage);
+            }
+
+            try
+            {
+                var headlines = await NewsService.GetTopHeadlinesAsync(1);
+                if (headlines != null && headlines.Count > 0 && !string.IsNullOrWhiteSpace(headlines[0].Title))
+                {
+                    DebateTopicInput = headlines[0].Title.Trim();
+                    Logger.LogInformation("Pre-populated topic from news: {NewsTopic}", DebateTopicInput);
+                }
+                else
+                {
+                    InitialTopicFetchError = "Could not fetch a news topic. Please enter one manually.";
+                    Logger.LogWarning("NewsService returned no headlines or headline had no title.");
+                    DebateTopicInput = "";
+                }
+            }
+            catch (Exception newsEx)
+            {
+                 Logger.LogError(newsEx, "Error fetching initial news topic.");
+                 InitialTopicFetchError = $"Error fetching news topic: {newsEx.Message}. Please enter one manually.";
+                 DebateTopicInput = "";
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error loading initial data for Home page.");
+            LoadingErrorMessage = $"Error loading initial data: {ex.Message}";
+        }
+        finally
+        {
+            IsLoading = false;
+            IsFetchingInitialTopic = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task HandleDebateStateChange(DebateState newState)
+    {
+        _latestDebateState = newState;
+        Logger.LogDebug("Received state update. Turn: {Turn}, IsGenerating: {IsGenerating}, Winner: {Winner}",
+            newState.CurrentTurnNumber, newState.IsGeneratingTurn, newState.WinnerName ?? "N/A");
+
+        CurrentRapper1 = newState.Rapper1;
+        CurrentRapper2 = newState.Rapper2;
+        CurrentTopic = newState.Topic;
+        DebateStarted = newState.IsDebateInProgress || newState.IsDebateFinished;
+        CurrentDebateTurnText = newState.CurrentTurnText; // Update the UI property
+        Logger.LogInformation("HandleDebateStateChange: Received CurrentTurnText: '{TurnText}'", newState.CurrentTurnText ?? "NULL"); // Log the received text
+        IsRapper1Turn = newState.IsRapper1Turn;
+        CurrentTurn = newState.CurrentTurnNumber;
+        IsStartingDebate = newState.IsGeneratingTurn; // Reflect if orchestrator is busy
+
+        if (newState.CurrentTurnAudio != null && newState.CurrentTurnAudio.Length > 0 && objRef != null)
+        {
+            try
+            {
+                var base64Audio = Convert.ToBase64String(newState.CurrentTurnAudio);
+                Logger.LogInformation("Audio data received for turn {Turn}, attempting playback via JS interop.", newState.CurrentTurnNumber);
+                await JSRuntime.InvokeVoidAsync("playAudio", objRef, base64Audio);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, "Error invoking JS for audio playback for turn {Turn}.", newState.CurrentTurnNumber);
+                await NotifyAudioPlaybackComplete(); // Ensure completion is notified on error
+            }
+        }
+        else
+        {
+             if(newState.IsDebateInProgress) // Only notify if debate is actually running
+             {
+                Logger.LogDebug("No audio data for turn {Turn} or JS interop not ready, signaling completion.", newState.CurrentTurnNumber);
+                await NotifyAudioPlaybackComplete(); // Signal completion immediately if no audio
+             }
+        }
+
+        if (!string.IsNullOrEmpty(newState.ErrorMessage))
+        {
+             Logger.LogError("Error from orchestrator: {Error}", newState.ErrorMessage);
+             // TODO: Show error message in UI
+        }
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    [JSInvokable]
+    public async Task NotifyAudioPlaybackComplete()
+    {
+        Logger.LogDebug("NotifyAudioPlaybackComplete called.");
+        try
+        {
+            await Orchestrator.SignalAudioPlaybackCompleteAsync();
+
+            if (_latestDebateState.IsDebateFinished)
+            {
+                Logger.LogInformation("Audio playback complete AND debate is finished. Showing results modal.");
+                ShowVotingModal = true;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error signaling audio playback completion to orchestrator.");
+        }
+    }
+
+    private bool IsStartDisabled()
+    {
+        if (IsLoading || IsFetchingInitialTopic || IsStartingDebate || ShowVotingModal) return true;
+        if (string.IsNullOrEmpty(SelectedRapper1Name) || string.IsNullOrEmpty(SelectedRapper2Name)) return true;
+        if (SelectedRapper1Name == SelectedRapper2Name) return true;
+        if (string.IsNullOrWhiteSpace(DebateTopicInput)) return true;
+        return false;
+    }
+
+    private async Task StartDebate()
+    {
+        if (IsStartDisabled()) return;
+        IsStartingDebate = true;
+        DebateStarted = false; // Reset flag initially
+        ShowVotingModal = false;
+        LoadingErrorMessage = null; // Clear previous errors
+        InitialTopicFetchError = null;
+        StateHasChanged();
+
+        var finalTopic = new Topic(DebateTopicInput.Trim());
+        string topicTitleForLog = finalTopic.Title;
+
+        Logger.LogInformation("Begin Debate clicked. Rapper1: {R1}, Rapper2: {R2}, Topic: {T}",
+            SelectedRapper1Name, SelectedRapper2Name, topicTitleForLog);
+        try
+        {
+            CurrentRapper1 = Rappers?.FirstOrDefault(r => r.Name == SelectedRapper1Name);
+            CurrentRapper2 = Rappers?.FirstOrDefault(r => r.Name == SelectedRapper2Name);
+            CurrentTopic = finalTopic;
+
+            if (CurrentRapper1 == null || CurrentRapper2 == null || CurrentTopic == null)
+            {
+                Logger.LogError("Failed to find selected rappers or finalize topic.");
+                LoadingErrorMessage = "Selected rapper(s) not found.";
+                IsStartingDebate = false;
+                StateHasChanged();
+                return;
+            }
+
+            CurrentDebateTurnText = $"Get ready! Topic: '{CurrentTopic.Title}'. {CurrentRapper1.Name} (Pro) vs {CurrentRapper2.Name} (Con). {CurrentRapper1.Name} starts...";
+            CurrentTurn = 0;
+            IsRapper1Turn = true;
+            DebateStarted = true; // Set flag now that setup is complete
+            Logger.LogInformation("Debate setup complete. Starting orchestration.");
+
+            await Orchestrator.StartNewDebateAsync(CurrentRapper1, CurrentRapper2, CurrentTopic);
+            // IsStartingDebate will be set to false by HandleDebateStateChange when the first turn arrives
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error during debate setup or start.");
+            DebateStarted = false;
+            LoadingErrorMessage = $"Error starting debate: {ex.Message}";
+            IsStartingDebate = false; // Ensure flag is reset on error
+            StateHasChanged();
+        }
+    }
+
+    // New method to handle stopping the debate
+    private async Task StopDebate() // Make async
+    {
+        Logger.LogInformation("STOP DEBATE button clicked.");
+        // Stop audio playback via JS interop
+        try
+        {
+            await JSRuntime.InvokeVoidAsync("stopAudio");
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error invoking JS stopAudio function.");
+        }
+        Orchestrator.ResetDebate(); // Call the reset method on the orchestrator
+        ResetDebateState(); // Call the local UI reset method
+    }
+
+    private void HandleResultsModalClosed()
+    {
+        ShowVotingModal = false;
+        Logger.LogInformation("Results modal closed.");
+
+        if (!string.IsNullOrEmpty(_latestDebateState.WinnerName) && _latestDebateState.WinnerName != "Draw" && _latestDebateState.WinnerName != "Undecided" && _latestDebateState.WinnerName != "Error Judging" && _latestDebateState.WinnerName != "Error Parsing" && _latestDebateState.WinnerName != "Stats Error")
+        {
+             Rapper? winner = (_latestDebateState.WinnerName == CurrentRapper1?.Name) ? CurrentRapper1 : (_latestDebateState.WinnerName == CurrentRapper2?.Name) ? CurrentRapper2 : null;
+             Rapper? loser = (_latestDebateState.WinnerName == CurrentRapper1?.Name) ? CurrentRapper2 : (_latestDebateState.WinnerName == CurrentRapper2?.Name) ? CurrentRapper1 : null;
+
+             if (winner != null && loser != null)
+             {
+                 _ = Task.Run(async () => await UpdateWinLossRecord(winner, loser));
+             }
+             else
+             {
+                 Logger.LogWarning("Could not determine valid winner/loser from AI Judge WinnerName '{WinnerName}'.", _latestDebateState.WinnerName);
+             }
+        }
+        else
+        {
+             Logger.LogInformation("No valid winner determined by AI judge ({WinnerName}). Skipping win/loss update.", _latestDebateState.WinnerName ?? "N/A");
+        }
+
+        ResetDebateState(); // Reset UI state after handling results
+    }
+
+    private async Task UpdateWinLossRecord(Rapper winner, Rapper loser)
+    {
+        try
+        {
+            await RapperRepo.UpdateWinLossRecordAsync(winner.Name, loser.Name);
+            Logger.LogInformation("Win/loss record updated for winner {WinnerName}.", winner.Name);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error updating win/loss record for Winner: {WinnerName}, Loser: {LoserName}", winner.Name, loser.Name);
+        }
+    }
+
+    // Consolidated reset logic
+    private void ResetDebateState()
+    {
+        DebateStarted = false;
+        IsStartingDebate = false; // Ensure this is reset
+        ShowVotingModal = false; // Ensure modal is hidden
+        CurrentDebateTurnText = "Select rappers and a topic to start the debate!";
+        // Optionally reset selections?
+        // SelectedRapper1Name = null;
+        // SelectedRapper2Name = null;
+        // DebateTopicInput = ""; // Might fetch news again on next init if cleared
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+         objRef?.Dispose();
+        if (Orchestrator != null)
+        {
+            Orchestrator.OnStateChangeAsync -= HandleDebateStateChange;
+        }
+        Logger.LogDebug("Home page disposed.");
+        GC.SuppressFinalize(this);
+    }
+}

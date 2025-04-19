@@ -1,0 +1,69 @@
+name: .NET Build and Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x # Use .NET 9
+    - name: Restore dependencies
+      run: dotnet restore PoDebateRap.sln
+    - name: Build
+      run: dotnet build PoDebateRap.sln --no-restore
+    - name: Test
+      run: dotnet test PoDebateRap.sln --no-build --verbosity normal
+
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' # Only run on push to main
+    runs-on: ubuntu-latest
+    needs: build # Depends on the build job succeeding
+    environment:
+      name: 'Production' # Optional: Define environment for GitHub Environments feature
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    env:
+      AZURE_WEBAPP_NAME: podebaterap   # Name of the Azure App Service
+      AZURE_WEBAPP_PACKAGE_PATH: './publish_output' # Path to the published output
+      DOTNET_VERSION: '9.0.x'           # Specify .NET version
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET Core SDK ${{ env.DOTNET_VERSION }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Publish .NET Core Project
+        run: dotnet publish Server/PoDebateRap.Server.csproj --configuration Release --output ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp # Give the step an ID to reference outputs
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+      # Optional: Logout from Azure
+      - name: Logout from Azure
+        if: always() # Ensure logout runs even if previous steps fail
+        run: |
+          az logout
+          az cache purge
+          az account clear

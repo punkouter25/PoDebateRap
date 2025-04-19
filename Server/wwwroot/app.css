@@ -1,0 +1,285 @@
+:root {
+    /* Gritty Rap Theme Variables */
+    --primary-color: #B8860B; /* DarkGoldenrod */
+    --secondary-color: #696969; /* DimGray */
+    --accent-color: #8B0000; /* DarkRed */
+    --background-color: #121212; /* Near black */
+    --text-color: #E0E0E0; /* Light gray */
+    --header-font: 'Impact', Haettenschweiler, 'Arial Narrow Bold', sans-serif; /* Keep Impact */
+    --body-font: sans-serif; /* Standard sans-serif */
+    --link-color: var(--secondary-color); /* DimGray for links */
+    --border-color: #333; /* Darker border */
+}
+
+html, body {
+    font-family: var(--body-font);
+    background-color: var(--background-color);
+    /* Optional: Add a subtle texture later if needed */
+    /* background-image: linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px); */
+    /* background-size: 30px 30px; */
+    color: var(--text-color);
+}
+
+a, .btn-link {
+    color: var(--link-color);
+    text-decoration: none; /* Remove underline for cleaner look */
+}
+
+a:hover, .btn-link:hover {
+    color: var(--primary-color); /* Primary color on hover */
+}
+
+.btn-primary {
+    color: var(--background-color); /* Dark text on primary button */
+    background-color: var(--primary-color);
+    border-color: #A0740A; /* Slightly darker goldenrod */
+    font-family: var(--header-font);
+    text-transform: uppercase; /* Uppercase for impact */
+    letter-spacing: 1px;
+}
+
+.btn-primary:hover {
+    background-color: #A0740A; /* Slightly darker goldenrod */
+    border-color: #886108; /* Even darker goldenrod */
+    color: #f0f0f0; /* Lighter text on hover */
+}
+
+/* Keep focus style for accessibility, maybe adjust colors slightly */
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem var(--secondary-color), 0 0 0 0.25rem var(--primary-color);
+}
+
+.content {
+    padding-top: 1.1rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--header-font);
+    color: var(--primary-color); /* Headers in primary color */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5); /* Add subtle shadow */
+}
+
+h1:focus {
+    outline: none;
+}
+
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050; /* Keep green for valid */
+}
+
+.invalid {
+    outline: 1px solid var(--accent-color); /* Use accent color (DarkRed) for invalid */
+    border-color: var(--accent-color);
+}
+
+.validation-message {
+    color: var(--accent-color);
+}
+
+/* Keep error boundary style */
+.blazor-error-boundary {
+    background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNDkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIG92ZXJmbG93PSJoaWRkZW4iPjxkZWZzPjxjbGlwUGF0aCBpZD0iY2xpcDAiPjxyZWN0IHg9IjIzNSIgeT0iNTEiIHdpZHRoPSI1NiIgaGVpZ2h0PSI0OSIvPjwvY2xpcFBhdGg+PC9kZWZzPjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMCkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMzUgLTUxKSI+PHBhdGggZD0iTTI2My41MDYgNTFDMjY0LjcxNyA1MSAyNjUuODEzIDUxLjQ4MzcgMjY2LjYwNiA1Mi4yNjU4TDI2Ny4wNTIgNTIuNzk4NyAyNjcuNTM5IDUzLjYyODMgMjkwLjE4NSA5Mi4xODMxIDI5MC41NDUgOTIuNzk1IDI5MC42NTYgOTIuOTk2QzI5MC44NzcgOTMuNTEzIDI5MSA5NC4wODE1IDI5MSA5NC42NzgyIDI5MSA5Ny4wNjUxIDI4OS4wMzggOTkgMjg2LjYxNyA5OUwyNDAuMzgzIDk5QzIzNy45NjMgOTkgMjM2IDk3LjA2NTEgMjM2IDk0LjY3ODIgMjM2IDk0LjM3OTkgMjM2LjAzMSA5NC4wODg2IDIzNi4wODkgOTMuODA3MkwyMzYuMzM4IDkzLjAxNjIgMjM2Ljg1OCA5Mi4xMzE0IDI1OS40NzMgNTMuNjI5NCAyNTkuOTYxIDUyLjc5ODUgMjYwLjQwNyA1Mi4yNjU4QzI2MS4yIDUxLjQ4MzcgMjYyLjI5NiA1MSAyNjMuNTA2IDUxWk0yNjMuNTg2IDY2LjAxODNDMjYwLjczNyA2Ni4wMTgzIDI1OS4zMTMgNjcuMTI0NSAyNTkuMzEzIDY5LjMzNyAyNTkuMzEzIDY5LjYxMDIgMjU5LjMzMiA2OS44NjA4IDI1OS4zNzEgNzAuMDg4N0wyNjEuNzk1IDg0LjAxNjEgMjY1LjM4IDg0LjAxNjEgMjY3LjgyMSA2OS43NDc1QzI2Ny44NiA2OS43MzA5IDI2Ny44NzkgNjkuNTg3NyAyNjcuODc5IDY5LjMxNzkgMjY3Ljg3OSA2Ny4xMTgyIDI2Ni40NDggNjYuMDE4MyAyNjMuNTg2IDY2LjAxODNaTTI2My41NzYgODYuMDU0N0MyNjEuMDQ5IDg2LjA1NDcgMjU5Ljc4NiA4Ny4zMDA1IDI1OS43ODYgODkuNzkyMSAyNTkuNzg2IDkyLjI4MzcgMjYxLjA0OSA5My41Mjk1IDI2My41NzYgOTMuNTI5NSAyNjYuMTE2IDkzLjUyOTUgMjY3LjM4NyA5Mi4yODM3IDI2Ny4zODcgODkuNzkyMSAyNjcuMzg3IDg3LjMwMDUgMjY2LjExNiA4Ni4wNTQ3IDI2My41NzYgODYuMDU0N1oiIGZpbGw9IiNGRkU1MDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPjwvZz48L3N2Zz4=) no-repeat 1rem/1.8rem, #b32121;
+    padding: 1rem 1rem 1rem 3.7rem;
+    color: white;
+}
+
+    .blazor-error-boundary::after {
+        content: "An error has occurred.";
+    }
+
+/* Adjust default Blazor/Bootstrap styles */
+.nav-link {
+    color: var(--secondary-color);
+    font-family: var(--header-font); /* Use header font for nav links */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.8rem 1rem; /* Adjust padding */
+    border-bottom: 2px solid transparent; /* Add space for hover effect */
+    transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+}
+
+.nav-link:hover, .nav-link.active { /* Style active link like hover */
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color); /* Underline effect on hover/active */
+}
+
+.top-row {
+    background-color: #000; /* Black top row */
+    border-bottom: 1px solid var(--border-color);
+    padding: 0 1rem; /* Add some padding */
+}
+
+.sidebar {
+    background-image: linear-gradient(180deg, #222 0%, #000 70%); /* Darker gradient sidebar */
+    border-right: 1px solid var(--border-color);
+}
+
+.darker-border-checkbox.form-check-input {
+    border-color: var(--border-color);
+    background-color: #333; /* Darker checkbox background */
+}
+
+.darker-border-checkbox.form-check-input:checked {
+    background-color: var(--primary-color); /* Primary color when checked */
+    border-color: var(--primary-color);
+}
+
+/* Adjust form floating label placeholders if needed */
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+    color: var(--secondary-color); /* Use secondary color for placeholder */
+    text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+    text-align: start;
+}
+
+/* Add some general card styling */
+.card {
+    background-color: #1f1f1f; /* Slightly lighter than main background */
+    border: 1px solid var(--border-color);
+    margin-bottom: 1rem;
+}
+
+.card-header {
+    background-color: #2a2a2a;
+    color: var(--primary-color);
+    font-family: var(--header-font);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card-body {
+    color: var(--text-color);
+}
+
+/* Style tables */
+.table {
+    --bs-table-bg: transparent; /* Make table background transparent */
+    --bs-table-color: var(--text-color);
+    --bs-table-border-color: var(--border-color);
+    --bs-table-striped-bg: #2a2a2a; /* Dark stripe */
+    --bs-table-striped-color: var(--text-color);
+    --bs-table-hover-bg: #333333; /* Darker hover */
+    --bs-table-hover-color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+.table thead th {
+    color: var(--primary-color);
+    font-family: var(--header-font);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom-width: 2px; /* Thicker bottom border for header */
+}
+
+/* Diagnostics Modal Styles */
+.diagnostics-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Darker backdrop */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050; /* Ensure it's above other content */
+}
+
+.diagnostics-modal {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    width: 90%;
+    max-width: 600px; /* Limit max width */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+.diagnostics-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    background-color: #2a2a2a; /* Match card header */
+}
+
+.diagnostics-modal-header h5 {
+    margin: 0;
+    color: var(--primary-color); /* Match card header text */
+    font-family: var(--header-font);
+}
+
+.diagnostics-modal-body {
+    padding: 1rem;
+    max-height: 60vh; /* Limit height and allow scrolling */
+    overflow-y: auto;
+}
+
+.diagnostics-modal-footer {
+    padding: 0.8rem 1rem;
+    border-top: 1px solid var(--border-color);
+    text-align: right;
+    background-color: #2a2a2a;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--secondary-color);
+    cursor: pointer;
+    padding: 0 0.5rem;
+    line-height: 1;
+}
+
+.close-button:hover {
+    color: var(--text-color);
+}
+
+.btn-close-diag { /* Basic button styling */
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+.btn-close-diag:hover {
+    background-color: #555;
+}
+
+.btn-close-diag:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.diagnostics-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.diagnostics-table th,
+.diagnostics-table td {
+    border: 1px solid var(--border-color);
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.diagnostics-table th {
+    background-color: #333; /* Darker header for table */
+    color: var(--primary-color);
+    font-family: var(--header-font);
+}
+
+.loading-indicator p {
+    text-align: center;
+    padding: 1rem;
+}

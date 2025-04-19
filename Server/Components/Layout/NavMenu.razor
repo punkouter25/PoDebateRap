@@ -1,0 +1,28 @@
+﻿﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">
+            <span class="me-2">🎤</span> @* Replace MudIcon with Unicode *@
+            PoDebateRap
+        </a>
+    </div>
+</div>
+
+<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+
+
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <nav class="nav flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="me-3">🏠</span> Home @* Replace MudIcon with Unicode *@
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="leaderboard">
+                <span class="me-3">🏆</span> Leaderboard @* Replace MudIcon with Unicode *@
+            </NavLink>
+        </div>
+        @* Remove Counter and Weather links *@
+    </nav>
+</div>
